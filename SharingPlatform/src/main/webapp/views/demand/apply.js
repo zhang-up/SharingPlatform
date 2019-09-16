@@ -30,35 +30,37 @@ function initApplyList(){
         url: "./tdemand/applyList",
         datatype: "json",
         styleUI: 'Bootstrap',
-//        height: $(window).height() - 360,
-        //width: $("#div_left").width() - 2,
         headerpos: "left",
         recordpos: "center",
         pagerpos: "left",
         shownumpos: "right",
-        //altRows: true,
-        //altclass:'somec',
-        //autowidth: true,
         colModel:[{label: '信息资源提供部门 ', name: 'provideDepName',},
-                  {label: '需求名称', name: 'id',},
-                  {label: '需求内容', name: 'id',},
-                  {label: '期望提供方式', name: 'id',},
-                  {label: '期望共享服务方式', name: 'id',},
-                  {label: '期望更新频率', name: 'id',},
-                  {label: '用途', name: 'id',},
-                  {label: '状态', name: 'id',},
-                  {label: '推荐资源数', name: 'id',},
-                  {label: '引用资源', name: 'id',},
-                  {label: '操作', name: 'id',}],
+                  {label: '需求名称', name: 'demandName',},
+                  {label: '需求内容', name: 'demandDetail',},
+                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:110,},
+                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:115,},
+                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:110,},
+                  {label: '用途', name: 'demandUse',},
+                  {label: '状态', name: 'stateName',align:"center",width:90,},
+                  {label: '推荐资源数', name: 'id',align:"center",width:90,},
+                  {label: '引用资源', name: 'id',align:"center",width:90,},
+                  {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
+                	  var id=rowObject.id;
+                	  var state = rowObject.state;
+                	  if('00'==state){
+                		  return '<a href="javascript:void(0)" onclick="">修改</a> <a href="javascript:void(0)" onclick="">删除</a>';
+                	  }else if('03'==state || '05'==state){
+                		  return '<a href="javascript:void(0)" onclick="">修改</a> <a href="javascript:void(0)" onclick="">撤销</a>';
+                	  }else{
+                		  return '<a href="javascript:void(0)" onclick="">查看</a>';
+                	  }
+                	  
+                  }}],
         
-        //viewrecords: true,
-        //height: 385,
-        rowNum: 20,
-		rowList : [20,40,60],
-        //rownumbers: true, 
-        //rownumWidth: 25, 
+        height: 560,
+        rowNum: 15,
+		rowList : [15,30,45],
         autowidth:true,
-        //multiselect: true,
         pager: "#applyGridPager",
         jsonReader : {
             root: "list",

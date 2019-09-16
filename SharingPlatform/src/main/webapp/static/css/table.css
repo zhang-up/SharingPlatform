@@ -5,8 +5,16 @@
 	background-color: #FFFFFF;
 }
 
+.gridPanel{
+	background-color: #FFFFFF;
+}
+
 .gridPanel .grid-tool{
 	background-color: #FFFFFF;
+}
+
+tr .ui-th-column{
+	background-color: #F1F1F1;
 }
 
 th .ui-th-div{
