@@ -16,6 +16,17 @@ $(function() {
 		$('#page_tital').html('添加申请');
 	}else{
 		$('#page_tital').html('修改申请');
+		
+		$('#proDepIdEdit').val(eRowObj.provideDep);
+		$('#proDepNameEdit').val(eRowObj.provideDepName);
+		$('#demandName').val(eRowObj.demandName);
+		$('#keyWord').val(eRowObj.keyWord);
+		$('#demantDetail').val(eRowObj.demandDetail);
+		$('#accessMode').val(eRowObj.accessMode);
+		$('#serveMode').val(eRowObj.serveMode);
+		$('#frequency').val(eRowObj.frequency);
+		$('#demandUse').val(eRowObj.demandUse);
+		
 	}
 	
 	
@@ -74,7 +85,8 @@ function editApply(state){
 			if(mergeDemandId=='add'){
 				searchApply();
 			}else{
-				
+				eRowObj = null;
+				searchApply('update');
 			}
 			cancelPopup();
 		},

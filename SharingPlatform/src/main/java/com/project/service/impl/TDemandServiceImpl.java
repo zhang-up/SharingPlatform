@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.dao.TDemandDao;
 import com.project.dao.TDemandOperateDao;
+import com.project.dao.TDemandResourceDao;
 import com.project.entity.TDemandEntity;
 import com.project.entity.TDemandOperateEntity;
+import com.project.exception.RRException;
 import com.project.info.TDemandInfo;
 import com.project.service.TDemandService;
 import com.project.utils.DateUtil;
@@ -24,6 +26,8 @@ public class TDemandServiceImpl implements TDemandService {
 	private TDemandDao tDemandDao;
 	@Autowired
 	private TDemandOperateDao tDemandOperateDao;
+	@Autowired
+	private TDemandResourceDao tDemandResourceDao;
 	
 	@Override
 	public TDemandEntity queryObject(String demandId){
@@ -99,7 +103,16 @@ public class TDemandServiceImpl implements TDemandService {
 	}
 	
 	@Override
-	public void delete(String demandId){
+	public void delete(String demandId, String userId){
+		
+		TDemandEntity td = tDemandDao.queryObject(demandId);
+		
+		if(!userId.equals(td.getCreater())){
+			throw new RRException("您没有删除该记录的权限！");
+		}
+		
+		tDemandOperateDao.deleteByDemand(demandId);
+		tDemandResourceDao.deleteByDemand(demandId);
 		tDemandDao.delete(demandId);
 	}
 	

@@ -25,7 +25,8 @@ var $gridTable;
 var rObj = [];
 var rowNums = 0;
 function initApplyList(){
-	
+	rObj = [];
+	rowNums = 0;
 	$gridTable = $('#applyGrid');
 	
 	$gridTable.jqGrid({
@@ -55,7 +56,7 @@ function initApplyList(){
                 	  rObj.push(rowObject);
                 	  var str = '';
                 	  if('00'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>删除</a>";
+                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delApply('"+id+"');>删除</a>";
                 	  }else if('03'==state || '05'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>撤销</a>";
                 	  }else{
@@ -89,11 +90,18 @@ function initApplyList(){
 	
 }
 
-function searchApply(){
-
+function searchApply(type){
+	rObj = [];
+	rowNums = 0;
+	var curpagenum = 1;
+	
+	if('update'==type){
+		curpagenum = $gridTable.jqGrid('getGridParam', 'page');
+	}
+	
 	$gridTable.jqGrid('setGridParam', {
         postData: applyCondition(), 
-        page: 1
+        page: curpagenum
     }).trigger('reloadGrid');
 	
 }
@@ -113,9 +121,36 @@ function applyCondition(){
 }
 
 var mergeDemandId = 'add';
+var eRowObj = null
 function editApplyPage(id,rNums){
-	alert(stringify(rObj[rNums]));
 	mergeDemandId = id;
-//	alert(mergeDemandId);
-	//popup('views/demand/editApply.html');
+	eRowObj = rObj[rNums];
+	//alert(stringify(eRowObj));
+	popup('views/demand/editApply.html');
+}
+
+var deleDemandId = '';
+function delApply(id){
+	deleDemandId = id;
+	openDialog('delApply','提示',300,150,'记录删除后将无法恢复！是否确认删除。',function(){
+		//alert('确定');
+		$.ajax({
+			url:'./tdemand/delete',
+			data:'demandId='+deleDemandId,
+			dataType:'json',
+			type:'post',
+			success: function(result){
+				var code = result.code;
+				if(code == 500){
+					alert(result.msg);
+					return;
+				}
+				searchApply('update');
+				alert('记录已删除！');
+			},
+			error:commerror
+		});
+	},function(){
+		//alert('取消');
+	});
 }

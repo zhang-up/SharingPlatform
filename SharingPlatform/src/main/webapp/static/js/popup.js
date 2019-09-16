@@ -98,7 +98,7 @@ var openDialog = function(id,title,width,height,message,subFun,canFun){
 	$('body').append('<div id="'+id+'BackBack" class="PassWordBackBack" style="top:40%;z-index:10000"/>');
 	
 	$('#'+id+'BackBack').append('<div id="'+id+'Back" class="PassWordBack" style="width:'+width+'px;height:'+height+'px;"/>');
-	$('#'+id+'Back').append('<dl align="left" style="width:'+width+'px;">'+
+	$('#'+id+'Back').append('<dl align="left" style="width:'+width+'px;height:'+height+'px;">'+
 	    	'<dd id="page_tital" class="page_tital" style="height:20px;line-height:20px;">'+title+'</dd>'+
 	    	'<dd class="cut-offRule" ></dd>'+
 			'<dd class="tital" style="padding-left:10px;padding-right:10px;line-height:20px;height:'+msgH+'px;"><font style="top:0px;">'+message+'</font></dd>'+

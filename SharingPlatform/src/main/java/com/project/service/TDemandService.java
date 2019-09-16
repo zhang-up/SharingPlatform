@@ -23,7 +23,7 @@ public interface TDemandService {
 	
 	void update(TDemandEntity tDemand);
 	
-	void delete(String demandId);
+	void delete(String demandId, String userId);
 	
 	void deleteBatch(String[] demandIds);
 }

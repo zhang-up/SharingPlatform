@@ -124,6 +124,10 @@
 		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
 		    </if>
 		</if>
+		<!-- 申请页面对草稿状态做限制 -->
+		<if test="apply != null and apply != ''">
+	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
 		ORDER BY td.state,td.save_time DESC) PlayStation
 		<if test="offset != null and limit != null">
 			limit #{offset},#{limit}
@@ -154,6 +158,10 @@
 		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
 		    </if>
 		</if>
+		<!-- 申请页面对草稿状态做限制 -->
+		<if test="apply != null and apply != ''">
+	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
 	</select>
 
 	<insert id="save" parameterType="com.project.entity.TDemandEntity">

@@ -12,5 +12,5 @@ public interface TDemandResourceDao extends BaseDao<TDemandResourceEntity> {
 
     List<TDemandResourceEntity> findList(TDemandResourceEntity tDemandResource);
 
-
+    int deleteByDemand(Object demandId);
 }

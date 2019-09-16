@@ -63,6 +63,9 @@ public class TDemandController extends  AbstractController{
 		
 		params.put("demandDep", lui.getOrgCode());
 		
+		params.put("apply", "true");
+		params.put("userId", lui.getUserId());
+		
 		//查询列表数据
         Query query = new Query(params);
 
@@ -187,9 +190,33 @@ public class TDemandController extends  AbstractController{
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	public void delete(@RequestBody String[] demandIds){
-		tDemandService.deleteBatch(demandIds);
-
+	public R delete(@RequestParam Map<String, Object> params, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return R.error("登录状态异常！");
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		
+		String demandId = params.get("demandId") == null ? "" : params.get("demandId").toString();
+		if(StringUtil.isNull(demandId)){
+			return R.error("提交参数异常，删除记录失败！");
+		}
+		
+		try {
+			tDemandService.delete(demandId, lui.getUserId());
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		
+		
+		return R.ok();
 	}
 	
 }

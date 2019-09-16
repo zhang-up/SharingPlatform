@@ -12,5 +12,5 @@ public interface TDemandOperateDao extends BaseDao<TDemandOperateEntity> {
 
     List<TDemandOperateEntity> findList(TDemandOperateEntity tDemandOperate);
 
-
+    int deleteByDemand(Object demandId);
 }
