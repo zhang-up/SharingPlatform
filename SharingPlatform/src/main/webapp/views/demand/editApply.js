@@ -72,7 +72,7 @@ function editApply(state){
 				return;
 			}
 			if(mergeDemandId=='add'){
-				//reLoad();
+				searchApply();
 			}else{
 				
 			}

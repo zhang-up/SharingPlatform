@@ -27,7 +27,7 @@ function initApplyList(){
 	$gridTable = $('#applyGrid');
 	
 	$gridTable.jqGrid({
-        url: "",
+        url: "./tdemand/applyList",
         datatype: "json",
         styleUI: 'Bootstrap',
 //        height: $(window).height() - 360,
@@ -39,7 +39,7 @@ function initApplyList(){
         //altRows: true,
         //altclass:'somec',
         //autowidth: true,
-        colModel:[{label: '信息资源提供部门 ', name: 'id',},
+        colModel:[{label: '信息资源提供部门 ', name: 'provideDepName',},
                   {label: '需求名称', name: 'id',},
                   {label: '需求内容', name: 'id',},
                   {label: '期望提供方式', name: 'id',},
@@ -61,14 +61,14 @@ function initApplyList(){
         //multiselect: true,
         pager: "#applyGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "list",
+            page: "currPage",
+            total: "totalPage",
+            records: "totalCount"
         },
         prmNames : {
             page:"page", 
-            rows:"limit", 
+            rows:"rows", 
             order: "order"
         },
         gridComplete:function(){

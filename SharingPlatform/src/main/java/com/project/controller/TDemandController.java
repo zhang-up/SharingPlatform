@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandEntity;
 import com.project.exception.RRException;
+import com.project.info.TDemandInfo;
 import com.project.info.loginUserInfo;
 import com.project.service.TDemandService;
 import com.project.utils.PageUtils;
@@ -39,6 +40,19 @@ public class TDemandController extends  AbstractController{
 
 		List<TDemandEntity> tDemandList = tDemandService.queryList(query);
 		int total = tDemandService.queryTotal(query);
+		
+		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
+		
+		return pageUtil;
+	}
+	
+	@RequestMapping("/applyList")
+	public PageUtils applyList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+        Query query = new Query(params);
+
+		List<TDemandInfo> tDemandList = tDemandService.queryApplyList(query);
+		int total = tDemandService.queryApplyTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
 		
@@ -120,7 +134,7 @@ public class TDemandController extends  AbstractController{
 		tDemand.setDemandUse(demandUse);
 		
 		String keyWord = params.get("keyWord") == null ? "" : params.get("keyWord").toString();
-		tDemand.setProvideDep(keyWord);
+		tDemand.setKeyWord(keyWord);
 		
 		String demandId = params.get("demandId") == null ? "" : params.get("demandId").toString();
 		tDemand.setDemandId(demandId);

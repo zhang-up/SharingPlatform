@@ -1,9 +1,10 @@
 package com.project.service;
 
-import com.project.entity.TDemandEntity;
-
 import java.util.List;
 import java.util.Map;
+
+import com.project.entity.TDemandEntity;
+import com.project.info.TDemandInfo;
 
 public interface TDemandService {
 	
@@ -12,6 +13,9 @@ public interface TDemandService {
     List<TDemandEntity> findALL();
     List<TDemandEntity> findList(TDemandEntity tDemand);
 	int queryTotal(Map<String, Object> map);
+	
+	List<TDemandInfo> queryApplyList(Map<String, Object> map);
+	int queryApplyTotal(Map<String, Object> map);
 	
 	void edit(TDemandEntity tDemand, String userId);
 	

@@ -10,6 +10,7 @@ import com.project.dao.TDemandDao;
 import com.project.dao.TDemandOperateDao;
 import com.project.entity.TDemandEntity;
 import com.project.entity.TDemandOperateEntity;
+import com.project.info.TDemandInfo;
 import com.project.service.TDemandService;
 import com.project.utils.DateUtil;
 import com.project.utils.StringUtil;
@@ -46,6 +47,16 @@ public class TDemandServiceImpl implements TDemandService {
 
 	@Override
 	public int queryTotal(Map<String, Object> map){
+		return tDemandDao.queryTotal(map);
+	}
+	
+	@Override
+	public List<TDemandInfo> queryApplyList(Map<String, Object> map){
+		return tDemandDao.queryInfoList(map);
+	}
+	
+	@Override
+	public int queryApplyTotal(Map<String, Object> map){
 		return tDemandDao.queryTotal(map);
 	}
 	
