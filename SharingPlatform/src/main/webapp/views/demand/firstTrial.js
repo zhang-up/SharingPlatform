@@ -43,7 +43,7 @@ function dockingList(){
         //altRows: true,
         //altclass:'somec',
         //autowidth: true,
-        colModel:[{label: '信息资源需求部门 ', name: 'id',},
+        colModel:[{label: '信息资源需求部门 ', name: 'demandId',},
                   {label: '信息资源提供部门 ', name: 'id',},
                   {label: '需求名称', name: 'id',},
                   {label: '需求内容', name: 'id',},
@@ -56,7 +56,7 @@ function dockingList(){
         
         //viewrecords: true,
         height: 560,
-        rowNum: 15,
+        rowNum: 2,
 		rowList : [15,30,45],
         //rownumbers: true, 
         //rownumWidth: 25, 

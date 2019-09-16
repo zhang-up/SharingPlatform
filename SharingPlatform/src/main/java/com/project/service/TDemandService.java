@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.entity.TDemandEntity;
+import com.project.info.TDemandInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,7 @@ public interface TDemandService {
 	void delete(String demandId);
 	
 	void deleteBatch(String[] demandIds);
+	
+	
+	 List<TDemandInfo> dockingList(Map<String, Object> map);
 }

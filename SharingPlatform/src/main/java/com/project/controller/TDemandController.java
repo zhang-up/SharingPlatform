@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandEntity;
+import com.project.info.TDemandInfo;
 import com.project.service.TDemandService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -32,7 +33,7 @@ public class TDemandController {
 		//查询列表数据
         Query query = new Query(params);
 
-		List<TDemandEntity> tDemandList = tDemandService.queryList(query);
+		List<TDemandInfo> tDemandList = tDemandService.dockingList(query);
 		int total = tDemandService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
