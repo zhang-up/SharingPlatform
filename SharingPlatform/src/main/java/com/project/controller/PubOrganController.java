@@ -21,7 +21,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/puborgan")
-public class PubOrganController {
+public class PubOrganController extends  AbstractController{
 	@Autowired
 	private PubOrganService pubOrganService;
 	

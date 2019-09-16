@@ -35,6 +35,23 @@ public class TDemandEntity implements Serializable {
 	//备注
 	private String remark;
 
+	public void updateValue(TDemandEntity bs) {
+    	this.setDemandId(bs.getDemandId());
+    	this.setDemandDep(bs.getDemandDep());
+    	this.setProvideDep(bs.getProvideDep());
+    	this.setDemandName(bs.getDemandName());
+    	this.setKeyWord(bs.getKeyWord());
+    	this.setDemandDetail(bs.getDemandDetail());
+    	this.setAccessMode(bs.getAccessMode());
+    	this.setServeMode(bs.getServeMode());
+    	this.setFrequency(bs.getFrequency());
+    	this.setDemandUse(bs.getDemandUse());
+    	this.setSaveTime(bs.getSaveTime());
+    	this.setCreater(bs.getCreater());
+    	this.setState(bs.getState());
+    	this.setRemark(bs.getRemark());
+    }
+	
 	/**
 	 * 设置：需求ID
 	 */

@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/pubregion")
-public class PubRegionController {
+public class PubRegionController extends  AbstractController{
 	@Autowired
 	private PubRegionService pubRegionService;
 	

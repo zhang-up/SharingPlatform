@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/puborgantree")
-public class PubOrganTreeController {
+public class PubOrganTreeController extends  AbstractController{
 	@Autowired
 	private PubOrganTreeService pubOrganTreeService;
 	

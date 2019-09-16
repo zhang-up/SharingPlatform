@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/pubuser")
-public class PubUserController {
+public class PubUserController extends  AbstractController{
 	@Autowired
 	private PubUserService pubUserService;
 	

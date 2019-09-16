@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/tparameter")
-public class TParameterController {
+public class TParameterController extends  AbstractController{
 	@Autowired
 	private TParameterService tParameterService;
 	

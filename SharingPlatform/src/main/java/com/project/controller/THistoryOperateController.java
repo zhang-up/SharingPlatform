@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/thistoryoperate")
-public class THistoryOperateController {
+public class THistoryOperateController extends  AbstractController{
 	@Autowired
 	private THistoryOperateService tHistoryOperateService;
 	

@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/thistorydata")
-public class THistoryDataController {
+public class THistoryDataController extends  AbstractController{
 	@Autowired
 	private THistoryDataService tHistoryDataService;
 	

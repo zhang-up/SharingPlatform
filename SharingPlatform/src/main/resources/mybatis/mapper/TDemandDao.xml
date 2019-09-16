@@ -21,7 +21,7 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-	<select id="queryObject" resultType="com.project.entity.TDemandEntity">
+	<select id="queryObject"  resultMap="tDemandMap">
 		select * from t_demand where demand_id = #{value}
 	</select>
 

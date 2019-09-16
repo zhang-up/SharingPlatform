@@ -2,17 +2,19 @@
  * 
  */
 $(function() {
+	getUserId();
 	creatMenu();
 });
 
 function getUserId(){
-	
+	var uId = $("input[name='login_uid']").val();
+	sessionStorage.token = uId;
 }
 
 function creatMenu(){
 	$('#menusDiv').html('');
 	$.ajax({url:'./menu/menus',
-		data:"",
+		data:"token="+sessionStorage.token,
 		 dataType:'json',
 		 type : 'post',
 		 success: function(result){

@@ -19,7 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/tdemandresource")
-public class TDemandResourceController {
+public class TDemandResourceController extends  AbstractController{
 	@Autowired
 	private TDemandResourceService tDemandResourceService;
 	

@@ -13,6 +13,8 @@ public interface TDemandService {
     List<TDemandEntity> findList(TDemandEntity tDemand);
 	int queryTotal(Map<String, Object> map);
 	
+	void edit(TDemandEntity tDemand, String userId);
+	
 	void save(TDemandEntity tDemand);
 	
 	void update(TDemandEntity tDemand);

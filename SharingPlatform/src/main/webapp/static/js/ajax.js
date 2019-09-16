@@ -7,18 +7,18 @@ $.ajaxSetup({
 	async:false,
 	beforeSend:function(){
 		//alert(stringify(loginedInfo));
-		if(this.url.indexOf('Controller')!=-1){
+		//if(this.url.indexOf('Controller')!=-1){
 			if(strIsNull(this.data)){
-				this.data='token='+(loginedInfo!=null ? loginedInfo.token: '');
+				this.data='token='+(sessionStorage.token!=null ? sessionStorage.token: '');
 			}else{
 				if(this.data.indexOf('token=')==-1){
-					this.data+='&token='+(loginedInfo!=null ? loginedInfo.token: '');
+					this.data+='&token='+(sessionStorage.token!=null ? sessionStorage.token: '');
 				}
 			}
-			//alert(paramToJson(this.data));
-			this.data = 'piData='+paramToJson(this.data);
+			
+			//this.data = 'piData='+paramToJson(this.data);
 			tokenNums++;
-		}
+		//}
 	},
 	complete:function(result){
 		tokenNums--;
