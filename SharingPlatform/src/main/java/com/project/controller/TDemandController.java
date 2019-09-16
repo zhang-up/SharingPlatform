@@ -28,6 +28,7 @@ public class TDemandController {
 	 */
 	@RequestMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){
+		System.out.println(params);
 		//查询列表数据
         Query query = new Query(params);
 

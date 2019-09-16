@@ -1,0 +1,44 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="views/demand/firstTrial.js?v=1"></script>
+
+
+<div class="showList" style='height:100px;'>
+	<div class="screen">
+		<div style="left:0px;width: 130px;">信息资源需求部门：</div>
+		<div style="left:100px;width: 150px;">
+			<input id="ft_needDepId" style="width:100px;display:none;"readonly="readonly" placeholder="请选择部门"/>
+			<input id="ft_needDepName" style="width:100px;"readonly="readonly" placeholder="请选择部门"/>
+		</div>
+		
+		<div style="left:170px;width: 250px;">信息资源提供部门：</div>
+		<div style="left:250px;width: 320px;">
+			<input id="ft_proDepId" style="width:100px;display:none;"readonly="readonly" placeholder="请选择部门"/>
+			<input id="ft_proDepName" style="width:100px;"readonly="readonly" placeholder="请选择部门"/>
+		</div>
+		
+		<div style="left:460px;width: 60px;">状态：</div>
+		<div style="left:500px;"><select id="ft_state" name="ft_state"></select></div>
+		
+		<div style="left:630px;width: 80px;"><select id="ft_timeType" name="ft_timeType" style="width:80px;"></select></div>
+		
+		<div style="left:730px;width:110px;">
+			<input id="ft_stratDate" name="ft_stratDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:830px;width:30px;">
+			至
+		</div>
+		<div style="left:850px;width:110px;">
+			<input id="ft_endDate" name="ft_endDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:950px;">
+			<a class="btn btn-primary" href="javascript:" onclick="searchApply();" ><i class="fa fa-plus"></i>搜  索</a>
+		</div>
+
+	</div>
+	<div class="gridPanel">
+	    <table id="ft_applyGrid"></table>
+	    <div id="ft_applyGridPager"></div>
+    </div>
+  </div>
+

@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+
+.MyDepTreeBG{
+	border: 1px solid #52A0EA;
+	width: 100%;
+	height:100%;
+	position: fixed;
+	top: 0px;
+	background-color:#000000;
+	z-index:999;
+	filter:alpha(Opacity=30);
+	-moz-opacity:0.3;
+	opacity: 0.3;
+}
+
+.MyDepTreeBack{
+	width: 100%;
+	position: fixed;
+	top: 20%;
+	z-index:1000;
+}
+
+.MyDepTree{
+	position: relative;
+	border: 2px solid #3B85D8;
+	width: 450px;
+	height:550px;
+	background-color:#F0F0F0;
+	z-index:1000;
+	margin: 0 auto;
+}
+
+.MyDepTreePanel {
+	position: relative;
+	top:50px;
+	height:400px; 
+	overflow:auto;
+}
+
+.depTreeBut{
+	position: absolute;
+	bottom:15px;
+	left:20%;
+	font-size:15px;
+	width:20%;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	border-left: 2px solid #C0C0B4;
+	border-top: 2px solid #C0C0B4;
+	border-right: 2px solid #676565;
+	border-bottom: 2px solid #676565;
+	background-color:#3B85D8; 
+	color:#FFFFFF; 
+/* 	font-weight:bold; */
+	margin: 0px;
+	cursor:pointer;
+}

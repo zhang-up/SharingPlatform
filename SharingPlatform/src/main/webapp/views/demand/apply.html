@@ -1,0 +1,42 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="views/demand/apply.js?v=1"></script>
+
+
+<div class="showList" style='height:100px;'>
+	<div class="screen">
+		<div style="left:0px;width: 150px;">信息资源提供部门：</div>
+		<div style="left:150px;width: 220px;">
+			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择部门"/>
+			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择部门"/>
+		</div>
+		
+		<div style="left:390px;width: 60px;">状态：</div>
+		<div style="left:450px;"><select id="state" name="state"></select></div>
+		
+		<div style="left:580px;width: 150px;"><select id="timeType" name="timeType" style="width:140px;"></select></div>
+		
+		<div style="left:730px;width:110px;">
+			<input id="stratDate" name="stratDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:830px;width:30px;">
+			至
+		</div>
+		<div style="left:850px;width:110px;">
+			<input id="endDate" name="endDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:950px;">
+			<a class="btn btn-primary" href="javascript:" onclick="searchApply();" ><i class="fa fa-plus"></i>搜  索</a>
+			<a class="btn btn-primary" href="javascript:" onclick="editApplyPage('add');" ><i class="fa fa-pencil-square-o"></i>添  加</a>
+		</div>
+<!-- 		<div style="left:960px;"> -->
+<!-- 			<a v-if="hasPermission('puborgan:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>搜  索</a> -->
+<!-- 			<a v-if="hasPermission('puborgan:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>添  加</a> -->
+<!-- 		</div> -->
+	</div>
+	<div class="gridPanel">
+	    <table id="applyGrid"></table>
+	    <div id="applyGridPager"></div>
+    </div>
+  </div>
+

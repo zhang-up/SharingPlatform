@@ -25,7 +25,7 @@ public class MenuController {
 		List<SysMenusInfo> smiList = new ArrayList<SysMenusInfo>();
 		
 		smiList.add(new SysMenusInfo("需求申请", "views/demand/apply.html"));
-		smiList.add(new SysMenusInfo("需求初审", ""));
+		smiList.add(new SysMenusInfo("需求初审", "views/demand/firstTrial.html"));
 		smiList.add(new SysMenusInfo("需求提供", ""));
 		smiList.add(new SysMenusInfo("需求统计", ""));
 		
