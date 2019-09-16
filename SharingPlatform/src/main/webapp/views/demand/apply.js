@@ -22,12 +22,17 @@ $(function() {
 });
 
 var $gridTable;
+var rObj = [];
+var rowNums = 0;
 function initApplyList(){
 	
 	$gridTable = $('#applyGrid');
 	
 	$gridTable.jqGrid({
         url: "./tdemand/applyList",
+        postData:{
+        	token : (sessionStorage.token!=null ? sessionStorage.token: '')
+		},
         datatype: "json",
         styleUI: 'Bootstrap',
         headerpos: "left",
@@ -45,16 +50,19 @@ function initApplyList(){
                   {label: '推荐资源数', name: 'id',align:"center",width:90,},
                   {label: '引用资源', name: 'id',align:"center",width:90,},
                   {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
-                	  var id=rowObject.id;
+                	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
+                	  rObj.push(rowObject);
+                	  var str = '';
                 	  if('00'==state){
-                		  return '<a href="javascript:void(0)" onclick="">修改</a> <a href="javascript:void(0)" onclick="">删除</a>';
+                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>删除</a>";
                 	  }else if('03'==state || '05'==state){
-                		  return '<a href="javascript:void(0)" onclick="">修改</a> <a href="javascript:void(0)" onclick="">撤销</a>';
+                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>撤销</a>";
                 	  }else{
-                		  return '<a href="javascript:void(0)" onclick="">查看</a>';
+                		  str = "<a href='javascript:void(0)' onclick=''>查看</a>";
                 	  }
-                	  
+                	  rowNums++;
+                	  return str;
                   }}],
         
         height: 560,
@@ -94,7 +102,8 @@ function searchApply(){
 function applyCondition(){
 	
 	var queryJson={
-			proDepId : $("#proDepId").val(),
+			token : (sessionStorage.token!=null ? sessionStorage.token: ''),
+			provideDep : $("#proDepId").val(),
 			state : $("#state").val(),
 			timeType : $("#timeType").val(),
 			stratDate : $("#stratDate").val(),
@@ -104,7 +113,9 @@ function applyCondition(){
 }
 
 var mergeDemandId = 'add';
-function editApplyPage(id){
+function editApplyPage(id,rNums){
+	alert(stringify(rObj[rNums]));
 	mergeDemandId = id;
-	popup('views/demand/editApply.html');
+//	alert(mergeDemandId);
+	//popup('views/demand/editApply.html');
 }

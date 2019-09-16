@@ -104,7 +104,7 @@
 		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
 		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
 		<if test="timeType != null and timeType != ''">
-	      LEFT JOIN　(SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
+	      LEFT JOIN (SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
 	    </if>
 		WHERE 1=1
 		<if test="demandDep != null and demandDep != ''">
@@ -118,10 +118,10 @@
 	    </if>
 	    <if test="timeType != null and timeType != ''">
 		    <if test="stratDate != null and stratDate != ''">
-		      AND ope.operate_time = #{stratDate}
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
 		    </if>
 		    <if test="endDate != null and endDate != ''">
-		      AND ope.operate_time &lt;= #{endDate}
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
 		    </if>
 		</if>
 		ORDER BY td.state,td.save_time DESC) PlayStation
@@ -134,7 +134,7 @@
 		SELECT count(td.demand_id)
 		FROM t_demand td
 		<if test="timeType != null and timeType != ''">
-	      LEFT JOIN　(SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
+	      LEFT JOIN (SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
 	    </if>
 		WHERE 1=1
 		<if test="demandDep != null and demandDep != ''">
@@ -148,10 +148,10 @@
 	    </if>
 	    <if test="timeType != null and timeType != ''">
 		    <if test="stratDate != null and stratDate != ''">
-		      AND ope.operate_time = #{stratDate}
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
 		    </if>
 		    <if test="endDate != null and endDate != ''">
-		      AND ope.operate_time &lt;= #{endDate}
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
 		    </if>
 		</if>
 	</select>

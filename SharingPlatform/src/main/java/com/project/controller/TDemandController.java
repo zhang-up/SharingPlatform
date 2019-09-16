@@ -47,7 +47,22 @@ public class TDemandController extends  AbstractController{
 	}
 	
 	@RequestMapping("/applyList")
-	public PageUtils applyList(@RequestParam Map<String, Object> params){
+	public PageUtils applyList(@RequestParam Map<String, Object> params, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return new PageUtils();
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return new PageUtils();
+		}
+		
+		params.put("demandDep", lui.getOrgCode());
+		
 		//查询列表数据
         Query query = new Query(params);
 
