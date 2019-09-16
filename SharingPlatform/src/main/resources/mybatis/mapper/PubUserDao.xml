@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.PubUserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.PubUserEntity" id="pubUserMap">
+        <result property="id" column="ID"/>
+        <result property="account" column="ACCOUNT"/>
+        <result property="name" column="NAME"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="userCode" column="USER_CODE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="gender" column="GENDER"/>
+        <result property="birthday" column="birthday"/>
+        <result property="identityNum" column="IDENTITY_NUM"/>
+        <result property="phone" column="PHONE"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="position" column="POSITION"/>
+        <result property="typeCode" column="TYPE_CODE"/>
+        <result property="lastLoginTime" column="LAST_LOGIN_TIME"/>
+        <result property="roleCode" column="ROLE_CODE"/>
+        <result property="regionCode" column="REGION_CODE"/>
+        <result property="regionName" column="REGION_NAME"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="orgShortCode" column="ORG_SHORT_CODE"/>
+        <result property="roleValue" column="ROLE_VALUE"/>
+        <result property="isAdmin" column="IS_ADMIN"/>
+        <result property="status" column="STATUS"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="pwdChanged" column="PWD_CHANGED"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="userType" column="USER_TYPE"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.PubUserEntity">
+		select * from pub_user where ID = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.PubUserEntity">
+		select * from pub_user
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.PubUserEntity" parameterType="com.project.entity.PubUserEntity" >
+			select * from pub_user where  1=1
+        <set>
+														                    <if test="account != null"> AND ACCOUNT = #{account}, </if>
+											                    <if test="name != null"> AND NAME = #{name}, </if>
+											                    <if test="password != null"> AND PASSWORD = #{password}, </if>
+											                    <if test="userCode != null"> AND USER_CODE = #{userCode}, </if>
+											                    <if test="grade != null"> AND GRADE = #{grade}, </if>
+											                    <if test="gender != null"> AND GENDER = #{gender}, </if>
+											                    <if test="birthday != null"> AND birthday = #{birthday}, </if>
+											                    <if test="identityNum != null"> AND IDENTITY_NUM = #{identityNum}, </if>
+											                    <if test="phone != null"> AND PHONE = #{phone}, </if>
+											                    <if test="mobile != null"> AND MOBILE = #{mobile}, </if>
+											                    <if test="email != null"> AND EMAIL = #{email}, </if>
+											                    <if test="position != null"> AND POSITION = #{position}, </if>
+											                    <if test="typeCode != null"> AND TYPE_CODE = #{typeCode}, </if>
+											                    <if test="lastLoginTime != null"> AND LAST_LOGIN_TIME = #{lastLoginTime}, </if>
+											                    <if test="roleCode != null"> AND ROLE_CODE = #{roleCode}, </if>
+											                    <if test="regionCode != null"> AND REGION_CODE = #{regionCode}, </if>
+											                    <if test="regionName != null"> AND REGION_NAME = #{regionName}, </if>
+											                    <if test="orgCode != null"> AND ORG_CODE = #{orgCode}, </if>
+											                    <if test="orgName != null"> AND ORG_NAME = #{orgName}, </if>
+											                    <if test="orgShortCode != null"> AND ORG_SHORT_CODE = #{orgShortCode}, </if>
+											                    <if test="roleValue != null"> AND ROLE_VALUE = #{roleValue}, </if>
+											                    <if test="isAdmin != null"> AND IS_ADMIN = #{isAdmin}, </if>
+											                    <if test="status != null"> AND STATUS = #{status}, </if>
+											                    <if test="address != null"> AND ADDRESS = #{address}, </if>
+											                    <if test="pwdChanged != null"> AND PWD_CHANGED = #{pwdChanged}, </if>
+											                    <if test="updateTime != null"> AND UPDATE_TIME = #{updateTime}, </if>
+											                    <if test="userType != null"> AND USER_TYPE = #{userType}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.PubUserEntity">
+		SELECT * FROM
+        (
+		select * from pub_user
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from pub_user 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.PubUserEntity">
+		insert into pub_user
+		(
+			ID, 
+			ACCOUNT, 
+			NAME, 
+			PASSWORD, 
+			USER_CODE, 
+			GRADE, 
+			GENDER, 
+			birthday, 
+			IDENTITY_NUM, 
+			PHONE, 
+			MOBILE, 
+			EMAIL, 
+			POSITION, 
+			TYPE_CODE, 
+			LAST_LOGIN_TIME, 
+			ROLE_CODE, 
+			REGION_CODE, 
+			REGION_NAME, 
+			ORG_CODE, 
+			ORG_NAME, 
+			ORG_SHORT_CODE, 
+			ROLE_VALUE, 
+			IS_ADMIN, 
+			STATUS, 
+			ADDRESS, 
+			PWD_CHANGED, 
+			UPDATE_TIME, 
+			USER_TYPE
+		)
+		values
+		(
+			#{id}, 
+			#{account}, 
+			#{name}, 
+			#{password}, 
+			#{userCode}, 
+			#{grade}, 
+			#{gender}, 
+			#{birthday}, 
+			#{identityNum}, 
+			#{phone}, 
+			#{mobile}, 
+			#{email}, 
+			#{position}, 
+			#{typeCode}, 
+			#{lastLoginTime}, 
+			#{roleCode}, 
+			#{regionCode}, 
+			#{regionName}, 
+			#{orgCode}, 
+			#{orgName}, 
+			#{orgShortCode}, 
+			#{roleValue}, 
+			#{isAdmin}, 
+			#{status}, 
+			#{address}, 
+			#{pwdChanged}, 
+			#{updateTime}, 
+			#{userType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.PubUserEntity">
+		update pub_user 
+		<set>
+			<if test="account != null">ACCOUNT = #{account}, </if>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="password != null">PASSWORD = #{password}, </if>
+			<if test="userCode != null">USER_CODE = #{userCode}, </if>
+			<if test="grade != null">GRADE = #{grade}, </if>
+			<if test="gender != null">GENDER = #{gender}, </if>
+			<if test="birthday != null">birthday = #{birthday}, </if>
+			<if test="identityNum != null">IDENTITY_NUM = #{identityNum}, </if>
+			<if test="phone != null">PHONE = #{phone}, </if>
+			<if test="mobile != null">MOBILE = #{mobile}, </if>
+			<if test="email != null">EMAIL = #{email}, </if>
+			<if test="position != null">POSITION = #{position}, </if>
+			<if test="typeCode != null">TYPE_CODE = #{typeCode}, </if>
+			<if test="lastLoginTime != null">LAST_LOGIN_TIME = #{lastLoginTime}, </if>
+			<if test="roleCode != null">ROLE_CODE = #{roleCode}, </if>
+			<if test="regionCode != null">REGION_CODE = #{regionCode}, </if>
+			<if test="regionName != null">REGION_NAME = #{regionName}, </if>
+			<if test="orgCode != null">ORG_CODE = #{orgCode}, </if>
+			<if test="orgName != null">ORG_NAME = #{orgName}, </if>
+			<if test="orgShortCode != null">ORG_SHORT_CODE = #{orgShortCode}, </if>
+			<if test="roleValue != null">ROLE_VALUE = #{roleValue}, </if>
+			<if test="isAdmin != null">IS_ADMIN = #{isAdmin}, </if>
+			<if test="status != null">STATUS = #{status}, </if>
+			<if test="address != null">ADDRESS = #{address}, </if>
+			<if test="pwdChanged != null">PWD_CHANGED = #{pwdChanged}, </if>
+			<if test="updateTime != null">UPDATE_TIME = #{updateTime}, </if>
+			<if test="userType != null">USER_TYPE = #{userType}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from pub_user where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from pub_user where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

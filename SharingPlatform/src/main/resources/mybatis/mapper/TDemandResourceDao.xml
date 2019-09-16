@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.TDemandResourceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.TDemandResourceEntity" id="tDemandResourceMap">
+        <result property="dResId" column="d_res_id"/>
+        <result property="demandId" column="demand_id"/>
+        <result property="resourceId" column="resource_id"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.TDemandResourceEntity">
+		select * from t_demand_resource where d_res_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.TDemandResourceEntity">
+		select * from t_demand_resource
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.TDemandResourceEntity" parameterType="com.project.entity.TDemandResourceEntity" >
+			select * from t_demand_resource where  1=1
+        <set>
+														                    <if test="demandId != null"> AND demand_id = #{demandId}, </if>
+											                    <if test="resourceId != null"> AND resource_id = #{resourceId}, </if>
+											                    <if test="state != null"> AND state = #{state}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.TDemandResourceEntity">
+		SELECT * FROM
+        (
+		select * from t_demand_resource
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by d_res_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_demand_resource 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.TDemandResourceEntity">
+		insert into t_demand_resource
+		(
+			d_res_id, 
+			demand_id, 
+			resource_id, 
+			state
+		)
+		values
+		(
+			#{dResId}, 
+			#{demandId}, 
+			#{resourceId}, 
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.TDemandResourceEntity">
+		update t_demand_resource 
+		<set>
+			<if test="demandId != null">demand_id = #{demandId}, </if>
+			<if test="resourceId != null">resource_id = #{resourceId}, </if>
+			<if test="state != null">state = #{state}</if>
+		</set>
+		where d_res_id = #{dResId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_demand_resource where d_res_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_demand_resource where d_res_id in 
+		<foreach item="dResId" collection="array" open="(" separator="," close=")">
+			#{dResId}
+		</foreach>
+	</delete>
+
+</mapper>

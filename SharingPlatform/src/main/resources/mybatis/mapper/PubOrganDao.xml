@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.PubOrganDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.PubOrganEntity" id="pubOrganMap">
+        <result property="id" column="ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="pinyin" column="PINYIN"/>
+        <result property="icon" column="ICON"/>
+        <result property="organType" column="ORGAN_TYPE"/>
+        <result property="shortName" column="SHORT_NAME"/>
+        <result property="regionCode" column="REGION_CODE"/>
+        <result property="regionName" column="REGION_NAME"/>
+        <result property="sortOrder" column="SORT_ORDER"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="lastEditor" column="LAST_EDITOR"/>
+        <result property="lastTime" column="LAST_TIME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="status" column="STATUS"/>
+        <result property="appCode" column="APP_CODE"/>
+        <result property="childs" column="CHILDS"/>
+        <result property="isBusiness" column="IS_BUSINESS"/>
+        <result property="organLevel" column="ORGAN_LEVEL"/>
+        <result property="type" column="TYPE"/>
+        <result property="shortCode" column="SHORT_CODE"/>
+        <result property="organPathCode" column="ORGAN_PATH_CODE"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+    
+    <resultMap id="treeMap" type="com.project.info.PubOrganTreeInfo">
+		<id column="parentCode" property="parentCode"></id>
+		<result column="CODE" property="code"></result>
+		<result column="NAME" property="text"></result>
+		<result column="VALUE" property="value"></result>
+		<result column="CNUMS" property="cNums"></result>
+	</resultMap>
+	
+    <select id="tree" parameterType="com.project.param.PubOrganParam"  resultMap="treeMap">
+    	SELECT a.parentCode,a.CODE,a.NAME,a.VALUE,count(b.code) cNums FROM
+			(SELECT PARENT_CODE parentCode,
+				CODE,
+				NAME,
+				 CODE VALUE,
+				 SORT_ORDER
+			FROM pub_region WHERE STATUS = 1
+			UNION ALL
+			SELECT	
+				t.PARENT_CODE parentCode,
+				t.ORG_CODE CODE,
+				o.SHORT_NAME NAME,
+				t.ORG_CODE VALUE,
+				o.SORT_ORDER
+			FROM pub_organ_tree t
+			LEFT JOIN pub_organ o ON t.ORG_CODE = o.CODE
+			WHERE o. STATUS = 1
+			AND t.VIEW_CODE = "ORG_VERTICAL_VIEW") a left join
+			(SELECT PARENT_CODE parentCode,CODE
+			FROM pub_region WHERE STATUS = 1
+			UNION ALL
+			SELECT	t.PARENT_CODE parentCode,t.ORG_CODE CODE
+			FROM pub_organ_tree t
+			LEFT JOIN pub_organ o ON t.ORG_CODE = o.CODE
+			WHERE o. STATUS = 1
+			AND t.VIEW_CODE = "ORG_VERTICAL_VIEW") b
+			on a.code = b.parentCode
+			WHERE 1=1 
+	    	<if test="code != null and code != ''">
+		      AND a.code = #{code}
+		    </if>
+		    <if test="parentCode != null and parentCode != ''">
+		      AND a.parentCode = #{parentCode}
+		    </if>
+		    <if test="name != null and name != ''">
+		      AND a.name like #{name}
+		    </if>
+			group by a.parentCode,a.CODE,a.NAME,a.VALUE
+			ORDER BY a.SORT_ORDER ASC;
+	</select>
+
+	<select id="queryObject" resultType="com.project.entity.PubOrganEntity">
+		select * from pub_organ where ID = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.PubOrganEntity">
+		select * from pub_organ
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.PubOrganEntity" parameterType="com.project.entity.PubOrganEntity" >
+			select * from pub_organ where  1=1
+        <set>
+														                    <if test="code != null"> AND CODE = #{code}, </if>
+											                    <if test="name != null"> AND NAME = #{name}, </if>
+											                    <if test="pinyin != null"> AND PINYIN = #{pinyin}, </if>
+											                    <if test="icon != null"> AND ICON = #{icon}, </if>
+											                    <if test="organType != null"> AND ORGAN_TYPE = #{organType}, </if>
+											                    <if test="shortName != null"> AND SHORT_NAME = #{shortName}, </if>
+											                    <if test="regionCode != null"> AND REGION_CODE = #{regionCode}, </if>
+											                    <if test="regionName != null"> AND REGION_NAME = #{regionName}, </if>
+											                    <if test="sortOrder != null"> AND SORT_ORDER = #{sortOrder}, </if>
+											                    <if test="creator != null"> AND CREATOR = #{creator}, </if>
+											                    <if test="createTime != null"> AND CREATE_TIME = #{createTime}, </if>
+											                    <if test="lastEditor != null"> AND LAST_EDITOR = #{lastEditor}, </if>
+											                    <if test="lastTime != null"> AND LAST_TIME = #{lastTime}, </if>
+											                    <if test="remark != null"> AND REMARK = #{remark}, </if>
+											                    <if test="status != null"> AND STATUS = #{status}, </if>
+											                    <if test="appCode != null"> AND APP_CODE = #{appCode}, </if>
+											                    <if test="childs != null"> AND CHILDS = #{childs}, </if>
+											                    <if test="isBusiness != null"> AND IS_BUSINESS = #{isBusiness}, </if>
+											                    <if test="organLevel != null"> AND ORGAN_LEVEL = #{organLevel}, </if>
+											                    <if test="type != null"> AND TYPE = #{type}, </if>
+											                    <if test="shortCode != null"> AND SHORT_CODE = #{shortCode}, </if>
+											                    <if test="organPathCode != null"> AND ORGAN_PATH_CODE = #{organPathCode}, </if>
+											                    <if test="updateTime != null"> AND UPDATE_TIME = #{updateTime}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.PubOrganEntity">
+		SELECT * FROM
+        (
+		select * from pub_organ
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from pub_organ 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.PubOrganEntity">
+		insert into pub_organ
+		(
+			ID, 
+			CODE, 
+			NAME, 
+			PINYIN, 
+			ICON, 
+			ORGAN_TYPE, 
+			SHORT_NAME, 
+			REGION_CODE, 
+			REGION_NAME, 
+			SORT_ORDER, 
+			CREATOR, 
+			CREATE_TIME, 
+			LAST_EDITOR, 
+			LAST_TIME, 
+			REMARK, 
+			STATUS, 
+			APP_CODE, 
+			CHILDS, 
+			IS_BUSINESS, 
+			ORGAN_LEVEL, 
+			TYPE, 
+			SHORT_CODE, 
+			ORGAN_PATH_CODE, 
+			UPDATE_TIME
+		)
+		values
+		(
+			#{id}, 
+			#{code}, 
+			#{name}, 
+			#{pinyin}, 
+			#{icon}, 
+			#{organType}, 
+			#{shortName}, 
+			#{regionCode}, 
+			#{regionName}, 
+			#{sortOrder}, 
+			#{creator}, 
+			#{createTime}, 
+			#{lastEditor}, 
+			#{lastTime}, 
+			#{remark}, 
+			#{status}, 
+			#{appCode}, 
+			#{childs}, 
+			#{isBusiness}, 
+			#{organLevel}, 
+			#{type}, 
+			#{shortCode}, 
+			#{organPathCode}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.PubOrganEntity">
+		update pub_organ 
+		<set>
+			<if test="code != null">CODE = #{code}, </if>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="pinyin != null">PINYIN = #{pinyin}, </if>
+			<if test="icon != null">ICON = #{icon}, </if>
+			<if test="organType != null">ORGAN_TYPE = #{organType}, </if>
+			<if test="shortName != null">SHORT_NAME = #{shortName}, </if>
+			<if test="regionCode != null">REGION_CODE = #{regionCode}, </if>
+			<if test="regionName != null">REGION_NAME = #{regionName}, </if>
+			<if test="sortOrder != null">SORT_ORDER = #{sortOrder}, </if>
+			<if test="creator != null">CREATOR = #{creator}, </if>
+			<if test="createTime != null">CREATE_TIME = #{createTime}, </if>
+			<if test="lastEditor != null">LAST_EDITOR = #{lastEditor}, </if>
+			<if test="lastTime != null">LAST_TIME = #{lastTime}, </if>
+			<if test="remark != null">REMARK = #{remark}, </if>
+			<if test="status != null">STATUS = #{status}, </if>
+			<if test="appCode != null">APP_CODE = #{appCode}, </if>
+			<if test="childs != null">CHILDS = #{childs}, </if>
+			<if test="isBusiness != null">IS_BUSINESS = #{isBusiness}, </if>
+			<if test="organLevel != null">ORGAN_LEVEL = #{organLevel}, </if>
+			<if test="type != null">TYPE = #{type}, </if>
+			<if test="shortCode != null">SHORT_CODE = #{shortCode}, </if>
+			<if test="organPathCode != null">ORGAN_PATH_CODE = #{organPathCode}, </if>
+			<if test="updateTime != null">UPDATE_TIME = #{updateTime}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from pub_organ where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from pub_organ where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

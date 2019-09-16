@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.IUserDao;
 import com.project.dao.TestDAO;
-import com.project.po.TestPO;
+import com.project.entity.TestPO;
 import com.project.service.TestService;
 import com.project.utils.PageUtils;
 @Service

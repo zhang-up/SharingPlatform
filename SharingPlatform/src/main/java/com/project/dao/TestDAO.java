@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 
-import com.project.po.TestPO;
+import com.project.entity.TestPO;
 
 public interface TestDAO {
 	@Select("select * from student ")

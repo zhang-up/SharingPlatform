@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.PubRegionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.PubRegionEntity" id="pubRegionMap">
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="shortCode" column="SHORT_CODE"/>
+        <result property="grade" column="GRADE"/>
+        <result property="map" column="MAP"/>
+        <result property="coordX" column="COORD_X"/>
+        <result property="coordY" column="COORD_Y"/>
+        <result property="parentCode" column="PARENT_CODE"/>
+        <result property="sortOrder" column="SORT_ORDER"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="lastEditor" column="LAST_EDITOR"/>
+        <result property="lastTime" column="LAST_TIME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="status" column="STATUS"/>
+        <result property="type" column="TYPE"/>
+        <result property="childs" column="CHILDS"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.PubRegionEntity">
+		select * from pub_region where CODE = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.PubRegionEntity">
+		select * from pub_region
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.PubRegionEntity" parameterType="com.project.entity.PubRegionEntity" >
+			select * from pub_region where  1=1
+        <set>
+														                    <if test="name != null"> AND NAME = #{name}, </if>
+											                    <if test="shortCode != null"> AND SHORT_CODE = #{shortCode}, </if>
+											                    <if test="grade != null"> AND GRADE = #{grade}, </if>
+											                    <if test="map != null"> AND MAP = #{map}, </if>
+											                    <if test="coordX != null"> AND COORD_X = #{coordX}, </if>
+											                    <if test="coordY != null"> AND COORD_Y = #{coordY}, </if>
+											                    <if test="parentCode != null"> AND PARENT_CODE = #{parentCode}, </if>
+											                    <if test="sortOrder != null"> AND SORT_ORDER = #{sortOrder}, </if>
+											                    <if test="creator != null"> AND CREATOR = #{creator}, </if>
+											                    <if test="createTime != null"> AND CREATE_TIME = #{createTime}, </if>
+											                    <if test="lastEditor != null"> AND LAST_EDITOR = #{lastEditor}, </if>
+											                    <if test="lastTime != null"> AND LAST_TIME = #{lastTime}, </if>
+											                    <if test="remark != null"> AND REMARK = #{remark}, </if>
+											                    <if test="status != null"> AND STATUS = #{status}, </if>
+											                    <if test="type != null"> AND TYPE = #{type}, </if>
+											                    <if test="childs != null"> AND CHILDS = #{childs}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.PubRegionEntity">
+		SELECT * FROM
+        (
+		select * from pub_region
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by CODE desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from pub_region 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.PubRegionEntity">
+		insert into pub_region
+		(
+			CODE, 
+			NAME, 
+			SHORT_CODE, 
+			GRADE, 
+			MAP, 
+			COORD_X, 
+			COORD_Y, 
+			PARENT_CODE, 
+			SORT_ORDER, 
+			CREATOR, 
+			CREATE_TIME, 
+			LAST_EDITOR, 
+			LAST_TIME, 
+			REMARK, 
+			STATUS, 
+			TYPE, 
+			CHILDS
+		)
+		values
+		(
+			#{code}, 
+			#{name}, 
+			#{shortCode}, 
+			#{grade}, 
+			#{map}, 
+			#{coordX}, 
+			#{coordY}, 
+			#{parentCode}, 
+			#{sortOrder}, 
+			#{creator}, 
+			#{createTime}, 
+			#{lastEditor}, 
+			#{lastTime}, 
+			#{remark}, 
+			#{status}, 
+			#{type}, 
+			#{childs}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.PubRegionEntity">
+		update pub_region 
+		<set>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="shortCode != null">SHORT_CODE = #{shortCode}, </if>
+			<if test="grade != null">GRADE = #{grade}, </if>
+			<if test="map != null">MAP = #{map}, </if>
+			<if test="coordX != null">COORD_X = #{coordX}, </if>
+			<if test="coordY != null">COORD_Y = #{coordY}, </if>
+			<if test="parentCode != null">PARENT_CODE = #{parentCode}, </if>
+			<if test="sortOrder != null">SORT_ORDER = #{sortOrder}, </if>
+			<if test="creator != null">CREATOR = #{creator}, </if>
+			<if test="createTime != null">CREATE_TIME = #{createTime}, </if>
+			<if test="lastEditor != null">LAST_EDITOR = #{lastEditor}, </if>
+			<if test="lastTime != null">LAST_TIME = #{lastTime}, </if>
+			<if test="remark != null">REMARK = #{remark}, </if>
+			<if test="status != null">STATUS = #{status}, </if>
+			<if test="type != null">TYPE = #{type}, </if>
+			<if test="childs != null">CHILDS = #{childs}</if>
+		</set>
+		where CODE = #{code}
+	</update>
+	
+	<delete id="delete">
+		delete from pub_region where CODE = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from pub_region where CODE in 
+		<foreach item="code" collection="array" open="(" separator="," close=")">
+			#{code}
+		</foreach>
+	</delete>
+
+</mapper>
