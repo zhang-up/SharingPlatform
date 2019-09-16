@@ -55,9 +55,9 @@ function dockingList(){
                   {label: '操作', name: 'id',}],
         
         //viewrecords: true,
-        //height: 385,
-        rowNum: 20,
-		rowList : [20,40,60],
+        height: 560,
+        rowNum: 15,
+		rowList : [15,30,45],
         //rownumbers: true, 
         //rownumWidth: 25, 
         autowidth:true,
