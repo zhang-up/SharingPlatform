@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.PubOrganTypeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.PubOrganTypeEntity" id="pubOrganTypeMap">
+        <result property="id" column="ID"/>
+        <result property="code" column="CODE"/>
+        <result property="name" column="NAME"/>
+        <result property="parentCode" column="PARENT_CODE"/>
+        <result property="sortOrder" column="SORT_ORDER"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="lastEditor" column="LAST_EDITOR"/>
+        <result property="lastTime" column="LAST_TIME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="status" column="STATUS"/>
+        <result property="isDefault" column="IS_DEFAULT"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.PubOrganTypeEntity">
+		select * from pub_organ_type where ID = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.PubOrganTypeEntity">
+		select * from pub_organ_type
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.PubOrganTypeEntity" parameterType="com.project.entity.PubOrganTypeEntity" >
+			select * from pub_organ_type where  1=1
+        <set>
+														                    <if test="code != null"> AND CODE = #{code}, </if>
+											                    <if test="name != null"> AND NAME = #{name}, </if>
+											                    <if test="parentCode != null"> AND PARENT_CODE = #{parentCode}, </if>
+											                    <if test="sortOrder != null"> AND SORT_ORDER = #{sortOrder}, </if>
+											                    <if test="creator != null"> AND CREATOR = #{creator}, </if>
+											                    <if test="createTime != null"> AND CREATE_TIME = #{createTime}, </if>
+											                    <if test="lastEditor != null"> AND LAST_EDITOR = #{lastEditor}, </if>
+											                    <if test="lastTime != null"> AND LAST_TIME = #{lastTime}, </if>
+											                    <if test="remark != null"> AND REMARK = #{remark}, </if>
+											                    <if test="status != null"> AND STATUS = #{status}, </if>
+											                    <if test="isDefault != null"> AND IS_DEFAULT = #{isDefault}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.PubOrganTypeEntity">
+		SELECT * FROM
+        (
+		select * from pub_organ_type
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from pub_organ_type 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.PubOrganTypeEntity">
+		insert into pub_organ_type
+		(
+			ID, 
+			CODE, 
+			NAME, 
+			PARENT_CODE, 
+			SORT_ORDER, 
+			CREATOR, 
+			CREATE_TIME, 
+			LAST_EDITOR, 
+			LAST_TIME, 
+			REMARK, 
+			STATUS, 
+			IS_DEFAULT
+		)
+		values
+		(
+			#{id}, 
+			#{code}, 
+			#{name}, 
+			#{parentCode}, 
+			#{sortOrder}, 
+			#{creator}, 
+			#{createTime}, 
+			#{lastEditor}, 
+			#{lastTime}, 
+			#{remark}, 
+			#{status}, 
+			#{isDefault}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.PubOrganTypeEntity">
+		update pub_organ_type 
+		<set>
+			<if test="code != null">CODE = #{code}, </if>
+			<if test="name != null">NAME = #{name}, </if>
+			<if test="parentCode != null">PARENT_CODE = #{parentCode}, </if>
+			<if test="sortOrder != null">SORT_ORDER = #{sortOrder}, </if>
+			<if test="creator != null">CREATOR = #{creator}, </if>
+			<if test="createTime != null">CREATE_TIME = #{createTime}, </if>
+			<if test="lastEditor != null">LAST_EDITOR = #{lastEditor}, </if>
+			<if test="lastTime != null">LAST_TIME = #{lastTime}, </if>
+			<if test="remark != null">REMARK = #{remark}, </if>
+			<if test="status != null">STATUS = #{status}, </if>
+			<if test="isDefault != null">IS_DEFAULT = #{isDefault}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from pub_organ_type where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from pub_organ_type where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

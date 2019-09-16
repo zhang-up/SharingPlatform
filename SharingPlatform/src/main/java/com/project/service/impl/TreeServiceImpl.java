@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.TreeDao;
-import com.project.po.TreePo;
+import com.project.entity.TreePo;
 import com.project.service.TreeService;
 @Service
 @Transactional

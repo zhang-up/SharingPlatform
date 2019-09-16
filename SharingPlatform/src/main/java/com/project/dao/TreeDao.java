@@ -2,7 +2,7 @@ package com.project.dao;
 
 import java.util.List;
 
-import com.project.po.TreePo;
+import com.project.entity.TreePo;
 
 public interface TreeDao {
 	//根据parentCode查询所有相对应的子集

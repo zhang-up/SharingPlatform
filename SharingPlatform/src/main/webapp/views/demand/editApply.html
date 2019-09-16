@@ -1,0 +1,47 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<script type="text/javascript" src="views/demand/editApply.js?v=1"></script>
+	
+    <dl align="left">
+    	<dd id="page_tital" class="page_tital">申请</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital">
+			<font class="redStart">*</font><font style="left:40px;">信息资源提供部门</font>
+			<font class="redStart" style="left:330px;">*</font><font style="left:340px;">需求名称</font>
+		</dd>
+		<dd style="position: relative;">
+			<input id="proDepIdEdit" style="display:none;width: 40%;" readonly="readonly" placeholder="请选择部门"/>
+			<input id="proDepNameEdit" style="width: 40%;" readonly="readonly" placeholder="请选择部门"/>
+			<input id="demandName" style="position:absolute;width: 40%;left:330px;" type="text" placeholder="请输入需求名称"/>
+		</dd>
+<!-- 		<dd class="cut-offRule" ></dd> -->
+<!-- 		<dd class="tital"><font style="width: 10px;color: red;">*</font><font style="left:40px;">需求名称</font></dd> -->
+<!-- 		<dd style="position: relative;"><input id="demandName" type="text" placeholder="请输入需求名称"/></dd> -->
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font>资源匹配关键字（多个关键字请用中文逗号“，”分割，最多填写5个关键字）</font></dd>
+		<dd style="position: relative;">
+			<input id="keyWord" type="text" placeholder="适当的关键字可以更准确的匹配资源" style="width:450px;"/>
+			<a id="captchaBut" class="but" href="javascript:" onclick="getCaptcha();" style="width:80px;position: absolute;left:490px;">匹配资源</a>
+		</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font class="redStart">*</font><font style="left:40px;">需求内容（须细化到数据项）</font></dd>
+		<dd style="height: 63px;"><textarea rows="3" id="demantDetail" placeholder="请输入需求内容（须细化到数据项）"></textarea></dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital">
+			<font class="redStart">*</font><font style="left:40px;">期望提供方式</font>
+			<font class="redStart" style="left:330px;">*</font><font style="left:340px;">期望共享服务方式</font>
+		</dd>
+		<dd ><select id="accessMode" style="width: 40%;"></select><select id="serveMode" style="position:absolute;width: 40%;left:330px;"></select></dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font class="redStart">*</font><font style="left:40px;">期望更新频率</font></dd>
+		<dd ><select id="frequency" style="width: 40%;"></select></dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font class="redStart">*</font><font style="left:40px;">用途</font></dd>
+		<dd style="height: 63px;"><textarea rows="3" id="demandUse" placeholder="请输入用途"></textarea></dd>
+		<dd class="cut-offRule" id="last_cut" ></dd>
+		<dd>
+			<a class="subA" href="javascript:" onclick="creatAssParam();" style="position:absolute;width: 20%;">保存草稿</a>  
+			<a class="subA" href="javascript:" onclick="creatAssParam();" style="position:absolute;width: 20%; right:40% ">提交</a>  
+			<a class="subA" href="javascript:" onclick="creatAssParam();" style="position:absolute;width: 20%;right: 30px;">取消</a>  
+		</dd>
+	</dl>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.TParameterDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.TParameterEntity" id="tParameterMap">
+        <result property="parameterId" column="parameter_id"/>
+        <result property="parName" column="par_name"/>
+        <result property="parValue" column="par_value"/>
+        <result property="parCode" column="par_code"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.TParameterEntity">
+		select * from t_parameter where parameter_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.TParameterEntity">
+		select * from t_parameter
+	</select>
+
+    <select id="findList"  resultMap="tParameterMap" parameterType="com.project.entity.TParameterEntity" >
+			select * from t_parameter where  1=1
+            <if test="parName != null"> AND par_name = #{parName}</if>
+            <if test="parValue != null"> AND par_value = #{parValue}</if>
+            <if test="parCode != null"> AND par_code = #{parCode}</if>
+            <if test="remark != null"> AND remark = #{remark}</if>
+            order by par_value
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.TParameterEntity">
+		SELECT * FROM
+        (
+		select * from t_parameter
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by parameter_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_parameter 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.TParameterEntity">
+		insert into t_parameter
+		(
+			parameter_id, 
+			par_name, 
+			par_value, 
+			par_code, 
+			remark
+		)
+		values
+		(
+			#{parameterId}, 
+			#{parName}, 
+			#{parValue}, 
+			#{parCode}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.TParameterEntity">
+		update t_parameter 
+		<set>
+			<if test="parName != null">par_name = #{parName}, </if>
+			<if test="parValue != null">par_value = #{parValue}, </if>
+			<if test="parCode != null">par_code = #{parCode}, </if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where parameter_id = #{parameterId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_parameter where parameter_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_parameter where parameter_id in 
+		<foreach item="parameterId" collection="array" open="(" separator="," close=")">
+			#{parameterId}
+		</foreach>
+	</delete>
+
+</mapper>
