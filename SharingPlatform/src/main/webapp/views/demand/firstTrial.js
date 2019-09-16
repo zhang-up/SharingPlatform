@@ -43,20 +43,29 @@ function dockingList(){
         //altRows: true,
         //altclass:'somec',
         //autowidth: true,
-        colModel:[{label: '信息资源需求部门 ', name: 'demandId',},
-                  {label: '信息资源提供部门 ', name: 'id',},
-                  {label: '需求名称', name: 'id',},
-                  {label: '需求内容', name: 'id',},
-                  {label: '期望提供方式', name: 'id',},
-                  {label: '期望共享服务方式', name: 'id',},
-                  {label: '期望更新频率', name: 'id',},
-                  {label: '用途', name: 'id',},
-                  {label: '状态', name: 'id',},
-                  {label: '操作', name: 'id',}],
+        colModel:[{label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
+                  {label: '信息资源提供部门 ', name: 'provideDepName',align:"center",width:120,},
+                  {label: '需求名称', name: 'demandName',align:"center",width:80,},
+                  {label: '需求内容', name: 'demandDetail',align:"center",width:80,},
+                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:100,},
+                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:120,},
+                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:120,},
+                  {label: '用途', name: 'demandUse',align:"center",width:80,},
+                  {label: '状态', name: 'stateName',align:"center",width:80,},
+                  {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
+                	  var id=rowObject.id;
+                	  var state = rowObject.state;
+                	  if('01'==state){
+                		  return '<a href="javascript:void(0)" onclick="">处理</a> ';
+                	  }else{
+                		  return '<a href="javascript:void(0)" onclick="">查看</a>';
+                	  }
+                	  
+                  }}],
         
         //viewrecords: true,
         height: 560,
-        rowNum: 2,
+        rowNum: 15,
 		rowList : [15,30,45],
         //rownumbers: true, 
         //rownumWidth: 25, 

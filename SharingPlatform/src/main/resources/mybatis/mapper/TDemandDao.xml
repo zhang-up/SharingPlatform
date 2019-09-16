@@ -91,7 +91,7 @@
 	<select id="queryInfoList" resultMap="tDemandInfoMap">
 		SELECT * FROM
         (
-		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
+		SELECT distinct td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
 		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
 		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
 		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
@@ -155,6 +155,8 @@
 		    </if>
 		</if>
 	</select>
+	
+
 
 	<insert id="save" parameterType="com.project.entity.TDemandEntity">
 		insert into t_demand
