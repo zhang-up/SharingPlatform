@@ -97,8 +97,8 @@
 		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
 		td.demand_use,td.save_time,td.creater,td.remark 
 		FROM t_demand td
-		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE
-		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code
+		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
 		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
 		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
 		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
@@ -127,6 +127,10 @@
 		<!-- 申请页面对草稿状态做限制 -->
 		<if test="apply != null and apply != ''">
 	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
+	    <!-- 初审页面不查询草稿状态 -->
+		<if test="firstT != null and firstT != ''">
+	      AND td.state NOT IN ('00')
 	    </if>
 		ORDER BY td.state,td.save_time DESC) PlayStation
 		<if test="offset != null and limit != null">
