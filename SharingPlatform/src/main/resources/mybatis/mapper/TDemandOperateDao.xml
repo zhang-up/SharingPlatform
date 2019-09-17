@@ -106,10 +106,12 @@
 		delete from t_demand_operate where operate_id = #{value}
 	</delete>
 	
+
 	<delete id="deleteByDemand">
 		delete from t_demand_operate where demand_id = #{value}
 	</delete>
 	
+
 	<delete id="deleteBatch">
 		delete from t_demand_operate where operate_id in 
 		<foreach item="operateId" collection="array" open="(" separator="," close=")">

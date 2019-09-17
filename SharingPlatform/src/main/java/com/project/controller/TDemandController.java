@@ -2,7 +2,6 @@ package com.project.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandEntity;
 import com.project.exception.RRException;
+import com.project.info.DockTrialInfo;
 import com.project.info.TDemandInfo;
 import com.project.info.loginUserInfo;
 import com.project.service.TDemandService;
@@ -29,22 +29,24 @@ import com.project.utils.StringUtil;
 public class TDemandController extends  AbstractController{
 	@Autowired
 	private TDemandService tDemandService;
-	
 	/**
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params){
+	public PageUtils list(@RequestParam Map<String, Object> params){	
+		System.out.println(params);
+		params.put("firstT", "true");		
 		//查询列表数据
         Query query = new Query(params);
 
-		List<TDemandEntity> tDemandList = tDemandService.queryList(query);
+		List<TDemandInfo> tDemandList = tDemandService.dockingList(query);
 		int total = tDemandService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
 		
 		return pageUtil;
 	}
+
 	
 	@RequestMapping("/applyList")
 	public PageUtils applyList(@RequestParam Map<String, Object> params, HttpSession session){
@@ -225,6 +227,6 @@ public class TDemandController extends  AbstractController{
 		
 		
 		return R.ok();
-	}
 	
+  }
 }

@@ -81,10 +81,12 @@
 		delete from t_demand_resource where d_res_id = #{value}
 	</delete>
 	
+
 	<delete id="deleteByDemand">
 		delete from t_demand_resource where demand_id = #{value}
 	</delete>
 	
+
 	<delete id="deleteBatch">
 		delete from t_demand_resource where d_res_id in 
 		<foreach item="dResId" collection="array" open="(" separator="," close=")">

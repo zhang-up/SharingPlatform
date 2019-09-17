@@ -76,6 +76,8 @@ public class PubOrganTreeInfo {
 		return cNums>0;
 	}
 	
+
+
 	public void isParent(boolean isParent) {
 		this.isParent = isParent;
 	}

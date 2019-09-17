@@ -4,7 +4,7 @@
  * 是否为空字符串
  */
 function strIsNull(str){
-	if(str==null || trim(str).length ==0 || typeof(str)=="undefined"){
+	if(str==null || trim(str).length ==0 || str=='null' || typeof(str)=="undefined"){
 		return true;
 	}
 	return false;

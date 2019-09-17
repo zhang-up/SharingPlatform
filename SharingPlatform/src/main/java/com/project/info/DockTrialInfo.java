@@ -3,9 +3,8 @@ package com.project.info;
 import java.io.Serializable;
 
 
-public class TDemandInfo implements Serializable {
+public class DockTrialInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	
 	//需求ID
 	private String demandId;
@@ -36,16 +35,32 @@ public class TDemandInfo implements Serializable {
 	private String saveTime;
 	//创建人
 	private String creater;
-	private String createrName;
-	private String account;
-	private String mobile;
-	
 	//需求当前的状态：00草稿，01已提交，02初审通过，03初审回退，04提供单位通过，05提供单位驳回，06已完成，07已撤销，08已删除
 	private String state;
 	private String stateName;
 	//备注
 	private String remark;
+	//电话号码
+	private String MOBILE;
+
+	//申请人
+	private String operator;
 	
+	
+
+	public String getMOBILE() {
+		return MOBILE;
+	}
+	public void setMOBILE(String mOBILE) {
+		MOBILE = mOBILE;
+	}
+
+	public String getOperator() {
+		return operator;
+	}
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
 	/**
 	 * 设置：需求ID
 	 */
@@ -250,23 +265,6 @@ public class TDemandInfo implements Serializable {
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
 	}
-	public String getCreaterName() {
-		return createrName;
-	}
-	public void setCreaterName(String createrName) {
-		this.createrName = createrName;
-	}
-	public String getAccount() {
-		return account;
-	}
-	public void setAccount(String account) {
-		this.account = account;
-	}
-	public String getMobile() {
-		return mobile;
-	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+	
 	
 }

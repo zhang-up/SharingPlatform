@@ -1,0 +1,80 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<script type="text/javascript" src="views/demand/dockTrial.js?v=1"></script>
+	
+	<dl align="left" style="height: 30px;">
+		<dd id="page_tital" class="page_tital"></dd>
+	</dl>
+    <dl align="left" style="top: 30px;border-top:0px;">
+    	<dd id="groud_tital" class="groud_tital">需求申请</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital">
+			<font>信息资源需求部门</font>
+			<font style="left:330px;">信息资源提供部门</font>
+		</dd>
+		<dd style="position: relative;">
+			<input id="demandDepNameShow" readonly="readonly" style="width: 40%;"/>
+			<input id="proDepNameShow" readonly="readonly" style="position:absolute;left:330px;width: 40%;"/>
+<!-- 			<font id="demandDepNameShow">信息资源提供部门</font> -->
+<!-- 			<font id="proDepNameShow" style="left:330px;">信息资源提供部门</font> -->
+		</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital">
+			<font>需求名称</font>
+			<font style="left:330px;">资源匹配关键字</font>
+		</dd>
+		<dd style="position: relative;">
+			<input id="demandNameShow" readonly="readonly" style="width: 40%;"/>
+			<input id="keyWordShow" readonly="readonly" style="position:absolute;left:330px;width: 40%;"/>
+<!-- 			<font id="demandNameShow">需求名称</font> -->
+<!-- 			<font id="keyWordShow" style="left:330px;">资源匹配关键字</font> -->
+		</dd>
+<!-- 		<dd class="cut-offRule" ></dd> -->
+<!-- 		<dd class="tital"><font>资源匹配关键字</font></dd> -->
+<!-- 		<dd style="position: relative;"> -->
+<!-- 			<font id="keyWordShow">资源匹配关键字</font> -->
+<!-- 		</dd> -->
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font style="left:40px;">需求内容（须细化到数据项）</font></dd>
+		<dd style="height: 63px;"><textarea rows="3" id="demantDetailShow" readonly="readonly"></textarea></dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital">
+			<font style="width: 20%;">期望提供方式</font>
+			<font style="width: 20%;left:40%;">期望共享服务方式</font>
+			<font style="width: 20%;right: 30px;">期望更新频率</font>
+		</dd>
+		<dd >
+			<input id="accessModeNameShow" style="width: 20%;" readonly="readonly"/>
+			<input id="serveModeNameShow" readonly="readonly" style="position:absolute;width: 20%;left:40%;"/>
+			<input id="frequencyNameShow" readonly="readonly" style="position:absolute;width: 20%;right: 30px;"/>
+<!-- 			<font id="accessModeNameShow" style="width: 20%;">期望提供方式</font> -->
+<!-- 			<font id="serveModeNameShow" style="width: 20%;left:40%;">期望共享服务方式</font> -->
+<!-- 			<font id="frequencyNameShow" style="width: 20%;right: 30px;">期望更新频率</font> -->
+		</dd>
+<!-- 		<dd class="cut-offRule" ></dd> -->
+<!-- 		<dd class="tital"><font class="redStart">*</font><font style="left:40px;">期望更新频率</font></dd> -->
+<!-- 		<dd ><font id="frequencyNameShow">期望更新频率</font></dd> -->
+		<dd class="cut-offRule" ></dd>
+		<dd class="tital"><font>用途</font></dd>
+		<dd style="height: 63px;"><textarea rows="3" id="demandUseShow" readonly="readonly"></textarea></dd>
+		<dd class="cut-offRule" id="last_cut" ></dd>
+		<dd id="groud_tital" class="groud_tital">对接人处理</dd>
+		<dd class="cut-offRule" ></dd>
+		
+		<dd class="tital">
+			<font class="redStart">*</font><font style="left:40px;">处理结果</font>
+			<font style="left:340px;" id="backCauseTi">回退原因</font>
+		</dd>
+				<dd ><select id="dealResult" style="width: 40%;"></select>
+				<select id="backCause" style="position:absolute;width: 40%;left:330px;"></select></dd>
+		<dd class="cut-offRule" ></dd>
+
+		<dd class="tital"><font class="redStart"></font><font style="left:40px;">说明</font></dd>
+		<dd style="height: 63px;"><textarea rows="3" id="demandUse" placeholder="请输入说明"></textarea></dd>
+		<dd class="cut-offRule" id="last_cut" ></dd>
+		
+		<dd>
+			<a class="subA" href="javascript:" onclick="submit();" style="position:absolute;width: 20%; right:20% ">提交</a>  
+			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%; right:60%">取消</a>
+		</dd>
+	</dl>

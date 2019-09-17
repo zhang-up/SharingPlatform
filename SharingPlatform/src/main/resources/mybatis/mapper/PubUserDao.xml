@@ -35,7 +35,10 @@
         <result property="userType" column="USER_TYPE"/>
     </resultMap>
 
-	<select id="queryObject" resultMap="pubUserMap">
+
+
+
+	<select id="queryObject" resultType="com.project.entity.PubUserEntity">
 		select * from pub_user where ID = #{value}
 	</select>
 

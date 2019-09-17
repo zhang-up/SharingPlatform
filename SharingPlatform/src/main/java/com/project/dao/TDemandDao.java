@@ -17,4 +17,7 @@ public interface TDemandDao extends BaseDao<TDemandEntity> {
     List<TDemandInfo> queryInfoList(Map<String, Object> map);
     
     TDemandInfo queryDetailObject(Object id);
+
+
+
 }

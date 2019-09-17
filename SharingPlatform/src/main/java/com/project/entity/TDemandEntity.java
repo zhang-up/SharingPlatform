@@ -35,6 +35,7 @@ public class TDemandEntity implements Serializable {
 	//备注
 	private String remark;
 
+
 	public void updateValue(TDemandEntity bs) {
     	this.setDemandId(bs.getDemandId());
     	this.setDemandDep(bs.getDemandDep());
@@ -52,6 +53,8 @@ public class TDemandEntity implements Serializable {
     	this.setRemark(bs.getRemark());
     }
 	
+
+
 	/**
 	 * 设置：需求ID
 	 */

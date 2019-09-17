@@ -23,8 +23,7 @@ public class MenuController extends  AbstractController{
 	 */
 	@RequestMapping("/menus")
 	public List<SysMenusInfo> creatMenus(@RequestParam Map<String, Object> params){
-		
-		List<SysMenusInfo> smiList = new ArrayList<SysMenusInfo>();
+	List<SysMenusInfo> smiList = new ArrayList<SysMenusInfo>();
 		
 		smiList.add(new SysMenusInfo("需求申请", "views/demand/apply.html"));
 		smiList.add(new SysMenusInfo("需求初审", "views/demand/firstTrial.html"));

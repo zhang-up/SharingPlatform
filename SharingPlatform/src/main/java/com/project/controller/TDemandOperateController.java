@@ -19,6 +19,7 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/tdemandoperate")
+
 public class TDemandOperateController extends  AbstractController{
 	@Autowired
 	private TDemandOperateService tDemandOperateService;

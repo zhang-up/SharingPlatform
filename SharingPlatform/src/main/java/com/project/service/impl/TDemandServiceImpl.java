@@ -12,6 +12,7 @@ import com.project.dao.TDemandResourceDao;
 import com.project.entity.TDemandEntity;
 import com.project.entity.TDemandOperateEntity;
 import com.project.exception.RRException;
+import com.project.info.DockTrialInfo;
 import com.project.info.TDemandInfo;
 import com.project.service.TDemandService;
 import com.project.utils.DateUtil;
@@ -124,6 +125,12 @@ public class TDemandServiceImpl implements TDemandService {
 	@Override
 	public void deleteBatch(String[] demandIds){
 		tDemandDao.deleteBatch(demandIds);
+	}
+
+	@Override
+	public List<TDemandInfo> dockingList(Map<String, Object> map) {
+		return tDemandDao.queryInfoList(map);
+
 	}
 	
 }
