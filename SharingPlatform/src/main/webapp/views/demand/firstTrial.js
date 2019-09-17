@@ -92,10 +92,8 @@ function dockingList(){
 }
 
 function deal(id){
-	var id=id;
-	popup('views/demand/dockTrial.html');
-	
-	
+	var demandid=id;
+	popup('views/demand/dockTrial.html');	
 }
 
 function searchTrial(){
