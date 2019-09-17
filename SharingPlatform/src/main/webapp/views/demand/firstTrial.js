@@ -92,6 +92,7 @@ function dockingList(){
 }
 
 function searchTrial(){
+	
 
 	$gridTable.jqGrid('setGridParam', {
         postData: applyCondition(), 
@@ -104,8 +105,8 @@ function searchTrial(){
 function applyCondition(){
 	
 	var queryJson={
-			needDepId : $("#ft_needDepId").val(),
-			proDepId : $("#ft_proDepId").val(),
+			demandDep : $("#ft_needDepId").val(),
+			provideDep : $("#ft_proDepId").val(),
 			state : $("#ft_state").val(),
 			timeType : $("#ft_timeType").val(),
 			stratDate : $("#ft_stratDate").val(),
