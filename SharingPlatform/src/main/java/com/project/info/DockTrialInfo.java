@@ -42,8 +42,7 @@ public class DockTrialInfo implements Serializable {
 	private String remark;
 	//电话号码
 	private String MOBILE;
-	//申请时间
-	private String operate_time;
+
 	//申请人
 	private String operator;
 	
@@ -55,12 +54,7 @@ public class DockTrialInfo implements Serializable {
 	public void setMOBILE(String mOBILE) {
 		MOBILE = mOBILE;
 	}
-	public String getOperate_time() {
-		return operate_time;
-	}
-	public void setOperate_time(String operate_time) {
-		this.operate_time = operate_time;
-	}
+
 	public String getOperator() {
 		return operator;
 	}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.DockTrialDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.info.DockTrialInfo" id="dockTrialInfoMap">
+        <result property="demandId" column="demand_id"/>
+        <result property="demandDep" column="demand_dep"/>
+        <result property="demandDepName" column="demand_dep_name"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="demandName" column="demand_name"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="demandDetail" column="demand_detail"/>
+        <result property="accessMode" column="access_mode"/>
+        <result property="accessModeName" column="access_mode_name"/>
+        <result property="serveMode" column="serve_mode"/>
+        <result property="serveModeName" column="serve_mode_name"/>
+        <result property="frequency" column="frequency"/>
+        <result property="frequencyName" column="frequency_name"/>
+        <result property="demandUse" column="demand_use"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+        <result property="state" column="state"/>
+        <result property="stateName" column="state_name"/>
+        <result property="remark" column="remark"/>
+        <result property="MOBILE" column="demand_phone"/>
+        <result property="operator" column="demand_creater_name"/>
+     
+    </resultMap>
+    
+  	<select id="trialInfoList" resultMap="dockTrialInfoMap">
+		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
+		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
+		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
+		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
+		td.demand_use,td.save_time,td.creater,td.remark ,u.name AS demand_creater_name,u.MOBILE AS demand_phone
+		FROM t_demand td
+  		LEFT JOIN pub_user u ON td.creater=u.ID
+		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
+		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
+		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
+		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
+		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
+		where td.state='01'
+		<if test="demandDep != null and demandDep != ''">
+		   AND td.demand_id=#{demandDep}
+	    </if>
+	</select>
+	
+
+</mapper>
