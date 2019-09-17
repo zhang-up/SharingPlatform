@@ -6,13 +6,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.dao.DockTrialDao;
 import com.project.info.DockTrialInfo;
 import com.project.service.DockTrialService;
 import com.project.utils.DateUtil;
+import com.project.utils.UUIDUtil;
 
 @Service
+@Transactional
 public class DockTrialServiceImpl implements DockTrialService{
 	@Autowired
 	private DockTrialDao dockTrialDao;
@@ -29,19 +32,28 @@ public class DockTrialServiceImpl implements DockTrialService{
 		String dealResult = params.get("dealResult") == null ? "" : params.get("dealResult").toString();//处理结果
 		String backCause=params.get("backCause")==null ? "" : params.get("backCause").toString();//退回原因
 		String demandid=params.get("demandid").toString();//ID
-		Date date = new Date();
-		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-		String time=dateFormat.format(date);//时间
+//		Date date = new Date();
+		String demandOperateId = UUIDUtil.getUUID32();
+//		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//		String time=dateFormat.format(date);//时间
+		String time=DateUtil.getDate();//时间
 		params.clear();params.put("token", token);params.put("demandUse", demandUse);
 		params.put("dealResult", dealResult);params.put("backCause", backCause);
 		params.put("backCause", backCause);params.put("demandid", demandid);
-		params.put("time", time);params.put("backCause", backCause);
+		params.put("time", time);params.put("backCause", backCause);params.put("demandOperateId", demandOperateId);
 		if(dealResult.equals("1")){//对接人同意
-			dockTrialDao.changTrial(params);//改状态			
+			params.put("state", "02");
+			params.put("res", "1");
+			params.put("cause", "0");
+			dockTrialDao.changTrial(params);//改状态	
+			dockTrialDao.insertAgreeTrial(params);//插入新数据
 			return ;
 		}else{//对接人不同意
-			System.out.println(2);
+			params.put("state", "03");
+			params.put("res", "2");
+			params.put("cause", backCause);
+			dockTrialDao.changTrial(params);//改状态	
+			dockTrialDao.insertAgreeTrial(params);//插入新数据
 		}
-	}
-	
+	}	
 }

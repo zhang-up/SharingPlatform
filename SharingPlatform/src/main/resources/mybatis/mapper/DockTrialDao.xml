@@ -26,8 +26,7 @@
         <result property="stateName" column="state_name"/>
         <result property="remark" column="remark"/>
         <result property="MOBILE" column="demand_phone"/>
-        <result property="operator" column="demand_creater_name"/>
-     
+        <result property="operator" column="demand_creater_name"/>   
     </resultMap>
     
   	<select id="trialInfoList" resultMap="dockTrialInfoMap">
@@ -49,24 +48,14 @@
 		   AND td.demand_id=#{demandDep}
 	    </if>
 	</select>
-	  	<select id="changTrial" resultMap="dockTrialInfoMap">
-		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
-		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
-		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
-		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
-		td.demand_use,td.save_time,td.creater,td.remark ,u.name AS demand_creater_name,u.MOBILE AS demand_phone
-		FROM t_demand td
-  		LEFT JOIN pub_user u ON td.creater=u.ID
-		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
-		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
-		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
-		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
-		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
-		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
-		where td.state='01'
-		<if test="demandDep != null and demandDep != ''">
-		   AND td.demand_id=#{demandDep}
-	    </if>
+	<select id="changTrial" >
+	    UPDATE t_demand SET save_time=#{time},state=#{state} where t_demand.demand_id=#{demandid}
+	</select>
+	
+	<select id="insertAgreeTrial" >
+		INSERT INTO t_demand_operate (operate_id,demand_id,operator,operate_time,state,
+operate_res,cause,remark  )VALUES(#{demandOperateId},#{demandid},#{token},
+		#{time},#{state},#{res},#{cause},#{demandUse})
 	</select>
 	
 

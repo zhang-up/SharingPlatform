@@ -7,4 +7,5 @@ import com.project.info.DockTrialInfo;
 public interface DockTrialService {
 	DockTrialInfo trialInfoList(Map<String, Object> map);
 	void dealTrial(Map<String, Object> map);
+	
 }

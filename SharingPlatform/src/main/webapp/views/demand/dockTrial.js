@@ -38,7 +38,7 @@ function findList(){
 			$('#accessModeNameShow').val(result.accessModeName);
 			$('#serveModeNameShow').val(result.serveModeName);
 			$('#frequencyNameShow').val(result.frequencyName);
-			$('#demandUseShow').val(result.demandUse);
+			$('#demandUseShow').val(result.creater);
 		},
 	});
 }

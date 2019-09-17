@@ -9,5 +9,7 @@ public interface DockTrialDao {
 	DockTrialInfo trialInfoList(Map<String, Object> map);
 
 	void changTrial(Map<String, Object> params);
+	
+	void insertAgreeTrial(Map<String, Object> params);
 
 }

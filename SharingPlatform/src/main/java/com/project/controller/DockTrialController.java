@@ -28,6 +28,16 @@ public class DockTrialController extends  AbstractController{
 		return dockTrialService.trialInfoList(map);
 	}
 	/**
+	 * 提供方确认需求的查询
+	 */
+	@RequestMapping("/findTrial")
+	public DockTrialInfo findTrial(@RequestParam Map<String, Object> map, HttpSession session) {
+		String token = map.get("token") == null ? "" : map.get("token").toString();
+		if(StringUtil.isNull(token)){			
+		}
+		return dockTrialService.trialInfoList(map);
+	}
+	/**
 	 * 编辑
 	 */
 	@RequestMapping("/edit")

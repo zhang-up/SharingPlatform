@@ -30,11 +30,26 @@ public class TDemandController extends  AbstractController{
 	@Autowired
 	private TDemandService tDemandService;
 	/**
-	 * 列表
+	 *对接人列表
 	 */
 	@RequestMapping("/list")
 	public PageUtils list(@RequestParam Map<String, Object> params){	
-		System.out.println(params);
+		params.put("firstT", "true");		
+		//查询列表数据
+        Query query = new Query(params);
+
+		List<TDemandInfo> tDemandList = tDemandService.dockingList(query);
+		int total = tDemandService.queryTotal(query);
+		
+		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
+		
+		return pageUtil;
+	}
+	/**
+	 * 提供方列表
+	 */
+	@RequestMapping("/providelist")
+	public PageUtils list2(@RequestParam Map<String, Object> params){	
 		params.put("firstT", "true");		
 		//查询列表数据
         Query query = new Query(params);
