@@ -6,15 +6,18 @@ $(function() {
 	
 	addselect("T_DEMAND_OPERATE","OPERATE_RES_1","dealResult","",true,);
 	addselect("T_DEMAND_OPERATE","CAUSE_1","backCause","",true,"");
-	
+	findList();
 	
 	
 });	
 function findList(){
 	$.ajax({
-		url:'./tdemand/infoD/'+showDemandId,
-		type:'post',
+		url:'../dock/info/'+demandid,
 		dataType:'json',
+		type:'post',
+		success:function(){
+			alert(12)
+		}
 	})
 }
 function detailApply(){
