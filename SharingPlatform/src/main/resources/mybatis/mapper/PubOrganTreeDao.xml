@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.PubOrganTreeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.PubOrganTreeEntity" id="pubOrganTreeMap">
+        <result property="id" column="ID"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="parentCode" column="PARENT_CODE"/>
+        <result property="viewCode" column="VIEW_CODE"/>
+        <result property="isLeaf" column="IS_LEAF"/>
+        <result property="sortOrder" column="SORT_ORDER"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="status" column="STATUS"/>
+        <result property="pathParentCode" column="PATH_PARENT_CODE"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.PubOrganTreeEntity">
+		select * from pub_organ_tree where ID = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.PubOrganTreeEntity">
+		select * from pub_organ_tree
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.PubOrganTreeEntity" parameterType="com.project.entity.PubOrganTreeEntity" >
+			select * from pub_organ_tree where  1=1
+        <set>
+														                    <if test="orgCode != null"> AND ORG_CODE = #{orgCode}, </if>
+											                    <if test="parentCode != null"> AND PARENT_CODE = #{parentCode}, </if>
+											                    <if test="viewCode != null"> AND VIEW_CODE = #{viewCode}, </if>
+											                    <if test="isLeaf != null"> AND IS_LEAF = #{isLeaf}, </if>
+											                    <if test="sortOrder != null"> AND SORT_ORDER = #{sortOrder}, </if>
+											                    <if test="creator != null"> AND CREATOR = #{creator}, </if>
+											                    <if test="createTime != null"> AND CREATE_TIME = #{createTime}, </if>
+											                    <if test="remark != null"> AND REMARK = #{remark}, </if>
+											                    <if test="status != null"> AND STATUS = #{status}, </if>
+											                    <if test="pathParentCode != null"> AND PATH_PARENT_CODE = #{pathParentCode}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.PubOrganTreeEntity">
+		SELECT * FROM
+        (
+		select * from pub_organ_tree
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from pub_organ_tree 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.PubOrganTreeEntity">
+		insert into pub_organ_tree
+		(
+			ID, 
+			ORG_CODE, 
+			PARENT_CODE, 
+			VIEW_CODE, 
+			IS_LEAF, 
+			SORT_ORDER, 
+			CREATOR, 
+			CREATE_TIME, 
+			REMARK, 
+			STATUS, 
+			PATH_PARENT_CODE
+		)
+		values
+		(
+			#{id}, 
+			#{orgCode}, 
+			#{parentCode}, 
+			#{viewCode}, 
+			#{isLeaf}, 
+			#{sortOrder}, 
+			#{creator}, 
+			#{createTime}, 
+			#{remark}, 
+			#{status}, 
+			#{pathParentCode}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.PubOrganTreeEntity">
+		update pub_organ_tree 
+		<set>
+			<if test="orgCode != null">ORG_CODE = #{orgCode}, </if>
+			<if test="parentCode != null">PARENT_CODE = #{parentCode}, </if>
+			<if test="viewCode != null">VIEW_CODE = #{viewCode}, </if>
+			<if test="isLeaf != null">IS_LEAF = #{isLeaf}, </if>
+			<if test="sortOrder != null">SORT_ORDER = #{sortOrder}, </if>
+			<if test="creator != null">CREATOR = #{creator}, </if>
+			<if test="createTime != null">CREATE_TIME = #{createTime}, </if>
+			<if test="remark != null">REMARK = #{remark}, </if>
+			<if test="status != null">STATUS = #{status}, </if>
+			<if test="pathParentCode != null">PATH_PARENT_CODE = #{pathParentCode}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from pub_organ_tree where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from pub_organ_tree where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

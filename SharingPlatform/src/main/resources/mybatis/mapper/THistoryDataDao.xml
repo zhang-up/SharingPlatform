@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.THistoryDataDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.THistoryDataEntity" id="tHistoryDataMap">
+        <result property="historyId" column="history_id"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="hisName" column="his_name"/>
+        <result property="hisDetail" column="his_detail"/>
+        <result property="period" column="period"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+        <result property="state" column="state"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.THistoryDataEntity">
+		select * from t_history_data where history_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.THistoryDataEntity">
+		select * from t_history_data
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.THistoryDataEntity" parameterType="com.project.entity.THistoryDataEntity" >
+			select * from t_history_data where  1=1
+        <set>
+														                    <if test="provideDep != null"> AND provide_dep = #{provideDep}, </if>
+											                    <if test="hisName != null"> AND his_name = #{hisName}, </if>
+											                    <if test="hisDetail != null"> AND his_detail = #{hisDetail}, </if>
+											                    <if test="period != null"> AND period = #{period}, </if>
+											                    <if test="saveTime != null"> AND save_time = #{saveTime}, </if>
+											                    <if test="creater != null"> AND creater = #{creater}, </if>
+											                    <if test="state != null"> AND state = #{state}, </if>
+											                    <if test="remark != null"> AND remark = #{remark}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.THistoryDataEntity">
+		SELECT * FROM
+        (
+		select * from t_history_data
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by history_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_history_data 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.THistoryDataEntity">
+		insert into t_history_data
+		(
+			history_id, 
+			provide_dep, 
+			his_name, 
+			his_detail, 
+			period, 
+			save_time, 
+			creater, 
+			state, 
+			remark
+		)
+		values
+		(
+			#{historyId}, 
+			#{provideDep}, 
+			#{hisName}, 
+			#{hisDetail}, 
+			#{period}, 
+			#{saveTime}, 
+			#{creater}, 
+			#{state}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.THistoryDataEntity">
+		update t_history_data 
+		<set>
+			<if test="provideDep != null">provide_dep = #{provideDep}, </if>
+			<if test="hisName != null">his_name = #{hisName}, </if>
+			<if test="hisDetail != null">his_detail = #{hisDetail}, </if>
+			<if test="period != null">period = #{period}, </if>
+			<if test="saveTime != null">save_time = #{saveTime}, </if>
+			<if test="creater != null">creater = #{creater}, </if>
+			<if test="state != null">state = #{state}, </if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where history_id = #{historyId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_history_data where history_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_history_data where history_id in 
+		<foreach item="historyId" collection="array" open="(" separator="," close=")">
+			#{historyId}
+		</foreach>
+	</delete>
+
+</mapper>

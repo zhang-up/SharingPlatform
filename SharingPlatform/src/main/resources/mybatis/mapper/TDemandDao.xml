@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.TDemandDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.TDemandEntity" id="tDemandMap">
+        <result property="demandId" column="demand_id"/>
+        <result property="demandDep" column="demand_dep"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="demandName" column="demand_name"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="demandDetail" column="demand_detail"/>
+        <result property="accessMode" column="access_mode"/>
+        <result property="serveMode" column="serve_mode"/>
+        <result property="frequency" column="frequency"/>
+        <result property="demandUse" column="demand_use"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+        <result property="state" column="state"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <resultMap type="com.project.info.TDemandInfo" id="tDemandInfoMap">
+        <result property="demandId" column="demand_id"/>
+        <result property="demandDep" column="demand_dep"/>
+        <result property="demandDepName" column="demand_dep_name"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="demandName" column="demand_name"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="demandDetail" column="demand_detail"/>
+        <result property="accessMode" column="access_mode"/>
+        <result property="accessModeName" column="access_mode_name"/>
+        <result property="serveMode" column="serve_mode"/>
+        <result property="serveModeName" column="serve_mode_name"/>
+        <result property="frequency" column="frequency"/>
+        <result property="frequencyName" column="frequency_name"/>
+        <result property="demandUse" column="demand_use"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+        <result property="createrName" column="creater_Name"/>
+        <result property="account" column="account"/>
+        <result property="mobile" column="mobile"/>
+        <result property="state" column="state"/>
+        <result property="stateName" column="state_name"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<select id="queryObject"  resultMap="tDemandMap">
+		select * from t_demand where demand_id = #{value}
+	</select>
+	
+	<select id="queryDetailObject"  resultMap="tDemandInfoMap">
+		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
+		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
+		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
+		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
+		td.demand_use,td.save_time,td.creater, pu.name as creater_name,pu.account,pu.mobile,td.remark 
+		FROM t_demand td
+		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
+		LEFT JOIN pub_user pu ON td.creater = pu.id
+		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
+		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
+		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
+		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
+		WHERE td.demand_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.TDemandEntity">
+		select * from t_demand
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.TDemandEntity" parameterType="com.project.entity.TDemandEntity" >
+			select * from t_demand where  1=1
+        <set>
+														                    <if test="demandDep != null"> AND demand_dep = #{demandDep}, </if>
+											                    <if test="provideDep != null"> AND provide_dep = #{provideDep}, </if>
+											                    <if test="demandName != null"> AND demand_name = #{demandName}, </if>
+											                    <if test="keyWord != null"> AND key_word = #{keyWord}, </if>
+											                    <if test="demandDetail != null"> AND demand_detail = #{demandDetail}, </if>
+											                    <if test="accessMode != null"> AND access_mode = #{accessMode}, </if>
+											                    <if test="serveMode != null"> AND serve_mode = #{serveMode}, </if>
+											                    <if test="frequency != null"> AND frequency = #{frequency}, </if>
+											                    <if test="demandUse != null"> AND demand_use = #{demandUse}, </if>
+											                    <if test="saveTime != null"> AND save_time = #{saveTime}, </if>
+											                    <if test="creater != null"> AND creater = #{creater}, </if>
+											                    <if test="state != null"> AND state = #{state}, </if>
+											                    <if test="remark != null"> AND remark = #{remark}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultMap="tDemandInfoMap">
+		SELECT * FROM
+        (
+		select * from t_demand
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by demand_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	
+	<select id="queryInfoList" resultMap="tDemandInfoMap">
+		SELECT * FROM
+        (
+		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
+		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
+		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
+		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
+		td.demand_use,td.save_time,td.creater,td.remark 
+		FROM t_demand td
+		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
+		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
+		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
+		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
+		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
+		<if test="timeType != null and timeType != ''">
+	      LEFT JOIN (SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
+	    </if>
+		WHERE 1=1
+		<if test="demandDep != null and demandDep != ''">
+	      AND td.demand_dep = #{demandDep}
+	    </if>
+	    <if test="provideDep != null and provideDep != ''">
+	      AND td.provide_dep = #{provideDep}
+	    </if>
+	    <if test="state != null and state != ''">
+	      AND td.state = #{state}
+	    </if>
+	    <if test="timeType != null and timeType != ''">
+		    <if test="stratDate != null and stratDate != ''">
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+		</if>
+		<!-- 申请页面对草稿状态做限制 -->
+		<if test="apply != null and apply != ''">
+	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
+	    <!-- 初审页面不查询草稿状态 -->
+		<if test="firstT != null and firstT != ''">
+	      AND td.state NOT IN ('00')
+	    </if>
+		ORDER BY td.state,td.save_time DESC) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		SELECT count(td.demand_id)
+		FROM t_demand td
+		<if test="timeType != null and timeType != ''">
+	      LEFT JOIN (SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
+	    </if>
+		WHERE 1=1
+		<if test="demandDep != null and demandDep != ''">
+	      AND td.demand_dep = #{demandDep}
+	    </if>
+	    <if test="provideDep != null and provideDep != ''">
+	      AND td.provide_dep = #{provideDep}
+	    </if>
+	    <if test="state != null and state != ''">
+	      AND td.state = #{state}
+	    </if>
+	    <if test="timeType != null and timeType != ''">
+		    <if test="stratDate != null and stratDate != ''">
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+		</if>
+		<!-- 申请页面对草稿状态做限制 -->
+		<if test="apply != null and apply != ''">
+	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
+	</select>
+
+	<insert id="save" parameterType="com.project.entity.TDemandEntity">
+		insert into t_demand
+		(
+			demand_id, 
+			demand_dep, 
+			provide_dep, 
+			demand_name, 
+			key_word, 
+			demand_detail, 
+			access_mode, 
+			serve_mode, 
+			frequency, 
+			demand_use, 
+			save_time, 
+			creater, 
+			state, 
+			remark
+		)
+		values
+		(
+			#{demandId}, 
+			#{demandDep}, 
+			#{provideDep}, 
+			#{demandName}, 
+			#{keyWord}, 
+			#{demandDetail}, 
+			#{accessMode}, 
+			#{serveMode}, 
+			#{frequency}, 
+			#{demandUse}, 
+			#{saveTime}, 
+			#{creater}, 
+			#{state}, 
+			#{remark}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.TDemandEntity">
+		update t_demand 
+		<set>
+			<if test="demandDep != null">demand_dep = #{demandDep}, </if>
+			<if test="provideDep != null">provide_dep = #{provideDep}, </if>
+			<if test="demandName != null">demand_name = #{demandName}, </if>
+			<if test="keyWord != null">key_word = #{keyWord}, </if>
+			<if test="demandDetail != null">demand_detail = #{demandDetail}, </if>
+			<if test="accessMode != null">access_mode = #{accessMode}, </if>
+			<if test="serveMode != null">serve_mode = #{serveMode}, </if>
+			<if test="frequency != null">frequency = #{frequency}, </if>
+			<if test="demandUse != null">demand_use = #{demandUse}, </if>
+			<if test="saveTime != null">save_time = #{saveTime}, </if>
+			<if test="creater != null">creater = #{creater}, </if>
+			<if test="state != null">state = #{state}, </if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where demand_id = #{demandId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_demand where demand_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_demand where demand_id in 
+		<foreach item="demandId" collection="array" open="(" separator="," close=")">
+			#{demandId}
+		</foreach>
+	</delete>
+
+</mapper>

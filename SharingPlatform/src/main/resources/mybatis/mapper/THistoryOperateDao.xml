@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.THistoryOperateDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.THistoryOperateEntity" id="tHistoryOperateMap">
+        <result property="operateId" column="operate_id"/>
+        <result property="historyId" column="history_id"/>
+        <result property="operator" column="operator"/>
+        <result property="operateTime" column="operate_time"/>
+        <result property="state" column="state"/>
+        <result property="remark" column="remark"/>
+        <result property="fileAdd" column="file_add"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.THistoryOperateEntity">
+		select * from t_history_operate where operate_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.THistoryOperateEntity">
+		select * from t_history_operate
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.THistoryOperateEntity" parameterType="com.project.entity.THistoryOperateEntity" >
+			select * from t_history_operate where  1=1
+        <set>
+														                    <if test="historyId != null"> AND history_id = #{historyId}, </if>
+											                    <if test="operator != null"> AND operator = #{operator}, </if>
+											                    <if test="operateTime != null"> AND operate_time = #{operateTime}, </if>
+											                    <if test="state != null"> AND state = #{state}, </if>
+											                    <if test="remark != null"> AND remark = #{remark}, </if>
+											                    <if test="fileAdd != null"> AND file_add = #{fileAdd}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.THistoryOperateEntity">
+		SELECT * FROM
+        (
+		select * from t_history_operate
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by operate_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_history_operate 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.THistoryOperateEntity">
+		insert into t_history_operate
+		(
+			operate_id, 
+			history_id, 
+			operator, 
+			operate_time, 
+			state, 
+			remark, 
+			file_add
+		)
+		values
+		(
+			#{operateId}, 
+			#{historyId}, 
+			#{operator}, 
+			#{operateTime}, 
+			#{state}, 
+			#{remark}, 
+			#{fileAdd}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.THistoryOperateEntity">
+		update t_history_operate 
+		<set>
+			<if test="historyId != null">history_id = #{historyId}, </if>
+			<if test="operator != null">operator = #{operator}, </if>
+			<if test="operateTime != null">operate_time = #{operateTime}, </if>
+			<if test="state != null">state = #{state}, </if>
+			<if test="remark != null">remark = #{remark}, </if>
+			<if test="fileAdd != null">file_add = #{fileAdd}</if>
+		</set>
+		where operate_id = #{operateId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_history_operate where operate_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_history_operate where operate_id in 
+		<foreach item="operateId" collection="array" open="(" separator="," close=")">
+			#{operateId}
+		</foreach>
+	</delete>
+
+</mapper>
