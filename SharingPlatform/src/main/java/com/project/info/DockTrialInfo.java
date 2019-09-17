@@ -3,9 +3,9 @@ package com.project.info;
 import java.io.Serializable;
 
 
-public class TDemandInfo implements Serializable {
+public class DockTrialInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	//需求ID
 	private String demandId;
 	//需求单位
@@ -40,7 +40,33 @@ public class TDemandInfo implements Serializable {
 	private String stateName;
 	//备注
 	private String remark;
+	//电话号码
+	private String MOBILE;
+	//申请时间
+	private String operate_time;
+	//申请人
+	private String operator;
 	
+	
+
+	public String getMOBILE() {
+		return MOBILE;
+	}
+	public void setMOBILE(String mOBILE) {
+		MOBILE = mOBILE;
+	}
+	public String getOperate_time() {
+		return operate_time;
+	}
+	public void setOperate_time(String operate_time) {
+		this.operate_time = operate_time;
+	}
+	public String getOperator() {
+		return operator;
+	}
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
 	/**
 	 * 设置：需求ID
 	 */

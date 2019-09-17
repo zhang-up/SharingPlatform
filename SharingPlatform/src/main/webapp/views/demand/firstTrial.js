@@ -53,10 +53,10 @@ function dockingList(){
                   {label: '用途', name: 'demandUse',align:"center",width:80,},
                   {label: '状态', name: 'stateName',align:"center",width:80,},
                   {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
-                	  var id=rowObject.id;
+                	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
                 	  if('01'==state){
-                		  return '<a href="javascript:void(0)" onclick="deal('"+id+"','"+rowNums+"')">处理</a> ';
+                		  return '<a href="javascript:void(0)" onclick=deal('+id+')>处理</a> ';
                 	  }else{
                 		  return '<a href="javascript:void(0)" onclick="">查看</a>';
                 	  }
@@ -91,6 +91,13 @@ function dockingList(){
 	
 }
 
+function deal(id){
+	var id=id;
+	popup('views/demand/dockTrial.html');
+	
+	
+}
+
 function searchTrial(){
 	
 
@@ -114,9 +121,9 @@ function applyCondition(){
 	}
 	return queryJson;
 }
-var mergeDemandId = 'add';
+var showDemandId = '';
 function editApplyPage(id){
-	mergeDemandId = id;
+	showDemandId = id;
 	popup('views/demand/dockTrial.html');
 }
 

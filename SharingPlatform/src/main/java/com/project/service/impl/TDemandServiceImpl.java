@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.dao.TDemandDao;
 import com.project.entity.TDemandEntity;
-import com.project.info.TDemandInfo;
+import com.project.info.DockTrialInfo;
 import com.project.service.TDemandService;
 
 
@@ -64,7 +64,7 @@ public class TDemandServiceImpl implements TDemandService {
 	}
 
 	@Override
-	public List<TDemandInfo> dockingList(Map<String, Object> map) {
+	public List<DockTrialInfo> dockingList(Map<String, Object> map) {
 		return tDemandDao.queryInfoList(map);
 	}
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.entity.TDemandEntity;
-import com.project.info.TDemandInfo;
+import com.project.info.DockTrialInfo;
 
 @Mapper
 public interface TDemandDao extends BaseDao<TDemandEntity> {
@@ -14,7 +14,7 @@ public interface TDemandDao extends BaseDao<TDemandEntity> {
 
     List<TDemandEntity> findList(TDemandEntity tDemand);
     
-    List<TDemandInfo> queryInfoList(Map<String, Object> map);
+    List<DockTrialInfo> queryInfoList(Map<String, Object> map);
 
 
 }
