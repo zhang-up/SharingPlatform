@@ -88,6 +88,7 @@
 		</if>
 	</select>
 	
+	
 	<select id="queryInfoList" resultMap="tDemandInfoMap">
 		SELECT * FROM
         (
@@ -137,11 +138,18 @@
 			limit #{offset},#{limit}
 		</if>
 	</select>
+	
+	
+	
+	
+	
+	
+	
  	<select id="queryTotal" resultType="int">
 		SELECT count(td.demand_id)
 		FROM t_demand td
 		<if test="timeType != null and timeType != ''">
-	      LEFT JOIN　(SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
+	      LEFT JOIN (SELECT demand_id,MAX(operate_time) AS operate_time FROM t_demand_operate WHERE state = #{timeType} GROUP BY demand_id) ope ON td.demand_id = ope.demand_id
 	    </if>
 		WHERE 1=1
 		<if test="demandDep != null and demandDep != ''">

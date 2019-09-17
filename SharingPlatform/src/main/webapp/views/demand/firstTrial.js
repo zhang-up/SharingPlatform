@@ -114,6 +114,10 @@ function applyCondition(){
 	}
 	return queryJson;
 }
-
+var mergeDemandId = 'add';
+function editApplyPage(id){
+	mergeDemandId = id;
+	popup('views/demand/dockTrial.html');
+}
 
 
