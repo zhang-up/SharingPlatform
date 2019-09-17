@@ -90,9 +90,9 @@ function dockingList(){
     });
 	
 }
-
+var demandid='';
 function deal(id){
-	var demandid=id;
+	 demandid=id;
 	popup('views/demand/dockTrial.html');	
 }
 

@@ -6,16 +6,14 @@ $(function() {
 	
 	addselect("T_DEMAND_OPERATE","OPERATE_RES_1","dealResult","",true,);
 	addselect("T_DEMAND_OPERATE","CAUSE_1","backCause","",true,"");
-	findList();
-	
-	
+	findList();	
 });	
 function findList(){
 	$.ajax({
 		url:'../dock/info/'+demandid,
 		dataType:'json',
 		type:'post',
-		success:function(){
+		success:function(result){
 			alert(12)
 		}
 	})
