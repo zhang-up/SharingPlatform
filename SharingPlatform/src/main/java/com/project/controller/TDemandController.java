@@ -28,8 +28,8 @@ public class TDemandController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params){
-		System.out.println(params);
+	public PageUtils list(@RequestParam Map<String, Object> params){	
+		params.put("firstT", "true");		
 		//查询列表数据
         Query query = new Query(params);
 

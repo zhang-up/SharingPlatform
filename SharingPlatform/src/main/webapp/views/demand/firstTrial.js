@@ -91,7 +91,7 @@ function dockingList(){
 	
 }
 
-function searchApply(){
+function searchTrial(){
 
 	$gridTable.jqGrid('setGridParam', {
         postData: applyCondition(), 
