@@ -4,21 +4,31 @@
 
 $(function() {
 	
-	$("#proDepNameEdit").click(function(){
-		bindingDepTree("proDepIdEdit","proDepNameEdit");
-	});
-	
-	addselect("T_DEMAND","ACCESS_MODE","accessMode","",false,"");
-	addselect("T_DEMAND","SERVE_MODE","serveMode","",false,"");
-	addselect("T_DEMAND","FREQUENCY","frequency","",false,"");
-	
-	if('add'==mergeDemandId){
-		$('#page_tital').html('添加申请');
-	}else{
-		$('#page_tital').html('修改申请');
-	}
-	
+	addselect("T_DEMAND_OPERATE","OPERATE_RES_1","dealResult","",true,);
+	addselect("T_DEMAND_OPERATE","CAUSE_1","backCause","",true,"");
+
 	
 });	
 
+function detailApply(){
+	
+	$.ajax({
+		url:'./tdemand/infoD/'+showDemandId,
+		dataType:'json',
+		type:'post',
+		success: function(result){
+			$('#proDepNameShow').val(result.provideDepName);
+			$('#demandDepNameShow').val(result.demandDepName);
+			$('#demandNameShow').val(result.demandName);
+			$('#keyWordShow').val(result.keyWord);
+			$('#demantDetailShow').val(result.demandDetail);
+			$('#accessModeNameShow').val(result.accessModeName);
+			$('#serveModeNameShow').val(result.serveModeName);
+			$('#frequencyNameShow').val(result.frequencyName);
+			$('#demandUseShow').val(result.demandUse);
+		},
+		error:commerror
+	});
+	
+}
 

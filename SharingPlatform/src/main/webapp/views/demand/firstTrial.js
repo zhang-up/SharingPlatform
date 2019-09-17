@@ -56,7 +56,7 @@ function dockingList(){
                 	  var id=rowObject.id;
                 	  var state = rowObject.state;
                 	  if('01'==state){
-                		  return '<a href="javascript:void(0)" onclick="">处理</a> ';
+                		  return '<a href="javascript:void(0)" onclick="deal('"+id+"','"+rowNums+"')">处理</a> ';
                 	  }else{
                 		  return '<a href="javascript:void(0)" onclick="">查看</a>';
                 	  }
