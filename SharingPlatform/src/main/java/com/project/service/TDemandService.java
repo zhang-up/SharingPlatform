@@ -9,6 +9,7 @@ import com.project.info.TDemandInfo;
 public interface TDemandService {
 	
 	TDemandEntity queryObject(String demandId);
+	TDemandInfo queryDetailObject(String id);
 	List<TDemandEntity> queryList(Map<String, Object> map);
     List<TDemandEntity> findALL();
     List<TDemandEntity> findList(TDemandEntity tDemand);

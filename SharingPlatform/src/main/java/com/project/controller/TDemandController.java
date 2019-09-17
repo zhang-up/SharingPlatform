@@ -89,6 +89,15 @@ public class TDemandController extends  AbstractController{
 	}
 	
 	/**
+	 * 详细信息
+	 */
+	@RequestMapping("/infoD/{demandId}")
+	public TDemandInfo infoDetail(@PathVariable("demandId") String demandId){
+		TDemandInfo tDemand = tDemandService.queryDetailObject(demandId);
+		return tDemand;
+	}
+	
+	/**
 	 * 编辑
 	 */
 	@RequestMapping("/edit")

@@ -60,7 +60,7 @@ function initApplyList(){
                 	  }else if('03'==state || '05'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>撤销</a>";
                 	  }else{
-                		  str = "<a href='javascript:void(0)' onclick=''>查看</a>";
+                		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
                 	  }
                 	  rowNums++;
                 	  return str;
@@ -153,4 +153,10 @@ function delApply(id){
 	},function(){
 		//alert('取消');
 	});
+}
+
+var showDemandId = '';
+function demandDetailPage(id){
+	showDemandId = id;
+	popup('views/demand/demandDetail.html');
 }

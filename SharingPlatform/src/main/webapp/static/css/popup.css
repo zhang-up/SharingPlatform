@@ -74,6 +74,17 @@
 	line-height:30px; 
 	height:30px; 
 	font-size:16px;
+	background-color:#2A82E4;
+	color:#2A82E4;
+	font-weight: bold;
+}
+
+.PassWordBack dl .groud_tital{
+	position: relative;
+	padding-left: 10px;
+	line-height:30px; 
+	height:30px; 
+	font-size:16px;
 	background-color:#E0EAF5;
 	color:#2A82E4;
 	font-weight: bold;

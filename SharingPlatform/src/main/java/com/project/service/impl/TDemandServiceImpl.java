@@ -35,6 +35,11 @@ public class TDemandServiceImpl implements TDemandService {
 	}
 	
 	@Override
+	public TDemandInfo queryDetailObject(String demandId){
+		return tDemandDao.queryDetailObject(demandId);
+	}
+	
+	@Override
 	public List<TDemandEntity> queryList(Map<String, Object> map){
 		return tDemandDao.queryList(map);
 	}

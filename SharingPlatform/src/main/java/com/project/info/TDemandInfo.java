@@ -35,6 +35,10 @@ public class TDemandInfo implements Serializable {
 	private String saveTime;
 	//创建人
 	private String creater;
+	private String createrName;
+	private String account;
+	private String mobile;
+	
 	//需求当前的状态：00草稿，01已提交，02初审通过，03初审回退，04提供单位通过，05提供单位驳回，06已完成，07已撤销，08已删除
 	private String state;
 	private String stateName;
@@ -244,6 +248,24 @@ public class TDemandInfo implements Serializable {
 	}
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
+	}
+	public String getCreaterName() {
+		return createrName;
+	}
+	public void setCreaterName(String createrName) {
+		this.createrName = createrName;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	
 	
