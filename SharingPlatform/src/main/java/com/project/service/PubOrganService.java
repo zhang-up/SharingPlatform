@@ -27,4 +27,7 @@ public interface PubOrganService {
 	
 	//根据关键字模糊搜索树
 	List<PubOrganTreeInfo> treeByKey(String name);
+	
+	//查询全部有效部门
+	List<PubOrganTreeInfo> findAllInfo();
 }

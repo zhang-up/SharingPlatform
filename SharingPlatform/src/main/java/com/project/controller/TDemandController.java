@@ -178,6 +178,41 @@ public class TDemandController extends  AbstractController{
 	}
 	
 	/**
+	 * 撤销
+	 */
+	@RequestMapping("/revoke")
+	public R revoke(@RequestParam Map<String, Object> params, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return R.error("登录状态异常！");
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+			
+			TDemandEntity tDemand = new TDemandEntity();
+			
+			String demandId = params.get("demandId") == null ? "" : params.get("demandId").toString();
+			if(StringUtil.isNull(demandId)){
+				return R.error("提交信息异常！");
+			}
+			tDemand.setDemandId(demandId);
+			
+			String remark = params.get("remark") == null ? "" : params.get("remark").toString();
+			tDemand.setRemark(remark);
+			
+			tDemandService.revoke(tDemand, lui.getUserId());
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		
+		
+		return R.ok();
+	}
+	
+	/**
 	 * 保存
 	 */
 	@RequestMapping("/save")
@@ -227,5 +262,6 @@ public class TDemandController extends  AbstractController{
 		
 		return R.ok();
 	}
+	
 	
 }

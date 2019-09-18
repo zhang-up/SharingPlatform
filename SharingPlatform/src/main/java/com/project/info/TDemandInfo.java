@@ -2,6 +2,9 @@ package com.project.info;
 
 import java.io.Serializable;
 
+import com.project.utils.CTools;
+import com.project.utils.StringUtil;
+
 
 public class TDemandInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -262,7 +265,11 @@ public class TDemandInfo implements Serializable {
 		this.account = account;
 	}
 	public String getMobile() {
-		return mobile;
+		if(StringUtil.isNull(mobile)){
+			return mobile;
+		}else{
+			return CTools.decrypt(mobile);
+		}
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;

@@ -22,7 +22,7 @@
 .PassWordBack{
 	position: relative;
 	order: 1px solid #52A0EA;
-	width: 600px;
+	width: 900px;
 	height:180px;
 	/*background-color:#FFFFFF;*/
 	z-index:1000;
@@ -32,8 +32,8 @@
 .PassWordBack dl{
 	position: absolute;
 	right:0px;
-	width:600px;
-	background-color:#F0F0F0;
+	width:900px;
+	background-color:#FFFFFF;
 	border: 2px solid #1890FF;
 	height: 700px;
 	overflow-x:auto;
@@ -48,7 +48,7 @@
 .PassWordBack dl dd font{
 	position: absolute;
 	/*color:#52A0EA;*/ 
-	bottom: 13px;
+	bottom: 5px;
 	font-size:14px;
 }
 
@@ -56,7 +56,7 @@
 	position: absolute;
 	color:red;
 	width10px;
-	bottom: 13px;
+	bottom: 5px;
 	font-size:14px;
 }
 
@@ -75,7 +75,7 @@
 	height:30px; 
 	font-size:16px;
 	background-color:#2A82E4;
-	color:#2A82E4;
+	color:#FFFFFF;
 	font-weight: bold;
 }
 
@@ -86,6 +86,7 @@
 	height:30px; 
 	font-size:16px;
 	background-color:#E0EAF5;
+	border-bottom: 1px solid #D1D1D1;
 	color:#2A82E4;
 	font-weight: bold;
 }
@@ -110,21 +111,21 @@
 	border-top: 2px solid #C0C0B4;
 	border-right: 2px solid #676565;
 	border-bottom: 2px solid #676565;
-	background-color:#D3E2F3; 
+	background-color:#52A0EA; 
 	right:0px;
 }
 
-.PassWordBack dl .tital{
-	position: relative;
-	height:20px; 
-}
+/* .PassWordBack dl dd{ */
+/* 	position: relative; */
+/* 	height:20px;  */
+/* } */
 
-.PassWordBack dl .tital font{
-	position: absolute;
-	/*color:#52A0EA;*/ 
-	bottom: 0px;
-	font-size:14px;
-}
+/* .PassWordBack dl dd font{ */
+/* 	position: absolute; */
+/* 	/*color:#52A0EA;*/  */
+/* 	bottom: 0px; */
+/* 	font-size:14px; */
+/* } */
 
 .PassWordBack dl dd div a{
 	font-size:14px;
@@ -137,7 +138,7 @@
 	margin-top: 7px;
 	font-weight:bold;
 	
-	color:#D3E2F3; 
+	color:#52A0EA; 
 	border-left: 1px solid #C0C0B4;
     border-top: 1px solid #C0C0B4;
     border-right: 1px solid #676565;
@@ -147,46 +148,58 @@
 .PassWordBack dl dd div .chooseA{
 	/*background-color:#DCEBFC; 
 	color:#52A0EA; 
-	border: 1px solid #D3E2F3;*/
+	border: 1px solid #52A0EA;*/
 	
 	color:#FFFFFF; 
 	border-left: 1px solid #676565;
     border-top: 1px solid #676565;
     border-right: 1px solid #C0C0B4;
     border-bottom: 1px solid #C0C0B4;
-    background-color: #D3E2F3;
+    background-color: #52A0EA;
 }
 
 .PassWordBack dl input{
-	border: 1px solid #D3E2F3;
+	position: absolute;
+	border: 1px solid #52A0EA;
 	height:30px;
 	width:535px;
-	margin-top: 4px;
+	bottom: 0px;
 	padding-left: 10px;
 }
 
 .PassWordBack input[type='checkbox']{
-	border: 1px solid #D3E2F3;
+	border: 1px solid #52A0EA;
 	height:13px;
 	width:13px;
-	margin-top: 10px;
+	bottom: 0px;
 	margin-left: 3px;
 	margin-right: 3px;
 }
 
 .PassWordBack dl textarea{
-	border: 1px solid #D3E2F3;
+	position: absolute;
+	border: 1px solid #52A0EA;
 	/*height:30px;*/
 	width:535px;
-	margin-top: 4px;
+	bottom: 0px;
 	padding-left: 10px;
 }
 
+.PassWordBack dl .textareaShow{
+	position: absolute;
+	border: 1px solid #FFFFFF;
+	/*height:30px;*/
+	width:535px;
+	bottom: 0px;
+	padding-left: 0px;
+}
+
 .PassWordBack dl select{
-	border: 1px solid #D3E2F3;
+	position: absolute;
+	border: 1px solid #52A0EA;
 	height:30px;
 	width:535px;
-	margin-top: 4px;
+	bottom: 0px;
 	padding-left: 10px;
 }
 
@@ -206,7 +219,7 @@
 	display:block;
 	text-decoration:none; 
 	/*color:#52A0EA;*/
-	bottom:5px;
+	bottom:0px;
 }
 
 .PassWordBack dl .showI{
@@ -217,7 +230,7 @@
 	height: 0;
 	border-style: solid;
 	border-width: 10px;
-	border-color: #D3E2F3 transparent transparent transparent;
+	border-color: #2A82E4 transparent transparent transparent;
 	top:10px;
 	right:30px;
 	cursor:pointer;
@@ -231,7 +244,7 @@
 	height: 0;
 	border-style: solid;
 	border-width: 10px;
-	border-color: transparent transparent #D3E2F3 transparent;
+	border-color: transparent transparent #2A82E4 transparent;
 	top:0px;
 	right:30px;
 	cursor:pointer;

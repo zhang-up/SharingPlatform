@@ -148,4 +148,9 @@ public class PubOrganServiceImpl implements PubOrganService {
 		return orList;
 	}
 	
+	@Override
+	public List<PubOrganTreeInfo> findAllInfo() {
+		return pubOrganDao.tree(new PubOrganParam());
+	}
+	
 }

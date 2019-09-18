@@ -80,7 +80,7 @@ public class TDemandServiceImpl implements TDemandService {
 		}else{
 			TDemandEntity td = tDemandDao.queryObject(demandId);
 			td.updateValue(tDemand);
-			tDemand.setSaveTime(DateUtil.getDate());
+			td.setSaveTime(DateUtil.getDate());
 			tDemandDao.update(td);
 		}
 		
@@ -93,6 +93,32 @@ public class TDemandServiceImpl implements TDemandService {
 		tdoe.setState(tDemand.getState());
 		tdoe.setOperateRes("0");
 		tdoe.setCause("0");
+		tDemandOperateDao.save(tdoe);
+		
+	}
+	
+	@Override
+	public void revoke(TDemandEntity tDemand, String userId){
+		String demandId = tDemand.getDemandId();
+		if(StringUtil.isNull(demandId)){
+			throw new RRException("提交信息异常！");
+		}else{
+			TDemandEntity td = tDemandDao.queryObject(demandId);
+			td.setState("07");
+			td.setSaveTime(DateUtil.getDate());
+			tDemandDao.update(td);
+		}
+		
+		//操作记录
+		TDemandOperateEntity tdoe = new TDemandOperateEntity();
+		tdoe.setOperateId(UUIDUtil.getUUID32());
+		tdoe.setDemandId(demandId);
+		tdoe.setOperator(userId);
+		tdoe.setOperateTime(DateUtil.getDate());
+		tdoe.setState("07");
+		tdoe.setOperateRes("0");
+		tdoe.setCause("0");
+		tdoe.setRemark(tDemand.getRemark());
 		tDemandOperateDao.save(tdoe);
 		
 	}

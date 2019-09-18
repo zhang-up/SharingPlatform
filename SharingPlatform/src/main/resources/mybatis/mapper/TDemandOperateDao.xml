@@ -15,6 +15,24 @@
         <result property="remark" column="remark"/>
         <result property="fileAdd" column="file_add"/>
     </resultMap>
+    
+    <resultMap type="com.project.info.TDemandOperateInfo" id="tDemandOperateInforMap">
+        <result property="operateId" column="operate_id"/>
+        <result property="demandId" column="demand_id"/>
+        <result property="operator" column="operator"/>
+        <result property="operatorName" column="operator_Name"/>
+        <result property="account" column="account"/>
+        <result property="mobile" column="mobile"/>
+        <result property="operateTime" column="operate_time"/>
+        <result property="state" column="state"/>
+        <result property="stateName" column="state_name"/>
+        <result property="operateRes" column="operate_res"/>
+        <result property="operateResName" column="operate_res_name"/>
+        <result property="cause" column="cause"/>
+        <result property="causeName" column="cause_name"/>
+        <result property="remark" column="remark"/>
+        <result property="fileAdd" column="file_add"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.project.entity.TDemandOperateEntity">
 		select * from t_demand_operate where operate_id = #{value}
@@ -36,6 +54,40 @@
 											                    <if test="remark != null"> AND remark = #{remark}, </if>
 											                    <if test="fileAdd != null"> AND file_add = #{fileAdd}</if>
 							        </set>
+	</select>
+	
+	<select id="queryListByDemand"  resultMap="tDemandOperateInforMap" >
+		SELECT tdo.operate_id,tdo.demand_id, 
+			tdo.operator,pu.name AS operator_name,pu.account,pu.mobile, 
+			tdo.operate_time, 
+			tdo.state,s.par_name AS state_name, 
+			tdo.operate_res,
+			CASE
+				WHEN tdo.state IN ('02','03') THEN o1.par_name
+				WHEN tdo.state IN ('04','05') THEN o2.par_name
+				ELSE ''
+			END AS operate_res_name,
+			tdo.cause, 
+			CASE
+				WHEN tdo.state = '03' THEN c1.par_name
+				WHEN tdo.state = '05' THEN c2.par_name
+				WHEN tdo.state = '04' THEN c3.par_name
+				ELSE ''
+			END AS cause_name,
+			tdo.remark, 
+			tdo.file_add 
+		FROM t_demand_operate tdo
+		LEFT JOIN pub_user pu ON tdo.operator = pu.id 
+		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND tdo.state = s.par_value 
+		LEFT JOIN t_parameter o1 ON o1.par_code = 'T_DEMAND_OPERATE|OPERATE_RES_1' AND tdo.operate_res = o1.par_value 
+		LEFT JOIN t_parameter o2 ON o2.par_code = 'T_DEMAND_OPERATE|OPERATE_RES_2' AND tdo.operate_res = o2.par_value
+		
+		LEFT JOIN t_parameter c1 ON c1.par_code = 'T_DEMAND_OPERATE|CAUSE_1' AND tdo.cause = c1.par_value 
+		LEFT JOIN t_parameter c2 ON c2.par_code = 'T_DEMAND_OPERATE|CAUSE_2' AND tdo.cause = c2.par_value 
+		LEFT JOIN t_parameter c3 ON c3.par_code = 'T_DEMAND_OPERATE|CAUSE_3' AND tdo.cause = c3.par_value  
+		
+		WHERE demand_id = #{value}
+		ORDER BY tdo.operate_time
 	</select>
 
 	<select id="queryList" resultType="com.project.entity.TDemandOperateEntity">

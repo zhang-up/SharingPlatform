@@ -58,7 +58,7 @@ function initApplyList(){
                 	  if('00'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delApply('"+id+"');>删除</a>";
                 	  }else if('03'==state || '05'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>撤销</a>";
+                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=revokeApply('"+id+"');>撤销</a>";
                 	  }else{
                 		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
                 	  }
@@ -159,4 +159,14 @@ var showDemandId = '';
 function demandDetailPage(id){
 	showDemandId = id;
 	popup('views/demand/demandDetail.html');
+}
+
+var revokeDemandId = '';
+function revokeApply(id){
+	revokeDemandId = id;
+	popup('views/demand/revokeDemand.html');
+}
+
+function importDemand(){
+	popup('views/demand/importDemand.html');
 }

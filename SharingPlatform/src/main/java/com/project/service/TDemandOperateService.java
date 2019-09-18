@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.entity.TDemandOperateEntity;
+import com.project.info.TDemandOperateInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ public interface TDemandOperateService {
 	void delete(String operateId);
 	
 	void deleteBatch(String[] operateIds);
+	
+	List<TDemandOperateInfo> queryListByDemand(Object demandId);
 }

@@ -1,0 +1,59 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<script type="text/javascript" src="views/demand/importDemand.js?v=1"></script>
+	
+	<dl align="left" style="height: 30px;">
+		<dd id="page_tital" class="page_tital"></dd>
+	</dl>
+    <dl align="left" style="top: 30px;border-top:0px;">
+    	<dd id="groud_tital" class="groud_tital">导入需求 </dd>
+		<dd class="cut-offRule" ></dd>
+    	<dd id='upBut'>
+    		<a class="subA" href="javascript:" onclick="getTemplate();" style="position:absolute;width: 20%; left:20%; ">下载模板</a>
+			<div style="position: absolute;right:20%;width: 20%;" id="file">
+				<a id="fileA" href="javascript:;" class="fileBut" style="width: 100%;">选择文件
+				<input type="file" style="width: 100%;" name="fileToUpload" id="fileToUpload" accept="excel/xls,excel/xlsx" onchange="showfileSelected();"/></a>
+			</div>
+		</dd>
+		<dd>
+			<font id="fileName"></font>
+			<font id="fileSize" style="left:400px;"></font>
+			<a id="updateBut" class="subA" href="javascript:" onclick="upload('check');" style="position:absolute;width: 20%; right:20%; display: none;">检查文件</a>
+		</dd>
+		<dd name="importRe">
+			<font >列表中是导入文件中的异常数据，没有数据时表示文件数据正常！</font>
+		</dd>
+		<dd name="importRe" style="height: 350px;">
+			<div class="gridPanel">
+			    <table id="importReGrid"></table>
+		    </div>
+		</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd class="cut-offRule" ></dd>
+		<dd name="msg">
+			<font >上传的文件请按照模板规范填写文件</font>
+		</dd>
+		<dd name="msg">
+			<font >信息资源提供部门请确认正确名称后再填写</font>
+		</dd>
+		<dd name="msg">
+			<font >期望提供方式只能填写：服务接口，库表，文件</font>
+		</dd>
+		<dd name="msg">
+			<font >期望共享服务方式只能填写：查询，核验，批量交换</font>
+		</dd>
+		<dd name="msg">
+			<font >期望更新频率只能填写：实时，小时，天，周，半月，月，季，半年，年</font>
+		</dd>
+		<dd name="msg">
+			<font >资源匹配关键字用于匹配资源，多个关键字请用中文逗号“，”分割，最多填写5个关键字，适当的关键字可以更准确的匹配资源</font>
+		</dd>
+		<dd class="cut-offRule" id="last_cut" ></dd>
+		<dd>
+			<a class="subA" href="javascript:" onclick="upload('up');" style="position:absolute;width: 20%; left:20% ">确认导入</a>  
+			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%; right:20% ">关闭</a>  
+		</dd>
+		<dd class="cut-offRule" ></dd>
+	</dl>
+
+	
