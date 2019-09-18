@@ -132,6 +132,7 @@
 		<if test="demandDep != null and demandDep != ''">
 	      AND td.demand_dep = #{demandDep}
 	    </if>
+	    
 	    <if test="provideDep != null and provideDep != ''">
 	      AND td.provide_dep = #{provideDep}
 	    </if>
@@ -190,6 +191,14 @@
 		      AND ope.operate_time &lt;= #{endDate}
 		    </if>
 		</if>
+		<!-- 申请页面对草稿状态做限制 -->
+		<if test="apply != null and apply != ''">
+	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
+	    </if>
+	    <!-- 初审页面不查询草稿状态 -->
+		<if test="firstT != null and firstT != ''">
+	      AND td.state NOT IN ('00')
+	    </if>
 	</select>
 	
 

@@ -48,9 +48,20 @@ public class TDemandController extends  AbstractController{
 	/**
 	 * 提供方列表
 	 */
-	@RequestMapping("/providelist")
-	public PageUtils list2(@RequestParam Map<String, Object> params){	
-		params.put("firstT", "true");		
+	@RequestMapping("/provideList")
+	public PageUtils list2(@RequestParam Map<String, Object> params, HttpSession session){	
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){		
+			return new PageUtils();
+		}
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return new PageUtils();
+		}
+		params.put("firstT", "true");	
+		params.put("provideDep", lui.getOrgCode());
 		//查询列表数据
         Query query = new Query(params);
 
@@ -60,6 +71,7 @@ public class TDemandController extends  AbstractController{
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
 		
 		return pageUtil;
+
 	}
 
 	

@@ -41,20 +41,52 @@ public class DockTrialInfo implements Serializable {
 	//备注
 	private String remark;
 	//电话号码
-	private String MOBILE;
-
+	private String moblie;
 	//申请人
 	private String operator;
+	//处理人
+	private String trialPeople;
+	//处理时间
+	private String dealTime;
+	//处理结果
+	private String dealResult;
+	//提供单位处理人
+	private String providePeople;
+	//提供单位处理时间
+	private String provideDealTime;
+	//提供单位处理结果
+	private String provideDealResult;
 	
 	
-
-	public String getMOBILE() {
-		return MOBILE;
+	
+	
+	public String getMoblie() {
+		return moblie;
 	}
-	public void setMOBILE(String mOBILE) {
-		MOBILE = mOBILE;
+	public void setMoblie(String moblie) {
+		this.moblie = moblie;
 	}
-
+	public String getTrialPeople() {
+		return trialPeople;
+	}
+	public void setTrialPeople(String trialPeople) {
+		this.trialPeople = trialPeople;
+	}
+	public String getDealTime() {
+		return dealTime;
+	}
+	public void setDealTime(String dealTime) {
+		this.dealTime = dealTime;
+	}
+	public String getDealResult() {
+		return dealResult;
+	}
+	public void setDealResult(String dealResult) {
+		this.dealResult = dealResult;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public String getOperator() {
 		return operator;
 	}
@@ -264,6 +296,37 @@ public class DockTrialInfo implements Serializable {
 	}
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
+	}
+	public String getProvidePeople() {
+		return providePeople;
+	}
+	public void setProvidePeople(String providePeople) {
+		this.providePeople = providePeople;
+	}
+	public String getProvideDealTime() {
+		return provideDealTime;
+	}
+	public void setProvideDealTime(String provideDealTime) {
+		this.provideDealTime = provideDealTime;
+	}
+	public String getProvideDealResult() {
+		return provideDealResult;
+	}
+	public void setProvideDealResult(String provideDealResult) {
+		this.provideDealResult = provideDealResult;
+	}
+	@Override
+	public String toString() {
+		return "DockTrialInfo [demandId=" + demandId + ", demandDep=" + demandDep + ", demandDepName=" + demandDepName
+				+ ", provideDep=" + provideDep + ", provideDepName=" + provideDepName + ", demandName=" + demandName
+				+ ", keyWord=" + keyWord + ", demandDetail=" + demandDetail + ", accessMode=" + accessMode
+				+ ", accessModeName=" + accessModeName + ", serveMode=" + serveMode + ", serveModeName=" + serveModeName
+				+ ", frequency=" + frequency + ", frequencyName=" + frequencyName + ", demandUse=" + demandUse
+				+ ", saveTime=" + saveTime + ", creater=" + creater + ", state=" + state + ", stateName=" + stateName
+				+ ", remark=" + remark + ", moblie=" + moblie + ", operator=" + operator + ", trialPeople="
+				+ trialPeople + ", dealTime=" + dealTime + ", dealResult=" + dealResult + ", providePeople="
+				+ providePeople + ", provideDealTime=" + provideDealTime + ", provideDealResult=" + provideDealResult
+				+ "]";
 	}
 	
 	

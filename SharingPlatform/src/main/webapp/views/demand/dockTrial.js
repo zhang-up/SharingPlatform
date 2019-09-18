@@ -18,6 +18,7 @@ $(function() {
 		}else{
 			$('#backCauseTi').hide();
 			$('#backCause').hide();
+			$('#backCause').val('');
 		}
 	});
 });	
@@ -38,7 +39,7 @@ function findList(){
 			$('#accessModeNameShow').val(result.accessModeName);
 			$('#serveModeNameShow').val(result.serveModeName);
 			$('#frequencyNameShow').val(result.frequencyName);
-			$('#demandUseShow').val(result.creater);
+			$('#demandUseShow').val(result.demandUse);
 		},
 	});
 }
@@ -70,8 +71,31 @@ function submit(){
 				cancelPopup();
 				return;
 			}
+			if(mergeDemandId=='add'){
+				searchApply();
+			}else{
+				eRowObj = null;
+				searchApply('update');
+			}cancelPopup();
 		},
 		error:commerror
 	});
+}
+
+
+function searchApply(type){
+	rObj = [];
+	rowNums = 0;
+	var curpagenum = 1;
+	
+	if('update'==type){
+		curpagenum = $gridTable.jqGrid('getGridParam', 'page');
+	}
+	
+	$gridTable.jqGrid('setGridParam', {
+        postData: applyCondition(), 
+        page: curpagenum
+    }).trigger('reloadGrid');
+	
 }
 
