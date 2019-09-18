@@ -1,9 +1,16 @@
 package com.project.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -132,11 +139,45 @@ public class DockTrialController extends  AbstractController{
 	}
 	/**
 	 * 上传文件
+	 * @throws IOException 
 	 */
 	@RequestMapping("/importD")
-	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file){	
-		System.out.println(12);
+	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
 		String fileName = file.getOriginalFilename();
+		
+		
+		
+		
+		String url = session.getServletContext().getRealPath("/")+"static\\upload";
+		File root=new File(url);
+			if(!root.exists()){//如果文件夹不存在
+				root.mkdir();//创建文件夹
+			}
+		System.out.println(url);	
+		
+		File newFile=new File(root,fileName);
+		
+		
+		FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
+		//1.4存放文件
+		try {	
+			 newFile=new File(root,fileName);
+			
+			FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
+		
+			//FileUtils.copyFile((File) file, newFile);
+		
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		
+		
+
+		
+		//System.out.println(fileName);
+		//System.out.println(file);
 		try {
 			file.getInputStream();
 		} catch (IOException e) {
