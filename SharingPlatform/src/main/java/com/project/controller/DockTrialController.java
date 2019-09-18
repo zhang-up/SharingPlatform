@@ -23,6 +23,7 @@ import com.project.info.loginUserInfo;
 import com.project.service.DockTrialService;
 import com.project.utils.R;
 import com.project.utils.StringUtil;
+import com.project.utils.UUIDUtil;
 
 @RestController
 @RequestMapping("/dock")
@@ -115,8 +116,12 @@ public class DockTrialController extends  AbstractController{
 		if(StringUtil.isNull(dealReasonYes)&&StringUtil.isNull(dealReasonNo)){				
 				return R.error("请选择处理原因！");
 		}		
-		dockTrialService.dealProvide(params);		
-		return R.ok();
+
+		String String=dockTrialService.dealProvide(params);	
+		R r=new R();
+		r.put("opertorid", String);
+		//System.out.println(r);
+		return r;
 	}
 	/**
 	 * 提供单位完成需求的处理
@@ -142,48 +147,15 @@ public class DockTrialController extends  AbstractController{
 	 * @throws IOException 
 	 */
 	@RequestMapping("/importD")
-	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
+	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,@RequestParam(value = "operateid") String operateid,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
 		String fileName = file.getOriginalFilename();
-		
-		
-		
-		
+		String file_Name=UUIDUtil.getUUID32()+fileName.substring(fileName.lastIndexOf("."));
 		String url = session.getServletContext().getRealPath("/")+"static\\upload";
 		File root=new File(url);
 			if(!root.exists()){//如果文件夹不存在
 				root.mkdir();//创建文件夹
 			}
-		System.out.println(url);	
-		
-		File newFile=new File(root,fileName);
-		
-		
+		File newFile=new File(root,file_Name);		
 		FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
-		//1.4存放文件
-		try {	
-			 newFile=new File(root,fileName);
-			
-			FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
-		
-			//FileUtils.copyFile((File) file, newFile);
-		
-
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-		
-		
-
-		
-		//System.out.println(fileName);
-		//System.out.println(file);
-		try {
-			file.getInputStream();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 }

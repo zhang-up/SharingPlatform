@@ -19,6 +19,8 @@ public interface DockTrialDao {
 	
 	TDemandOperateEntity findTdOperate(Map<String, Object> map);
 	
+	void importD(Map<String, Object> map);
+	
 	
 
 }

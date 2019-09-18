@@ -107,7 +107,7 @@ public class DockTrialServiceImpl implements DockTrialService{
    * 提供方处理消息
    */
 	@Override
-	public void dealProvide(Map<String, Object> map) {
+	public String dealProvide(Map<String, Object> map) {
 		String token = map.get("token") == null ? "" : map.get("token").toString();//用户ID
 		String demandUse = map.get("demandUse") == null ? "" : map.get("demandUse").toString();//说明
 		String dealResult = map.get("dealResult") == null ? "" : map.get("dealResult").toString();//处理结果(1-同意，2-驳回)
@@ -122,17 +122,18 @@ public class DockTrialServiceImpl implements DockTrialService{
 			map.put("state", "04");
 			map.put("res", "1");
 			map.put("cause", dealReasonYes);
-			 dockTrialDao.changTrial(map);//需求表改状态	
-			 dockTrialDao.insertAgreeTrial(map);//插入新数据
-			return ;
+			 //dockTrialDao.changTrial(map);//需求表改状态	
+			// dockTrialDao.insertAgreeTrial(map);//插入新数据
+			return demandOperateId;
 		}else if(dealResult.equals("2")){//提供人不同意
 			map.put("state", "05");
 			map.put("res", "2");
 			map.put("cause", dealReasonNo);
-			dockTrialDao.changTrial(map);//需求表改状态	
-			dockTrialDao.insertAgreeTrial(map);//插入新数据
-			return ;
-		}		
+			//dockTrialDao.changTrial(map);//需求表改状态	
+			//dockTrialDao.insertAgreeTrial(map);//插入新数据
+			return demandOperateId;
+		}	
+		return demandOperateId;
 	}
 	  /*
 	   * 提供方处理完成确认消息
@@ -150,5 +151,10 @@ public class DockTrialServiceImpl implements DockTrialService{
 		map.put("cause", cause);map.put("file_add", fillADD);
 		dockTrialDao.insertAgreeTrial(map);//插入新数据
 		//插入新数据
+	}
+
+	@Override
+	public void importD(Map<String, Object> map) {
+				
 	}
 }

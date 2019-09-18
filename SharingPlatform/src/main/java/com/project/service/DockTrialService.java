@@ -8,8 +8,9 @@ public interface DockTrialService {
 	DockTrialInfo trialInfoList(Map<String, Object> map);
 	void dealTrial(Map<String, Object> map);
 	DockTrialInfo findTrialPeople(Map<String, Object> map);
-	void dealProvide(Map<String, Object> map);//提供者审核
+	String dealProvide(Map<String, Object> map);//提供者审核
 	DockTrialInfo finishVerify(Map<String, Object> map);
 	void finishDleal(Map<String, Object> map);
+	void importD(Map<String, Object> map);
 	
 }

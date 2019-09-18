@@ -101,6 +101,9 @@
 	<select id="findTdOperate" resultMap="map3">
 	select operate_res,cause,file_add from t_demand_operate 
 		where demand_id=#{demandid} and state='04'
+	</select>	
+	
+	<select id="importD">
+       update t_demand_operate set file_Name =#{file_Name},file_add=#{file_add} where operateid=#{operateid}
 	</select>
-
 </mapper>
