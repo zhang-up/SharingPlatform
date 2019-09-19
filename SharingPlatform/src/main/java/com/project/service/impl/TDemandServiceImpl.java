@@ -189,4 +189,9 @@ public class TDemandServiceImpl implements TDemandService {
 		tDemandDao.deleteBatch(demandIds);
 	}
 	
+	@Override
+	public List<TDemandInfo> dockingList(Map<String, Object> map) {
+		return tDemandDao.queryInfoList(map);
+
+	}
 }

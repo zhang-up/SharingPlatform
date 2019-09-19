@@ -207,22 +207,22 @@ public class TDemandOperateInfo implements Serializable {
 	}
 	public String getFileName() {
 		
-		if(!StringUtil.isNull(this.fileAdd)){
-			String fName = "";
-			if(this.fileAdd.indexOf("/")>=0){
-				fName = this.fileAdd.substring(this.fileAdd.lastIndexOf("/")+1);
-			}
-			if(this.fileAdd.indexOf("\\")>=0){
-				fName = this.fileAdd.substring(this.fileAdd.lastIndexOf("\\")+1);
-			}
-			
-			if(this.fileAdd.indexOf(".")>=0){
-				fName = fName.substring(0,fName.lastIndexOf("."));
-			}
-			
-			return fName;
-		}
-		return "";
+//		if(!StringUtil.isNull(this.fileAdd)){
+//			String fName = "";
+//			if(this.fileAdd.indexOf("/")>=0){
+//				fName = this.fileAdd.substring(this.fileAdd.lastIndexOf("/")+1);
+//			}
+//			if(this.fileAdd.indexOf("\\")>=0){
+//				fName = this.fileAdd.substring(this.fileAdd.lastIndexOf("\\")+1);
+//			}
+//			
+//			if(this.fileAdd.indexOf(".")>=0){
+//				fName = fName.substring(0,fName.lastIndexOf("."));
+//			}
+//			
+//			return fName;
+//		}
+		return this.fileName;
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;

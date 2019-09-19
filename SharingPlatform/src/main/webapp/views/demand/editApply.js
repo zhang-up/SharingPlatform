@@ -19,15 +19,23 @@ $(function() {
 	}else{
 		$('#page_tital').html('修改申请');
 		
-		$('#proDepIdEdit').val(eRowObj.provideDep);
-		$('#proDepNameEdit').val(eRowObj.provideDepName);
-		$('#demandName').val(eRowObj.demandName);
-		$('#keyWord').val(eRowObj.keyWord);
-		$('#demantDetail').val(eRowObj.demandDetail);
-		$('#accessMode').val(eRowObj.accessMode);
-		$('#serveMode').val(eRowObj.serveMode);
-		$('#frequency').val(eRowObj.frequency);
-		$('#demandUse').val(eRowObj.demandUse);
+		$.ajax({
+			url:'./tdemand/infoD/'+mergeDemandId,
+			dataType:'json',
+			type:'post',
+			success: function(result){
+				$('#proDepIdEdit').val(result.provideDep);
+				$('#proDepNameEdit').val(result.provideDepName);
+				$('#demandName').val(result.demandName);
+				$('#keyWord').val(result.keyWord);
+				$('#demantDetail').val(result.demandDetail);
+				$('#accessMode').val(result.accessMode);
+				$('#serveMode').val(result.serveMode);
+				$('#frequency').val(result.frequency);
+				$('#demandUse').val(result.demandUse);
+			},
+			error:commerror
+		});
 		
 		$.ajax({
 			url:'./tdemandresource/listByDemand/'+mergeDemandId,
@@ -38,6 +46,8 @@ $(function() {
 			},
 			error:commerror
 		});
+		
+		operDetail(mergeDemandId, 'last_cut');
 	}
 	
 });	

@@ -155,12 +155,6 @@ function delApply(id){
 	});
 }
 
-var showDemandId = '';
-function demandDetailPage(id){
-	showDemandId = id;
-	popup('views/demand/demandDetail.html');
-}
-
 var revokeDemandId = '';
 function revokeApply(id){
 	revokeDemandId = id;

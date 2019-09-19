@@ -1,17 +1,18 @@
 /**
  * 
  */
-
 $(function() {
+	addselect("T_DEMAND_OPERATE","OPERATE_RES_2","dealResult","",false,"");
+	addselect("T_DEMAND_OPERATE","CAUSE_2","dealReasonNo","",false,"");
+	addselect("T_DEMAND_OPERATE","CAUSE_3","dealReasonYes","",false,"");
+	findTrial();
+	operDetail(pro_deal_demandid, 'last_cut');
 	
-	demandDetail();
-	operDetail(revokeDemandId, 'rev_groud');
 });	
 
-function demandDetail(){
-	
+function findTrial(){
 	$.ajax({
-		url:'./tdemand/infoD/'+revokeDemandId,
+		url:'./tdemand/infoD/'+pro_deal_demandid,
 		dataType:'json',
 		type:'post',
 		success: function(result){
@@ -29,16 +30,15 @@ function demandDetail(){
 		},
 		error:commerror
 	});
-//	remarkRev
+	
 }
 
-function revDem(){
-	
-	var remarkRev = $('#remarkRev').val();
-	
+function submit(){
+	var demandUse=$('#demandUse').val();//说明
+	var str="demandid="+pro_deal_demandid+"&demandUse="+demandUse
 	$.ajax({
-		url:'./tdemand/revoke',
-		data:'remark='+remarkRev+'&demandId='+revokeDemandId,
+		url:'./dock/finishDleal',
+		data:str,
 		dataType:'json',
 		type:'post',
 		success: function(result){
@@ -48,11 +48,20 @@ function revDem(){
 				cancelPopup();
 				return;
 			}
-			searchApply('update');
+			if(mergeDemandId=='add'){
+				searchApply();
+			}else{
+				eRowObj = null;
+				searchApply('update');
+			}
 			cancelPopup();
 		},
 		error:commerror
 	});
-	
+}
+
+
+function showMoli(moli){
+	alert('联系电话：'+moli);
 }
 

@@ -53,10 +53,9 @@
 }
 
 .PassWordBack dl dd .redStart{
-	position: absolute;
 	color:red;
-	width10px;
-	bottom: 5px;
+	width:10px;
+	bottom: 0px;
 	font-size:14px;
 }
 

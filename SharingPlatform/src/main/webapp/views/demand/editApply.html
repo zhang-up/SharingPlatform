@@ -6,17 +6,16 @@
     	<dd id="page_tital" class="page_tital">申请</dd>
 		<dd class="cut-offRule" ></dd>
 		<dd>
-			<font class="redStart">*</font><font style="left:40px;">信息资源提供部门：</font>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>信息资源提供部门</font>
 			<input id="proDepIdEdit" style="display:none;width: 675px;" readonly="readonly" placeholder="请选择部门"/>
 			<input id="proDepNameEdit" style="left:170px;width: 675px;" readonly="readonly" placeholder="请选择部门"/>
 		</dd>
 		<dd>
-			<font class="redStart">*</font><font style="left:40px;">需求名称：</font>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>需求名称</font>
 			<input id="demandName" style="left:170px;width: 675px;" type="text" placeholder="请输入需求名称"/>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd>
-			<font>资源匹配关键字：</font>
+			<font style="width: 126px;text-align: right;">资源匹配关键字</font>
 			<input id="keyWord" type="text" style="left:170px;width:590px;" placeholder="多个关键字请用中文逗号“，”分割，最多填写5个关键字,适当的关键字可以更准确的匹配资源"/>
 			<a id="captchaBut" class="but" href="javascript:" onclick="matchingRes();" style="width:80px;position: absolute;left:765px;">匹配资源</a>
 		</dd>
@@ -25,26 +24,22 @@
 				    <table id="matchingResGrid"></table>
 		    </div>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd style="height: 70px;">
-			<font style="height: 50px;" class="redStart">*</font><font style="left:40px;height: 50px;">需求内容：<br>（须细化到数据项）</font>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;height: 50px;" class="redStart"> * </h>需求内容<br>（须细化到数据项）</font>
 			<textarea style="left:170px;width: 675px;"  rows="3" id="demantDetail" placeholder="请输入需求内容（须细化到数据项）"></textarea>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd>
-			<font class="redStart">*</font><font style="left:40px;">期望提供方式：</font>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>期望提供方式</font>
 			<select id="accessMode" style="left:170px;width: 200px;"></select>
-			<font class="redStart" style="left:410px;">*</font><font style="left:420px;">期望共享服务方式：</font>
-			<select id="serveMode" style="width: 200px;left:590px;"></select>
+			<font style="left:500px;width: 126px;text-align: right;"><h class="redStart"> * </h>期望共享服务方式</font>
+			<select id="serveMode" style="width: 200px;left:645px;"></select>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd>
-			<font class="redStart">*</font><font style="left:40px;">期望更新频率：</font>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>期望更新频率</font>
 			<select id="frequency" style="left:170px;width: 200px;"></select>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd style="height: 70px;">
-			<font style="height: 40px;" class="redStart">*</font><font style="left:40px;height: 40px;">用途：</font>
+			<font style="width: 126px;text-align: right;height: 50px; "><h style="left: 0px;height: 50px;" class="redStart"> * </h>用途</font>
 			<textarea style="left:170px;width: 675px;" rows="3" id="demandUse" placeholder="请输入用途"></textarea>
 		</dd>
 		<dd class="cut-offRule" id="last_cut" ></dd>

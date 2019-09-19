@@ -36,19 +36,48 @@ public class TDemandController extends  AbstractController{
 	private RcResourceService rcResourceService;
 	
 	/**
-	 * 列表
+	 *对接人列表
 	 */
 	@RequestMapping("/list")
-	public PageUtils list(@RequestParam Map<String, Object> params){
+	public PageUtils list(@RequestParam Map<String, Object> params){	
+		params.put("firstT", "true");		
 		//查询列表数据
         Query query = new Query(params);
 
-		List<TDemandEntity> tDemandList = tDemandService.queryList(query);
+		List<TDemandInfo> tDemandList = tDemandService.dockingList(query);
 		int total = tDemandService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
 		
 		return pageUtil;
+	}
+	/**
+	 * 提供方列表
+	 */
+	@RequestMapping("/provideList")
+	public PageUtils list2(@RequestParam Map<String, Object> params, HttpSession session){	
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){		
+			return new PageUtils();
+		}
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return new PageUtils();
+		}
+		params.put("firstT", "true");	
+		params.put("provideDep", lui.getOrgCode());
+		//查询列表数据
+        Query query = new Query(params);
+
+		List<TDemandInfo> tDemandList = tDemandService.dockingList(query);
+		int total = tDemandService.queryTotal(query);
+		
+		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
+		
+		return pageUtil;
+
 	}
 	
 	@RequestMapping("/applyList")

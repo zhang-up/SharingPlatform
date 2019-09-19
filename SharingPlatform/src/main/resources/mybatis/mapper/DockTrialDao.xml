@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.DockTrialDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.info.DockTrialInfo" id="dockTrialInfoMap">
+        <result property="demandId" column="demand_id"/>
+        <result property="demandDep" column="demand_dep"/>
+        <result property="demandDepName" column="demand_dep_name"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="demandName" column="demand_name"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="demandDetail" column="demand_detail"/>
+        <result property="accessMode" column="access_mode"/>
+        <result property="accessModeName" column="access_mode_name"/>
+        <result property="serveMode" column="serve_mode"/>
+        <result property="serveModeName" column="serve_mode_name"/>
+        <result property="frequency" column="frequency"/>
+        <result property="frequencyName" column="frequency_name"/>
+        <result property="demandUse" column="demand_use"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+        <result property="state" column="state"/>
+        <result property="stateName" column="state_name"/>
+        <result property="remark" column="remark"/>
+        <result property="moblie" column="demand_phone"/>
+        <result property="operator" column="demand_creater_name"/>    		
+    </resultMap>
+    
+     <resultMap type="com.project.info.DockTrialInfo" id="map1">
+        <result property="demandId" column="demand_id"/>
+        <result property="providePeople" column="dealname"/>  	
+        <result property="provideDealTime" column="operate_time"/>  
+        <result property="provideDealResult" column="operate_res"/>  	
+    </resultMap>
+    
+     <resultMap type="com.project.info.DockTrialInfo" id="map">
+        <result property="demandId" column="demand_id"/>
+        <result property="trialPeople" column="dealname"/>  	
+        <result property="dealTime" column="operate_time"/>  
+        <result property="dealResult" column="operate_res"/>  	
+    </resultMap>
+    
+         <resultMap type="com.project.entity.TDemandOperateEntity" id="map3">
+        <result property="demandId" column="demand_id"/>
+        <result property="operateRes" column="operate_res"/>  	
+        <result property="cause" column="cause"/>  
+        <result property="fileAdd" column="file_add "/>  	
+    </resultMap>
+    
+  	<select id="trialInfoList" resultMap="dockTrialInfoMap">
+		SELECT td.demand_id,td.demand_dep, dd.name AS demand_dep_name,
+		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
+		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
+		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
+		td.demand_use,td.save_time,td.creater,td.remark ,u.name AS demand_creater_name,u.MOBILE AS demand_phone
+		FROM t_demand td
+  		LEFT JOIN pub_user u ON td.creater=u.ID
+		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
+		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
+		LEFT JOIN t_parameter sm ON sm.par_code = 'T_DEMAND|SERVE_MODE' AND td.serve_mode = sm.par_value
+		LEFT JOIN t_parameter f ON f.par_code = 'T_DEMAND|FREQUENCY' AND td.frequency = f.par_value
+		LEFT JOIN t_parameter s ON s.par_code = 'T_DEMAND|STATE' AND td.state = s.par_value
+		where 1=1
+  		<if test="state != null and state != ''">
+		   AND td.state=#{state}
+	    </if>
+		<if test="demandDep != null and demandDep != ''">
+		   AND td.demand_id=#{demandDep}
+	    </if>
+	</select>
+	<select id="changTrial" >
+	    UPDATE t_demand SET save_time=#{time},state=#{state} where t_demand.demand_id=#{demandid}
+	</select>
+	
+
+	
+	<select id="findTrialPeople" resultMap="map">
+	    SELECT td.demand_id,u.`NAME` as dealname ,operate_time, operate_res FROM t_demand_operate td 
+        LEFT JOIN pub_user u ON td.operator=u.ID
+        where td.state='02'
+		 AND td.demand_id=#{demandDep}
+	</select>
+	
+	<select id="findProvidePeople" resultMap="map1">
+	    SELECT td.demand_id,u.`NAME` as dealname ,operate_time, operate_res FROM t_demand_operate td 
+        LEFT JOIN pub_user u ON td.operator=u.ID
+        where td.state='04'
+		AND td.demand_id=#{demandDep}
+	</select>
+	
+	<select id="insertAgreeTrial" >
+		INSERT INTO t_demand_operate (operate_id,demand_id,operator,operate_time,state,
+		operate_res,cause,remark,file_add  )VALUES(#{demandOperateId},#{demandid},#{token},
+		#{time},#{state},#{res},#{cause},#{demandUse},#{file_add})
+	</select>
+	
+	<select id="findTdOperate" resultMap="map3">
+	select operate_res,cause,file_add from t_demand_operate 
+		where demand_id=#{demandid} and state='04'
+	</select>	
+	
+	<select id="importD">
+       update t_demand_operate set file_Name =#{file_Name},file_add=#{file_add} where operate_id=#{operateid}
+	</select>
+</mapper>

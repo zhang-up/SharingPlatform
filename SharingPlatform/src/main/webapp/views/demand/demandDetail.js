@@ -5,8 +5,7 @@
 $(function() {
 	
 	demandDetail();
-	operDetail(showDemandId);
-	hideMoreGroud();
+	operDetail(showDemandId, 'last_cut');
 });	
 
 function demandDetail(){

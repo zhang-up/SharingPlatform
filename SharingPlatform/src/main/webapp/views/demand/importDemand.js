@@ -49,13 +49,16 @@ function showfileSelected(){
 }
 
 function getTemplate(){
-	var $eleForm = $("<form method='get' target='_blank'></form>");
+	var $eleForm = $("#dowLoadFileForm");
     $eleForm.attr("action",'static/template/需求清单导入模板.xlsx');
-    $(document.body).append($eleForm);
     $eleForm.submit();
 }
-
+var check = 'no';
 function upload(type){
+	if(type=='up' && check == 'no'){
+		alert('请先检查文件后再确认导入！');
+		return;
+	}
 	$("#upBut").hide();
 	//$("#updateBut").hide();
 	uploadFile(files[0],type);
@@ -91,6 +94,7 @@ function uploadComplete(evt) {
 			$('dd[name="importRe"]').show();
 			creatImpRe(backJ.msg);
 			alert('检查完成');
+			check = 'yes';
 		}else{
 			alert('导入成功');
 			searchApply();
