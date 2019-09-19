@@ -48,6 +48,9 @@ public class TDemandInfo implements Serializable {
 	//备注
 	private String remark;
 	
+	private int chooseNums;
+	private int recommendNums;
+	
 	/**
 	 * 设置：需求ID
 	 */
@@ -273,6 +276,18 @@ public class TDemandInfo implements Serializable {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public int getChooseNums() {
+		return chooseNums;
+	}
+	public void setChooseNums(int chooseNums) {
+		this.chooseNums = chooseNums;
+	}
+	public int getRecommendNums() {
+		return recommendNums;
+	}
+	public void setRecommendNums(int recommendNums) {
+		this.recommendNums = recommendNums;
 	}
 	
 	

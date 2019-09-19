@@ -18,7 +18,12 @@
 		<dd>
 			<font>资源匹配关键字：</font>
 			<input id="keyWord" type="text" style="left:170px;width:590px;" placeholder="多个关键字请用中文逗号“，”分割，最多填写5个关键字,适当的关键字可以更准确的匹配资源"/>
-			<a id="captchaBut" class="but" href="javascript:" onclick="getCaptcha();" style="width:80px;position: absolute;left:765px;">匹配资源</a>
+			<a id="captchaBut" class="but" href="javascript:" onclick="matchingRes();" style="width:80px;position: absolute;left:765px;">匹配资源</a>
+		</dd>
+		<dd style="height: 260px; padding-top: 10px;" id="resList">
+			<div class="gridPanel">
+				    <table id="matchingResGrid"></table>
+		    </div>
 		</dd>
 <!-- 		<dd class="cut-offRule" ></dd> -->
 		<dd style="height: 70px;">

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandEntity;
 import com.project.exception.RRException;
+import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
 import com.project.info.loginUserInfo;
+import com.project.service.RcResourceService;
 import com.project.service.TDemandService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -29,6 +32,8 @@ import com.project.utils.StringUtil;
 public class TDemandController extends  AbstractController{
 	@Autowired
 	private TDemandService tDemandService;
+	@Autowired
+	private RcResourceService rcResourceService;
 	
 	/**
 	 * 列表
@@ -172,7 +177,14 @@ public class TDemandController extends  AbstractController{
 		}
 		tDemand.setState(state);
 		
-		tDemandService.edit(tDemand, lui.getUserId());
+		String hiteMatch = params.get("hiteMatch") == null ? "" : params.get("hiteMatch").toString();
+		List<RcResourceInfo> rrf = new ArrayList<RcResourceInfo>();
+		if("yes".equals(hiteMatch)){
+			rrf = rcResourceService.matchingRes(keyWord);
+		}
+		String choose_res = params.get("chooseRes") == null ? "" : params.get("chooseRes").toString();
+		
+		tDemandService.edit(tDemand, lui.getUserId(), rrf, choose_res,hiteMatch);
 		
 		return R.ok();
 	}

@@ -36,6 +36,11 @@
         <result property="fromSystemId" column="from_system_id"/>
         <result property="fromSystemName" column="from_system_name"/>
     </resultMap>
+    
+    <resultMap type="com.project.info.RcResourceInfo" id="matchingMap">
+        <result property="id" column="id"/>
+        <result property="resName" column="res_name"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.project.entity.RcResourceEntity">
 		select * from rc_resource where id = #{value}
@@ -43,6 +48,28 @@
 
 	<select id="findALL" resultType="com.project.entity.RcResourceEntity">
 		select * from rc_resource
+	</select>
+	
+	<select id="matchingRes" resultMap="matchingMap">
+		select id,res_name from rc_resource 
+		where status = '4'
+		and (
+			<if test="keyWord1 != null and keyWord1 != ''">
+		      res_name like #{keyWord1}
+		    </if>
+		    <if test="keyWord2 != null and keyWord2 != ''">
+		      or res_name like #{keyWord2}
+		    </if>
+		    <if test="keyWord3 != null and keyWord3 != ''">
+		      or res_name like #{keyWord3}
+		    </if>
+		    <if test="keyWord4 != null and keyWord4 != ''">
+		      or res_name like #{keyWord4}
+		    </if>
+		    <if test="keyWord5 != null and keyWord5 != ''">
+		      or res_name like #{keyWord5}
+		    </if>
+		)
 	</select>
 
     <select id="findList"  resultType="com.project.entity.RcResourceEntity" parameterType="com.project.entity.RcResourceEntity" >

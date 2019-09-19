@@ -10,6 +10,12 @@
         <result property="resourceId" column="resource_id"/>
         <result property="state" column="state"/>
     </resultMap>
+    
+    <resultMap type="com.project.info.TDemandResourceInfo" id="tDemandResourceInfoMap">
+        <result property="id" column="resource_id"/>
+        <result property="resName" column="res_name"/>
+        <result property="state" column="state"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.project.entity.TDemandResourceEntity">
 		select * from t_demand_resource where d_res_id = #{value}
@@ -17,6 +23,16 @@
 
 	<select id="findALL" resultType="com.project.entity.TDemandResourceEntity">
 		select * from t_demand_resource
+	</select>
+	
+	<select id="findListByDemand" resultMap="tDemandResourceMap">
+		select * from t_demand_resource tdr
+		where tdr.demand_id = #{value}
+	</select>
+	
+	<select id="findInfoListByDemand" resultMap="tDemandResourceInfoMap">
+		select tdr.resource_id,tdr.state,rr.res_name from t_demand_resource tdr,rc_resource rr
+		where tdr.resource_id = rr.id and tdr.demand_id = #{value} order by tdr.state DESC
 	</select>
 
     <select id="findList"  resultType="com.project.entity.TDemandResourceEntity" parameterType="com.project.entity.TDemandResourceEntity" >

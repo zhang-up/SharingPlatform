@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.entity.RcResourceEntity;
+import com.project.info.RcResourceInfo;
 
 public interface RcResourceService {
 	
@@ -20,4 +21,8 @@ public interface RcResourceService {
 	void delete(String id);
 	
 	void deleteBatch(String[] ids);
+	
+	List<RcResourceInfo> matchingRes(String keyWord);
+	
+	void matchingAllRes(String userId);
 }
