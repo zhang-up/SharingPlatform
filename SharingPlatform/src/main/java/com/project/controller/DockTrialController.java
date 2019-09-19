@@ -2,6 +2,7 @@ package com.project.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -148,14 +149,25 @@ public class DockTrialController extends  AbstractController{
 	 */
 	@RequestMapping("/importD")
 	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,@RequestParam(value = "operateid") String operateid,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
-		String fileName = file.getOriginalFilename();
-		String file_Name=UUIDUtil.getUUID32()+fileName.substring(fileName.lastIndexOf("."));
+		if(file==null){
+			return ;
+		}
+		String file_Name = file.getOriginalFilename();
+		String newName=UUIDUtil.getUUID32()+file_Name.substring(file_Name.lastIndexOf("."));
 		String url = session.getServletContext().getRealPath("/")+"static\\upload";
+		String file_add=url+"\\"+newName;
 		File root=new File(url);
 			if(!root.exists()){//如果文件夹不存在
 				root.mkdir();//创建文件夹
 			}
-		File newFile=new File(root,file_Name);		
+		File newFile=new File(root,newName);		
 		FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
+		System.out.println(file_add);System.out.println(file_Name);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("file_Name", file_Name);
+		map.put("file_add", file_add);
+		map.put("operateid", operateid);
+		dockTrialService.importD(map);
+		
 	}
 }

@@ -9,54 +9,48 @@
     	<dd id="groud_tital" class="groud_tital">需求申请</dd>
 		<dd class="cut-offRule" ></dd>
 		<dd class="tital">
-			<font>信息资源需求部门</font>
-			<font style="left:330px;">信息资源提供部门</font>
+			<font>信息资源需求部门：</font>
+			<font id="demandDepNameShow"  style="left:170px;"/></font>			
+			<font style="left:460px;">信息资源提供部门：</font>
+			<font id="proDepNameShow"  style="left:600px;"/></font>
 		</dd>
-		<dd style="position: relative;">
-			<input id="demandDepNameShow" readonly="readonly" style="width: 40%;"/>
-			<input id="proDepNameShow" readonly="readonly" style="position:absolute;left:330px;width: 40%;"/>
-<!-- 			<font id="demandDepNameShow">信息资源提供部门</font> -->
-<!-- 			<font id="proDepNameShow" style="left:330px;">信息资源提供部门</font> -->
-		</dd>
-		<dd class="cut-offRule" ></dd>
+
 		<dd class="tital">
 			<font>需求名称</font>
-			<font style="left:330px;">资源匹配关键字</font>
+			<font id="demandNameShow"  style="left:170px;"/></font>
+			<font style="left:460px;">资源匹配关键字</font>
+			<font id="keyWordShow"  style="left:600px;"/></font>
 		</dd>
-		<dd style="position: relative;">
-			<input id="demandNameShow" readonly="readonly" style="width: 40%;"/>
-			<input id="keyWordShow" readonly="readonly" style="position:absolute;left:330px;width: 40%;"/>
-<!-- 			<font id="demandNameShow">需求名称</font> -->
-<!-- 			<font id="keyWordShow" style="left:330px;">资源匹配关键字</font> -->
+		
+		<dd style="height: 70px;">
+			<font style="height: 50px;">需求内容：<br>（须细化到数据项）</font>
+			<textarea class="textareaShow" style="left:170px;width: 675px;"  rows="3" id="demantDetailShow" readonly="readonly" ></textarea>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
-<!-- 		<dd class="tital"><font>资源匹配关键字</font></dd> -->
-<!-- 		<dd style="position: relative;"> -->
-<!-- 			<font id="keyWordShow">资源匹配关键字</font> -->
-<!-- 		</dd> -->
-		<dd class="cut-offRule" ></dd>
-		<dd class="tital"><font style="left:40px;">需求内容（须细化到数据项）</font></dd>
-		<dd style="height: 63px;"><textarea rows="3" id="demantDetailShow" readonly="readonly"></textarea></dd>
-		<dd class="cut-offRule" ></dd>
-		<dd class="tital">
-			<font style="width: 20%;">期望提供方式</font>
-			<font style="width: 20%;left:40%;">期望共享服务方式</font>
-			<font style="width: 20%;right: 30px;">期望更新频率</font>
+				
+		<dd>
+			<font>期望提供方式：</font>
+			<font id="accessModeNameShow" style="left:170px;"></font>
+			<font style="left:460px;">期望共享服务方式：</font>
+			<font id="serveModeNameShow" style="left:600px;"></font>
 		</dd>
-		<dd >
-			<input id="accessModeNameShow" style="width: 20%;" readonly="readonly"/>
-			<input id="serveModeNameShow" readonly="readonly" style="position:absolute;width: 20%;left:40%;"/>
-			<input id="frequencyNameShow" readonly="readonly" style="position:absolute;width: 20%;right: 30px;"/>
-<!-- 			<font id="accessModeNameShow" style="width: 20%;">期望提供方式</font> -->
-<!-- 			<font id="serveModeNameShow" style="width: 20%;left:40%;">期望共享服务方式</font> -->
-<!-- 			<font id="frequencyNameShow" style="width: 20%;right: 30px;">期望更新频率</font> -->
+		
+		<dd>
+			<font>期望更新频率：</font>
+			<font id="frequencyNameShow" style="left:170px;"></font>
 		</dd>
-<!-- 		<dd class="cut-offRule" ></dd> -->
-<!-- 		<dd class="tital"><font class="redStart">*</font><font style="left:40px;">期望更新频率</font></dd> -->
-<!-- 		<dd ><font id="frequencyNameShow">期望更新频率</font></dd> -->
-		<dd class="cut-offRule" ></dd>
-		<dd class="tital"><font>用途</font></dd>
-		<dd style="height: 63px;"><textarea rows="3" id="demandUseShow" readonly="readonly"></textarea></dd>
+				
+		<dd style="height: 70px;">
+			<font style="height: 40px;">用途：</font>
+			<textarea class="textareaShow" style="left:170px;width: 675px;" rows="3" id="demandUseShow" readonly="readonly"></textarea>
+		</dd>
+		
+		<dd>
+			<font>申请人：</font>
+			<font id="createrNameShow" style="left:170px;width:200px;"></font>
+			<font style="left:460px;">申请时间：</font>
+			<font id="saveTimeShow" style="left:600px;"></font>
+		</dd>
+				
 		<dd class="cut-offRule" id="last_cut" ></dd>
 		
 		<dd id="groud_tital" class="groud_tital">对接人处理</dd>

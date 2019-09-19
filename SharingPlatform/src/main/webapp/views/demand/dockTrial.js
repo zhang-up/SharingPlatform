@@ -31,15 +31,17 @@ function findList(){
 		dataType:'json',
 		type:'post',
 		success:function(result){	
-			$('#proDepNameShow').val(result.provideDepName);
-			$('#demandDepNameShow').val(result.demandDepName);
-			$('#demandNameShow').val(result.demandName);
-			$('#keyWordShow').val(result.keyWord);
-			$('#demantDetailShow').val(result.demandDetail);
-			$('#accessModeNameShow').val(result.accessModeName);
-			$('#serveModeNameShow').val(result.serveModeName);
-			$('#frequencyNameShow').val(result.frequencyName);
-			$('#demandUseShow').val(result.demandUse);
+			$('#proDepNameShow').text(result.provideDepName);
+			$('#demandDepNameShow').text(result.demandDepName);
+			$('#demandNameShow').text(result.demandName);
+			$('#keyWordShow').text(result.keyWord);
+			$('#demantDetailShow').text(result.demandDetail);
+			$('#accessModeNameShow').text(result.accessModeName);
+			$('#serveModeNameShow').text(result.serveModeName);
+			$('#frequencyNameShow').text(result.frequencyName);
+			$('#demandUseShow').text(result.demandUse);
+			$('#createrNameShow').append('<a href="javascript:" onclick=showMoli("'+result.moblie+'");>'+result.operator+'</a>');
+			$('#saveTimeShow').text(result.saveTime);
 		},
 	});
 }
@@ -98,4 +100,6 @@ function searchApply(type){
     }).trigger('reloadGrid');
 	
 }
-
+function showMoli(moli){
+	alert('联系电话：'+moli);
+}

@@ -104,6 +104,6 @@
 	</select>	
 	
 	<select id="importD">
-       update t_demand_operate set file_Name =#{file_Name},file_add=#{file_add} where operateid=#{operateid}
+       update t_demand_operate set file_Name =#{file_Name},file_add=#{file_add} where operate_id=#{operateid}
 	</select>
 </mapper>

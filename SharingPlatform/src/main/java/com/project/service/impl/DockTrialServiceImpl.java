@@ -122,15 +122,15 @@ public class DockTrialServiceImpl implements DockTrialService{
 			map.put("state", "04");
 			map.put("res", "1");
 			map.put("cause", dealReasonYes);
-			 //dockTrialDao.changTrial(map);//需求表改状态	
-			// dockTrialDao.insertAgreeTrial(map);//插入新数据
+			 dockTrialDao.changTrial(map);//需求表改状态	
+			 dockTrialDao.insertAgreeTrial(map);//插入新数据
 			return demandOperateId;
 		}else if(dealResult.equals("2")){//提供人不同意
 			map.put("state", "05");
 			map.put("res", "2");
 			map.put("cause", dealReasonNo);
-			//dockTrialDao.changTrial(map);//需求表改状态	
-			//dockTrialDao.insertAgreeTrial(map);//插入新数据
+			dockTrialDao.changTrial(map);//需求表改状态	
+			dockTrialDao.insertAgreeTrial(map);//插入新数据
 			return demandOperateId;
 		}	
 		return demandOperateId;
@@ -155,6 +155,6 @@ public class DockTrialServiceImpl implements DockTrialService{
 
 	@Override
 	public void importD(Map<String, Object> map) {
-				
+			dockTrialDao.importD(map);	
 	}
 }
