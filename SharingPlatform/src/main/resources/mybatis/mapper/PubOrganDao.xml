@@ -40,6 +40,16 @@
 		<result column="OPEN" property="open"></result>
 	</resultMap>
 	
+	<select id="treeRoot" parameterType="com.project.param.PubOrganParam"  resultMap="treeMap">
+    	SELECT PARENT_CODE parentCode,
+				CODE,
+				NAME,
+				 CODE VALUE,
+				 SORT_ORDER, TRUE AS OPEN, 1 as cNums
+			FROM pub_region WHERE STATUS = 1
+			ORDER BY SORT_ORDER ASC;
+	</select>
+	
     <select id="tree" parameterType="com.project.param.PubOrganParam"  resultMap="treeMap">
     	SELECT a.parentCode,a.CODE,a.NAME,a.VALUE,count(b.code) cNums, open FROM
 			(SELECT PARENT_CODE parentCode,

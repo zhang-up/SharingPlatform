@@ -72,9 +72,13 @@ public class PubOrganServiceImpl implements PubOrganService {
 		if(StringUtil.isNull(parentCode)){
 			return new ArrayList<PubOrganTreeInfo>();
 		}
-		PubOrganParam pubOrgan = new PubOrganParam();
-		pubOrgan.setParentCode(parentCode);
-		return pubOrganDao.tree(pubOrgan);
+		if("#".equals(parentCode)){
+			return pubOrganDao.treeRoot();
+		}else{
+			PubOrganParam pubOrgan = new PubOrganParam();
+			pubOrgan.setParentCode(parentCode);
+			return pubOrganDao.tree(pubOrgan);
+		}
 	}
 	
 	@Override
