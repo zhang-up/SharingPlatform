@@ -117,10 +117,10 @@ public class DockTrialController extends  AbstractController{
 		if(StringUtil.isNull(dealReasonYes)&&StringUtil.isNull(dealReasonNo)){				
 				return R.error("请选择处理原因！");
 		}		
-
-		String String=dockTrialService.dealProvide(params);	
+		System.out.println(params);
+		//String String=dockTrialService.dealProvide(params);	
 		R r=new R();
-		r.put("opertorid", String);
+		//r.put("opertorid", String);
 		//System.out.println(r);
 		return r;
 	}
@@ -148,9 +148,9 @@ public class DockTrialController extends  AbstractController{
 	 * @throws IOException 
 	 */
 	@RequestMapping("/importD")
-	public void importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,@RequestParam(value = "operateid") String operateid,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
+	public String importD(@RequestParam(value = "importDFile", required = false) MultipartFile file,@RequestParam(value = "operateid") String operateid,HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{	
 		if(file==null){
-			return ;
+			return "1";
 		}
 		String file_Name = file.getOriginalFilename();
 		String newName=UUIDUtil.getUUID32()+file_Name.substring(file_Name.lastIndexOf("."));
@@ -167,7 +167,61 @@ public class DockTrialController extends  AbstractController{
 		map.put("file_Name", file_Name);
 		map.put("file_add", file_add);
 		map.put("operateid", operateid);
-		dockTrialService.importD(map);
-		
+		//dockTrialService.importD(map);
+		return "2";
+	}
+	@RequestMapping("/submitd")
+	public R test(@RequestParam(value = "importDFile", required = false) MultipartFile file,
+			@RequestParam(value = "demandid") String demandid,
+			@RequestParam(value = "token") String token,
+			@RequestParam(value = "demandUse") String demandUse,
+			@RequestParam(value = "dealResult") String dealResult,
+			@RequestParam(value = "dealReasonYes") String dealReasonYes,
+			@RequestParam(value = "dealReasonNo") String dealReasonNo,
+			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session
+			) throws IOException{	
+        if(file==null){
+		}	
+		if(StringUtil.isNull(token)){
+			return R.error("登录状态异常！");
+		}				
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		if(StringUtil.isNull(dealResult)){
+			return R.error("请选择处理结果！");
+		}
+		if(StringUtil.isNull(dealReasonYes)&&StringUtil.isNull(dealReasonNo)){				
+				return R.error("请选择处理原因！");
+		}		
+		Map<String, Object> map=new HashMap<String, Object>();
+//上传文档
+		if(file!=null){
+			String file_Name = file.getOriginalFilename();
+			String newName=UUIDUtil.getUUID32()+file_Name.substring(file_Name.lastIndexOf("."));
+			String url = session.getServletContext().getRealPath("/")+"static\\upload";
+			String file_add="static/upload/"+newName;
+			File root=new File(url);
+				if(!root.exists()){//如果文件夹不存在
+					root.mkdir();//创建文件夹
+				}
+			File newFile=new File(root,newName);		
+			FileUtils.copyInputStreamToFile(file.getInputStream(), newFile);
+			map.put("file_add", file_add);
+			map.put("file_Name", file_Name);
+		}
+//往map当中传值		
+		map.put("token", token);
+		map.put("demandid", demandid);
+		map.put("demandUse", demandUse);
+		map.put("dealResult", dealResult);
+		map.put("dealReasonNo", dealReasonNo);		
+		map.put("dealReasonYes", dealReasonYes);
+		dockTrialService.dealProvide(map);
+		return R.ok();
 	}
 }

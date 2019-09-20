@@ -1,5 +1,7 @@
 package com.project.controller;
 
+
+import java.util.ArrayList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -317,6 +319,7 @@ public class TDemandController extends  AbstractController{
 		return R.ok();
 	}
 	
+
 	//提供方统计
 	@RequestMapping("/statisticPro")
 	public List<TDemandStatisticInfo> statisticPro(@RequestParam Map<String, Object> params, HttpSession session){
@@ -442,5 +445,5 @@ public class TDemandController extends  AbstractController{
             e.printStackTrace();
         }
 	}
-	
+
 }

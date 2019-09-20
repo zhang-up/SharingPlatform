@@ -88,10 +88,10 @@ function initResList(dataS){
         		var thisId = $(this).attr('id');
         		if(rowId == thisId){
         			if($(this).is(':hidden')){
-          			　　$(this).show();　
-          			}else{
-          			　　$(this).hide();
-          			}
+        				$(this).show();
+        			}else{
+        				$(this).hide();
+        			}
         		}
         	});
         },
@@ -140,7 +140,7 @@ function editApply(state){
 	$.each($("front[name='chose_Res']"), function(i, n){
 		var thisId = $(this).attr('id');
 		if(!$(this).is(':hidden')){
-		　　choose_res = thisId;　
+		   choose_res = thisId;
 		}
 	});
 	

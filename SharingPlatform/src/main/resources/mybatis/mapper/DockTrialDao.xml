@@ -94,8 +94,8 @@
 	
 	<select id="insertAgreeTrial" >
 		INSERT INTO t_demand_operate (operate_id,demand_id,operator,operate_time,state,
-		operate_res,cause,remark,file_add  )VALUES(#{demandOperateId},#{demandid},#{token},
-		#{time},#{state},#{res},#{cause},#{demandUse},#{file_add})
+		operate_res,cause,remark,file_add,file_Name )VALUES(#{demandOperateId},#{demandid},#{token},
+		#{time},#{state},#{res},#{cause},#{demandUse},#{file_add},#{file_Name})
 	</select>
 	
 	<select id="findTdOperate" resultMap="map3">

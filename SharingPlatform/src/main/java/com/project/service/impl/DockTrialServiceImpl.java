@@ -113,11 +113,15 @@ public class DockTrialServiceImpl implements DockTrialService{
 		String dealResult = map.get("dealResult") == null ? "" : map.get("dealResult").toString();//处理结果(1-同意，2-驳回)
 		String dealReasonYes=map.get("dealReasonYes")==null ? "" : map.get("dealReasonYes").toString();//同意原因
 		String dealReasonNo=map.get("dealReasonNo")==null ? "" : map.get("dealReasonNo").toString();//驳回原因
+		String file_add=map.get("file_add")==null ? "" : map.get("file_add").toString();
+		String file_Name=map.get("file_Name")==null ? "" : map.get("file_Name").toString();
 		String demandid=map.get("demandid").toString();//ID
 		String demandOperateId = UUIDUtil.getUUID32();
 		String time=DateUtil.getDate();//时间
 		map.clear();map.put("token", token);map.put("demandUse", demandUse);map.put("time", time);
 		map.put("demandid", demandid);map.put("token",token );map.put("demandOperateId",demandOperateId );
+		map.put("file_add", file_add);
+		map.put("file_Name", file_Name);
 		if(dealResult.equals("1")){//提供人同意
 			map.put("state", "04");
 			map.put("res", "1");

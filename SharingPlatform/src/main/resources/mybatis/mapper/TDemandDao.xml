@@ -47,6 +47,7 @@
         <result property="remark" column="remark"/>
         <result property="chooseNums" column="choose_nums"/>
         <result property="recommendNums" column="recommend_nums"/>
+
     </resultMap>
     
     <resultMap type="com.project.info.TDemandStatisticInfo" id="statisticInfoMap">

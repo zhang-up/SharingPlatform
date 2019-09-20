@@ -90,8 +90,8 @@ function submit(){
 	if(obj.type == "backCauseTi"){ 
 	alert(3); } 
 	}*/
-	if(isClick== true){upload(operateid);}
-	else{}
+	/*if(isClick== true){upload(operateid);}
+	else{}*/
 	
 }
 
@@ -136,23 +136,53 @@ function showfileSelected(){
 }
 */
 
-function upload(operateid){
+function upload(){
 	$("#upBut").hide();
 	$("#updateBut").hide();	
-	uploadFile(files[0],operateid);
+	uploadFile(files[0]);
 }
 
-function uploadFile(file,operateid) {
-		var fd = new FormData();
-		fd.append("importDFile", file);
-		fd.append("operateid",operateid);
+function uploadFile() {
+	var demandUse=$('#demandUse').val();//说明
+	var dealResult=$('#dealResult').val();//处理结果
+	var dealReasonYes=$('#dealReasonYes').val();//处理原因（同意）
+	var dealReasonNo=$('#dealReasonNo').val();//处理原因（拒绝）
+	if(strIsNull(dealResult)){
+		alert('请选择处理结果！');
+		return;
+	}
+	if(strIsNull(dealReasonYes)&&strIsNull(dealReasonNo)){
+		alert('请选择处理结果！');
+		return;
+	}
+	var fd = new FormData();
+	if(isClick== true){fd.append("importDFile", files[0]);alert(1)}
+	else{fd.append("importDFile", null);alert(2)}
+		
+		//fd.append("importDFile", file);
+		fd.append("demandid", pro_deal_demandid);
+		fd.append("demandUse", demandUse);
+		fd.append("dealResult", dealResult);
+		fd.append("dealReasonYes",dealReasonYes);
+		fd.append("dealReasonNo",dealReasonNo);
 		fd.append("token", (sessionStorage.token!=null ? sessionStorage.token: ''));		
 		var xhr = new XMLHttpRequest();
 		xhr.upload.addEventListener("progress", uploadProgress, false);
 		xhr.addEventListener("load", uploadComplete, false);
-		xhr.open("POST", "dock/importD");
+		xhr.open("POST", "dock/submitd");
 		xhr.send(fd);
+		
+/*		xhr.onreadystatechange = function(){
+		    //若响应完成且请求成功
+		    if(xhr.readyState === 4 && xhr.status === 200){
+		    	var b = xmlHttpRequest.responseText; 
+		        alert("chenggong")
+		    }
+		    cancelPopup();
+		}*/
+
 }
+
 
 function uploadProgress(evt) {
 	
@@ -165,7 +195,7 @@ function uploadComplete(evt) {
 	if(backJ.code == 0){
 		alert('导入成功');
 		searchApply();
-//		cancelPopup();
+		cancelPopup();
 	}else{
 		
 	}

@@ -195,7 +195,7 @@ public class TDemandServiceImpl implements TDemandService {
 		return tDemandDao.queryInfoList(map);
 
 	}
-	
+
 	//提供方统计
 	@Override
 	public List<TDemandStatisticInfo> statisticPro(Map<String, Object> map){
@@ -223,4 +223,5 @@ public class TDemandServiceImpl implements TDemandService {
 		
 		return tDemandDao.statisticPro(map);
     }
+
 }

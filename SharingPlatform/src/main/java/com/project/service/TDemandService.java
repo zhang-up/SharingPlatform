@@ -32,7 +32,8 @@ public interface TDemandService {
 	void deleteBatch(String[] demandIds);
 	
 	List<TDemandInfo> dockingList(Map<String, Object> map);
-	
+
 	//提供方统计
     List<TDemandStatisticInfo> statisticPro(Map<String, Object> map);
+
 }
