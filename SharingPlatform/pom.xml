@@ -8,11 +8,12 @@
 		<version>2.1.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.xuchaobo</groupId>
-	<artifactId>SpringBoot03_mybatis_xml</artifactId>
+
+	<groupId>com.maven.zp</groupId>
+	<artifactId>demo1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>SpringBoot03_mybatis_xml</name>
+	<name>SharingPlatform</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
