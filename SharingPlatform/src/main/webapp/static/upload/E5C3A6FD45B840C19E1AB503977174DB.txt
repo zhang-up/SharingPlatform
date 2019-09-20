@@ -1,0 +1,1 @@
+[Epoch 4/100, Batch 5350/15116] [Losses: x 0.007451, y 0.005035, w 0.008840, h 0.014760, conf 0.018375, cls 0.000000, total 0.054460, recall: 1.00000, precision: 0.74297] [train time: 0.980599, save time: 0.000000]

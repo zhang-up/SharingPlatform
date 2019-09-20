@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.entity.TDemandEntity;
 import com.project.info.TDemandInfo;
+import com.project.info.TDemandStatisticInfo;
 
 @Mapper
 public interface TDemandDao extends BaseDao<TDemandEntity> {
@@ -17,4 +18,7 @@ public interface TDemandDao extends BaseDao<TDemandEntity> {
     List<TDemandInfo> queryInfoList(Map<String, Object> map);
     
     TDemandInfo queryDetailObject(Object id);
+    
+    //提供方统计
+    List<TDemandStatisticInfo> statisticPro(Map<String, Object> map);
 }

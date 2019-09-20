@@ -1,0 +1,37 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="views/demand/statistic.js?v=1"></script>
+
+
+<div class="showList" style='height:100px;'>
+	<div class="screen">
+		<div style="left:0px;width: 150px;">信息资源提供部门：</div>
+		<div style="left:150px;width: 220px;">
+			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择部门"/>
+			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择部门"/>
+		</div>
+		
+		<div style="left:390px;width: 100px;">统计时间：</div>
+		
+		<div style="left:490px;width:110px;">
+			<input id="stratDate" name="stratDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:590px;width:30px;">
+			至
+		</div>
+		<div style="left:610px;width:110px;">
+			<input id="endDate" name="endDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:710px;">
+			<a class="btn btn-primary" href="javascript:" onclick="searchStaPro();" >搜  索</a>
+		</div>
+		<div style="left:810px;">
+			<a class="btn btn-primary" href="javascript:" onclick="uploadStaPro();" >导出统计表</a>
+		</div>
+	</div>
+	<div class="gridPanel">
+	    <table id="statisticGrid"></table>
+	    <div id="statisticGridPager"></div>
+    </div>
+  </div>
+
