@@ -6,6 +6,7 @@ package com.project.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.project.service.NationalInterfaceService;
+import com.project.utils.CommonJsonConfig;
 import com.project.utils.InterfaceXmlParam;
 import com.project.utils.SoapXmlUtil;
 
@@ -116,8 +117,7 @@ public class NationalInterfaceServiceImpl implements NationalInterfaceService {
 		// 发送发签名
 		String appKey = "9697747911790e01c7b3dbea041fd0fa";
 		String result = SoapXmlUtil.executeJsonRequest(url, query, rid, sid, appKey);
-		result = com.alibaba.fastjson.JSONObject.parseObject(result).toString();
-		return JSONObject.fromObject(result);
+		return JSONObject.fromObject(result, new CommonJsonConfig());
 	}
 
 	/* (non-Javadoc)
@@ -133,8 +133,7 @@ public class NationalInterfaceServiceImpl implements NationalInterfaceService {
 		// 发送发签名
 		String appKey = "52e52b21bf78a8f67979218ff53d0c71";
 		String result = SoapXmlUtil.executeJsonRequest(url, query, rid, sid, appKey);
-		result = com.alibaba.fastjson.JSONArray.parseArray(result).toString();
-		return JSONArray.fromObject(result);
+		return JSONArray.fromObject(result, new CommonJsonConfig());
 	}
 
 
