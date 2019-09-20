@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.TImportDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.TImportEntity" id="tImportMap">
+        <result property="importId" column="import_id"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="creater"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.TImportEntity">
+		select * from t_import where import_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.TImportEntity">
+		select * from t_import
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.TImportEntity" parameterType="com.project.entity.TImportEntity" >
+			select * from t_import where  1=1
+        <set>
+														                    <if test="saveTime != null"> AND save_time = #{saveTime}, </if>
+											                    <if test="creater != null"> AND creater = #{creater}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.TImportEntity">
+		SELECT * FROM
+        (
+		select * from t_import
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by import_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_import 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.TImportEntity">
+		insert into t_import
+		(
+			import_id, 
+			save_time, 
+			creater
+		)
+		values
+		(
+			#{importId}, 
+			#{saveTime}, 
+			#{creater}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.TImportEntity">
+		update t_import 
+		<set>
+			<if test="saveTime != null">save_time = #{saveTime}, </if>
+			<if test="creater != null">creater = #{creater}</if>
+		</set>
+		where import_id = #{importId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_import where import_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_import where import_id in 
+		<foreach item="importId" collection="array" open="(" separator="," close=")">
+			#{importId}
+		</foreach>
+	</delete>
+
+</mapper>

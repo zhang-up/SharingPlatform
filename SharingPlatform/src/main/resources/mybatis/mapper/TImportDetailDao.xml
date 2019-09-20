@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.TImportDetailDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.TImportDetailEntity" id="tImportDetailMap">
+        <result property="importDetailId" column="import_detail_id"/>
+        <result property="importId" column="import_id"/>
+        <result property="demandId" column="demand_id"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="accessMode" column="access_mode"/>
+        <result property="accessModeName" column="access_mode_name"/>
+        <result property="serveMode" column="serve_mode"/>
+        <result property="serveModeName" column="serve_mode_name"/>
+        <result property="frequency" column="frequency"/>
+        <result property="frequencyName" column="frequency_name"/>
+        <result property="rowsNums" column="rows_nums"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.TImportDetailEntity">
+		select * from t_import_detail where import_detail_id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.TImportDetailEntity">
+		select * from t_import_detail
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.TImportDetailEntity" parameterType="com.project.entity.TImportDetailEntity" >
+			select * from t_import_detail where  1=1
+        <set>
+														                    <if test="importId != null"> AND import_id = #{importId}, </if>
+											                    <if test="demandId != null"> AND demand_id = #{demandId}, </if>
+											                    <if test="provideDep != null"> AND provide_dep = #{provideDep}, </if>
+											                    <if test="provideDepName != null"> AND provide_dep_name = #{provideDepName}, </if>
+											                    <if test="accessMode != null"> AND access_mode = #{accessMode}, </if>
+											                    <if test="accessModeName != null"> AND access_mode_name = #{accessModeName}, </if>
+											                    <if test="serveMode != null"> AND serve_mode = #{serveMode}, </if>
+											                    <if test="serveModeName != null"> AND serve_mode_name = #{serveModeName}, </if>
+											                    <if test="frequency != null"> AND frequency = #{frequency}, </if>
+											                    <if test="frequencyName != null"> AND frequency_name = #{frequencyName}</if>
+											                    <if test="rowsNums != null"> AND rows_nums = #{rowsNums}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.TImportDetailEntity">
+		SELECT * FROM
+        (
+		select * from t_import_detail
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by import_detail_id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_import_detail 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.TImportDetailEntity">
+		insert into t_import_detail
+		(
+			import_detail_id, 
+			import_id, 
+			demand_id, 
+			provide_dep, 
+			provide_dep_name, 
+			access_mode, 
+			access_mode_name, 
+			serve_mode, 
+			serve_mode_name, 
+			frequency, 
+			frequency_name,
+			rows_nums
+		)
+		values
+		(
+			#{importDetailId}, 
+			#{importId}, 
+			#{demandId}, 
+			#{provideDep}, 
+			#{provideDepName}, 
+			#{accessMode}, 
+			#{accessModeName}, 
+			#{serveMode}, 
+			#{serveModeName}, 
+			#{frequency}, 
+			#{frequencyName}, 
+			#{rowsNums}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.TImportDetailEntity">
+		update t_import_detail 
+		<set>
+			<if test="importId != null">import_id = #{importId}, </if>
+			<if test="demandId != null">demand_id = #{demandId}, </if>
+			<if test="provideDep != null">provide_dep = #{provideDep}, </if>
+			<if test="provideDepName != null">provide_dep_name = #{provideDepName}, </if>
+			<if test="accessMode != null">access_mode = #{accessMode}, </if>
+			<if test="accessModeName != null">access_mode_name = #{accessModeName}, </if>
+			<if test="serveMode != null">serve_mode = #{serveMode}, </if>
+			<if test="serveModeName != null">serve_mode_name = #{serveModeName}, </if>
+			<if test="frequency != null">frequency = #{frequency}, </if>
+			<if test="frequencyName != null">frequency_name = #{frequencyName}</if>
+			<if test="rowsNums != null">rows_nums = #{rowsNums}</if>
+		</set>
+		where import_detail_id = #{importDetailId}
+	</update>
+	
+	<delete id="delete">
+		delete from t_import_detail where import_detail_id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_import_detail where import_detail_id in 
+		<foreach item="importDetailId" collection="array" open="(" separator="," close=")">
+			#{importDetailId}
+		</foreach>
+	</delete>
+
+</mapper>

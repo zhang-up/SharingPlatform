@@ -1,0 +1,82 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<script type="text/javascript" src="views/demand/dealProvide.js?v=1"></script>
+	
+	<dl align="left" style="height: 30px;">
+		<dd id="page_tital" class="page_tital"></dd>
+	</dl>
+    <dl align="left" style="top: 30px;border-top:0px;">
+    	<dd id="groud_tital" class="groud_tital">需求申请</dd>
+		<dd class="cut-offRule" ></dd>
+		<dd>
+			<font style="width: 126px;text-align: right;">信息资源需求部门</font>
+			<font id="demandDepNameShow" style="left:170px;"></font>
+			<font style="left:460px;">信息资源提供部门：</font>
+			<font id="proDepNameShow" style="left:600px;"></font>
+		</dd>
+		<dd>
+			<font style="width: 126px;text-align: right;">需求名称</font>
+			<font id="demandNameShow" style="left:170px;"></font>
+			<font style="left:460px;">资源匹配关键字：</font>
+			<font id="keyWordShow" style="left:600px;"></font>
+		</dd>
+		<dd style="height: 70px;">
+			<font style="height: 50px;width: 126px;text-align: right;">需求内容<br>（须细化到数据项）</font>
+			<textarea class="textareaShow" style="left:170px;width: 675px;"  rows="3" id="demantDetailShow" readonly="readonly" ></textarea>
+		</dd>
+		<dd>
+			<font style="width: 126px;text-align: right;">期望提供方式：</font>
+			<font id="accessModeNameShow" style="left:170px;"></font>
+			<font style="left:460px;">期望共享服务方式：</font>
+			<font id="serveModeNameShow" style="left:600px;"></font>
+		</dd>
+		<dd>
+			<font style="width: 126px;text-align: right;">期望更新频率：</font>
+			<font id="frequencyNameShow" style="left:170px;"></font>
+		</dd>
+		<dd style="height: 70px;">
+			<font style="height: 40px;width: 126px;text-align: right;">用途：</font>
+			<textarea class="textareaShow" style="left:170px;width: 675px;" rows="3" id="demandUseShow" readonly="readonly"></textarea>
+		</dd>
+		<dd>
+			<font style="width: 126px;text-align: right;">申请人：</font>
+			<font id="createrNameShow" style="left:170px;width:200px;"></font>
+			<font style="left:460px;">申请时间：</font>
+			<font id="saveTimeShow" style="left:600px;"></font>
+		</dd>
+
+		<dd id="groud_deal" class="groud_tital">提供单位处理</dd>
+		
+		<dd>
+			<font class="redStart">*</font><font style="left:40px;">处理结果：</font>
+			<select id="dealResult" style="left:130px;width: 200px;"></select>
+		</dd>
+		<dd class="tital" id='upBut'>
+			<font class="redStart">*</font><font style="left:40px;">处理原因：</font>
+			<select id="dealReasonYes" style="width: 200px;left:130px;"></select>
+			<select id="dealReasonNo" style="width: 200px;left:130px;display: none;"></select>
+		    <font style="left:420px;" id="backCauseTi">处理依据：</font>
+			<div style="position: absolute;right:22%;width: 20%;" id="file">
+				
+			</div>
+		
+		</dd>
+		<dd>
+			<font id="fileName"></font>
+			<font id="fileSize" style="left:400px;"></font>
+		</dd>
+	
+
+		
+		<dd style="height: 70px;">
+			<font style="height: 40px;" class="redStart"></font><font style="left:40px;height: 40px;">说明：</font>
+			<textarea style="left:130px;width: 675px;" rows="3" id="demandUse" placeholder="请输入说明"></textarea>
+		</dd>
+		<dd>
+		   <a id ="submit" class="subA" href="javascript:" onclick="uploadFile();" style="position:absolute;width: 20%; right:60% ">提交</a> 
+			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%; right:20% ">关闭</a>  
+		</dd>
+		<dd class="cut-offRule" ></dd>
+	</dl>
+
+	

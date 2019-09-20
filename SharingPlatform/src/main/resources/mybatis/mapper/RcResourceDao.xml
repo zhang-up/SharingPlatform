@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.RcResourceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.RcResourceEntity" id="rcResourceMap">
+        <result property="id" column="id"/>
+        <result property="version" column="version"/>
+        <result property="resName" column="res_name"/>
+        <result property="resDesc" column="res_desc"/>
+        <result property="resType" column="res_type"/>
+        <result property="cataId" column="cata_id"/>
+        <result property="orgId" column="org_id"/>
+        <result property="regionCode" column="region_code"/>
+        <result property="orgName" column="org_name"/>
+        <result property="shareType" column="share_type"/>
+        <result property="shareCondition" column="share_condition"/>
+        <result property="innerShareType" column="inner_share_type"/>
+        <result property="innerShareCondition" column="inner_share_condition"/>
+        <result property="openType" column="open_type"/>
+        <result property="openCondition" column="open_condition"/>
+        <result property="updateCycle" column="update_cycle"/>
+        <result property="customUpdateCycle" column="custom_update_cycle"/>
+        <result property="authzType" column="authz_type"/>
+        <result property="isSavedToPlatform" column="is_saved_to_platform"/>
+        <result property="createMethod" column="create_method"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorName" column="creator_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="publishTime" column="publish_time"/>
+        <result property="status" column="status"/>
+        <result property="canProxy" column="can_proxy"/>
+        <result property="expireTime" column="expire_time"/>
+        <result property="fromSystemId" column="from_system_id"/>
+        <result property="fromSystemName" column="from_system_name"/>
+    </resultMap>
+    
+    <resultMap type="com.project.info.RcResourceInfo" id="matchingMap">
+        <result property="id" column="id"/>
+        <result property="resName" column="res_name"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.project.entity.RcResourceEntity">
+		select * from rc_resource where id = #{value}
+	</select>
+
+	<select id="findALL" resultType="com.project.entity.RcResourceEntity">
+		select * from rc_resource
+	</select>
+	
+	<select id="matchingRes" resultMap="matchingMap">
+		select id,res_name from rc_resource 
+		where status = '4'
+		and (
+			<if test="keyWord1 != null and keyWord1 != ''">
+		      res_name like #{keyWord1}
+		    </if>
+		    <if test="keyWord2 != null and keyWord2 != ''">
+		      or res_name like #{keyWord2}
+		    </if>
+		    <if test="keyWord3 != null and keyWord3 != ''">
+		      or res_name like #{keyWord3}
+		    </if>
+		    <if test="keyWord4 != null and keyWord4 != ''">
+		      or res_name like #{keyWord4}
+		    </if>
+		    <if test="keyWord5 != null and keyWord5 != ''">
+		      or res_name like #{keyWord5}
+		    </if>
+		)
+	</select>
+
+    <select id="findList"  resultType="com.project.entity.RcResourceEntity" parameterType="com.project.entity.RcResourceEntity" >
+			select * from rc_resource where  1=1
+        <set>
+														                    <if test="version != null"> AND version = #{version}, </if>
+											                    <if test="resName != null"> AND res_name = #{resName}, </if>
+											                    <if test="resDesc != null"> AND res_desc = #{resDesc}, </if>
+											                    <if test="resType != null"> AND res_type = #{resType}, </if>
+											                    <if test="cataId != null"> AND cata_id = #{cataId}, </if>
+											                    <if test="orgId != null"> AND org_id = #{orgId}, </if>
+											                    <if test="regionCode != null"> AND region_code = #{regionCode}, </if>
+											                    <if test="orgName != null"> AND org_name = #{orgName}, </if>
+											                    <if test="shareType != null"> AND share_type = #{shareType}, </if>
+											                    <if test="shareCondition != null"> AND share_condition = #{shareCondition}, </if>
+											                    <if test="innerShareType != null"> AND inner_share_type = #{innerShareType}, </if>
+											                    <if test="innerShareCondition != null"> AND inner_share_condition = #{innerShareCondition}, </if>
+											                    <if test="openType != null"> AND open_type = #{openType}, </if>
+											                    <if test="openCondition != null"> AND open_condition = #{openCondition}, </if>
+											                    <if test="updateCycle != null"> AND update_cycle = #{updateCycle}, </if>
+											                    <if test="customUpdateCycle != null"> AND custom_update_cycle = #{customUpdateCycle}, </if>
+											                    <if test="authzType != null"> AND authz_type = #{authzType}, </if>
+											                    <if test="isSavedToPlatform != null"> AND is_saved_to_platform = #{isSavedToPlatform}, </if>
+											                    <if test="createMethod != null"> AND create_method = #{createMethod}, </if>
+											                    <if test="creatorId != null"> AND creator_id = #{creatorId}, </if>
+											                    <if test="creatorName != null"> AND creator_name = #{creatorName}, </if>
+											                    <if test="createTime != null"> AND create_time = #{createTime}, </if>
+											                    <if test="updateTime != null"> AND update_time = #{updateTime}, </if>
+											                    <if test="publishTime != null"> AND publish_time = #{publishTime}, </if>
+											                    <if test="status != null"> AND status = #{status}, </if>
+											                    <if test="canProxy != null"> AND can_proxy = #{canProxy}, </if>
+											                    <if test="expireTime != null"> AND expire_time = #{expireTime}, </if>
+											                    <if test="fromSystemId != null"> AND from_system_id = #{fromSystemId}, </if>
+											                    <if test="fromSystemName != null"> AND from_system_name = #{fromSystemName}</if>
+							        </set>
+	</select>
+
+	<select id="queryList" resultType="com.project.entity.RcResourceEntity">
+		SELECT * FROM
+        (
+		select * from rc_resource
+		<choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from rc_resource 
+	</select>
+
+
+	<insert id="save" parameterType="com.project.entity.RcResourceEntity">
+		insert into rc_resource
+		(
+			id, 
+			version, 
+			res_name, 
+			res_desc, 
+			res_type, 
+			cata_id, 
+			org_id, 
+			region_code, 
+			org_name, 
+			share_type, 
+			share_condition, 
+			inner_share_type, 
+			inner_share_condition, 
+			open_type, 
+			open_condition, 
+			update_cycle, 
+			custom_update_cycle, 
+			authz_type, 
+			is_saved_to_platform, 
+			create_method, 
+			creator_id, 
+			creator_name, 
+			create_time, 
+			update_time, 
+			publish_time, 
+			status, 
+			can_proxy, 
+			expire_time, 
+			from_system_id, 
+			from_system_name
+		)
+		values
+		(
+			#{id}, 
+			#{version}, 
+			#{resName}, 
+			#{resDesc}, 
+			#{resType}, 
+			#{cataId}, 
+			#{orgId}, 
+			#{regionCode}, 
+			#{orgName}, 
+			#{shareType}, 
+			#{shareCondition}, 
+			#{innerShareType}, 
+			#{innerShareCondition}, 
+			#{openType}, 
+			#{openCondition}, 
+			#{updateCycle}, 
+			#{customUpdateCycle}, 
+			#{authzType}, 
+			#{isSavedToPlatform}, 
+			#{createMethod}, 
+			#{creatorId}, 
+			#{creatorName}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{publishTime}, 
+			#{status}, 
+			#{canProxy}, 
+			#{expireTime}, 
+			#{fromSystemId}, 
+			#{fromSystemName}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.project.entity.RcResourceEntity">
+		update rc_resource 
+		<set>
+			<if test="version != null">version = #{version}, </if>
+			<if test="resName != null">res_name = #{resName}, </if>
+			<if test="resDesc != null">res_desc = #{resDesc}, </if>
+			<if test="resType != null">res_type = #{resType}, </if>
+			<if test="cataId != null">cata_id = #{cataId}, </if>
+			<if test="orgId != null">org_id = #{orgId}, </if>
+			<if test="regionCode != null">region_code = #{regionCode}, </if>
+			<if test="orgName != null">org_name = #{orgName}, </if>
+			<if test="shareType != null">share_type = #{shareType}, </if>
+			<if test="shareCondition != null">share_condition = #{shareCondition}, </if>
+			<if test="innerShareType != null">inner_share_type = #{innerShareType}, </if>
+			<if test="innerShareCondition != null">inner_share_condition = #{innerShareCondition}, </if>
+			<if test="openType != null">open_type = #{openType}, </if>
+			<if test="openCondition != null">open_condition = #{openCondition}, </if>
+			<if test="updateCycle != null">update_cycle = #{updateCycle}, </if>
+			<if test="customUpdateCycle != null">custom_update_cycle = #{customUpdateCycle}, </if>
+			<if test="authzType != null">authz_type = #{authzType}, </if>
+			<if test="isSavedToPlatform != null">is_saved_to_platform = #{isSavedToPlatform}, </if>
+			<if test="createMethod != null">create_method = #{createMethod}, </if>
+			<if test="creatorId != null">creator_id = #{creatorId}, </if>
+			<if test="creatorName != null">creator_name = #{creatorName}, </if>
+			<if test="createTime != null">create_time = #{createTime}, </if>
+			<if test="updateTime != null">update_time = #{updateTime}, </if>
+			<if test="publishTime != null">publish_time = #{publishTime}, </if>
+			<if test="status != null">status = #{status}, </if>
+			<if test="canProxy != null">can_proxy = #{canProxy}, </if>
+			<if test="expireTime != null">expire_time = #{expireTime}, </if>
+			<if test="fromSystemId != null">from_system_id = #{fromSystemId}, </if>
+			<if test="fromSystemName != null">from_system_name = #{fromSystemName}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from rc_resource where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from rc_resource where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
