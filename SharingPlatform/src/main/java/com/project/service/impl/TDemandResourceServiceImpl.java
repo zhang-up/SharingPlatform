@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.dao.TDemandResourceDao;
 import com.project.entity.TDemandResourceEntity;
+import com.project.info.TDemandResourceInfo;
 import com.project.service.TDemandResourceService;
 
 
@@ -36,7 +37,16 @@ public class TDemandResourceServiceImpl implements TDemandResourceService {
     public  List<TDemandResourceEntity> findList(TDemandResourceEntity tDemandResource) {
         return tDemandResourceDao.findList(tDemandResource);
     }
-
+    
+    @Override
+    public  List<TDemandResourceInfo> findInfoListByDemand(Object demandId){
+    	return tDemandResourceDao.findInfoListByDemand(demandId);
+    }
+    
+    @Override
+    public  List<TDemandResourceEntity> findListByDemand(Object demandId){
+    	return tDemandResourceDao.findListByDemand(demandId);
+    }
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return tDemandResourceDao.queryTotal(map);

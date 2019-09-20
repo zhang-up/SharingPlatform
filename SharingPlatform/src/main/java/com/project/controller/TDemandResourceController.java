@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandResourceEntity;
+import com.project.info.TDemandResourceInfo;
 import com.project.service.TDemandResourceService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -20,7 +21,6 @@ import com.project.utils.Query;
 @RestController
 @RequestMapping("/tdemandresource")
 public class TDemandResourceController extends  AbstractController{
-
 	@Autowired
 	private TDemandResourceService tDemandResourceService;
 	
@@ -40,6 +40,14 @@ public class TDemandResourceController extends  AbstractController{
 		return pageUtil;
 	}
 	
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/listByDemand/{demandId}")
+	public List<TDemandResourceInfo> listByDemand(@PathVariable("demandId") String demandId){
+		//查询列表数据
+		return tDemandResourceService.findInfoListByDemand(demandId);
+	}
 	
 	/**
 	 * 信息

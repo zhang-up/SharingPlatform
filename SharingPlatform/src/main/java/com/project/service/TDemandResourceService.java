@@ -1,9 +1,10 @@
 package com.project.service;
 
-import com.project.entity.TDemandResourceEntity;
-
 import java.util.List;
 import java.util.Map;
+
+import com.project.entity.TDemandResourceEntity;
+import com.project.info.TDemandResourceInfo;
 
 public interface TDemandResourceService {
 	
@@ -12,6 +13,9 @@ public interface TDemandResourceService {
     List<TDemandResourceEntity> findALL();
     List<TDemandResourceEntity> findList(TDemandResourceEntity tDemandResource);
 	int queryTotal(Map<String, Object> map);
+	
+	List<TDemandResourceInfo> findInfoListByDemand(Object demandId);
+	List<TDemandResourceEntity> findListByDemand(Object demandId);
 	
 	void save(TDemandResourceEntity tDemandResource);
 	

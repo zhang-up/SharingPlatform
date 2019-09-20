@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.project.entity.TDemandEntity;
-import com.project.info.DockTrialInfo;
+import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
 
 public interface TDemandService {
@@ -19,7 +19,8 @@ public interface TDemandService {
 	List<TDemandInfo> queryApplyList(Map<String, Object> map);
 	int queryApplyTotal(Map<String, Object> map);
 	
-	void edit(TDemandEntity tDemand, String userId);
+	void edit(TDemandEntity tDemand, String userId, List<RcResourceInfo> rri, String choose_res, String hiteMatch);
+	void revoke(TDemandEntity tDemand, String userId);
 	
 	void save(TDemandEntity tDemand);
 	
@@ -29,6 +30,5 @@ public interface TDemandService {
 	
 	void deleteBatch(String[] demandIds);
 	
-	 List<TDemandInfo> dockingList(Map<String, Object> map);
-
+	List<TDemandInfo> dockingList(Map<String, Object> map);
 }

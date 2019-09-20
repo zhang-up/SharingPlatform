@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandOperateEntity;
+import com.project.info.TDemandOperateInfo;
 import com.project.service.TDemandOperateService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -19,7 +20,6 @@ import com.project.utils.Query;
 
 @RestController
 @RequestMapping("/tdemandoperate")
-
 public class TDemandOperateController extends  AbstractController{
 	@Autowired
 	private TDemandOperateService tDemandOperateService;
@@ -38,6 +38,15 @@ public class TDemandOperateController extends  AbstractController{
 		PageUtils pageUtil = new PageUtils(tDemandOperateList, total, query.getLimit(), query.getPage());
 		
 		return pageUtil;
+	}
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/listByDemand/{demandId}")
+	public List<TDemandOperateInfo> listByDemand(@PathVariable("demandId") String demandId){
+		//查询列表数据
+		return tDemandOperateService.queryListByDemand(demandId);
 	}
 	
 	

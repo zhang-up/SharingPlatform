@@ -1,7 +1,9 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.entity.TDemandEntity;
 import com.project.exception.RRException;
-import com.project.info.DockTrialInfo;
+import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
 import com.project.info.loginUserInfo;
+import com.project.service.RcResourceService;
 import com.project.service.TDemandService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -29,6 +32,9 @@ import com.project.utils.StringUtil;
 public class TDemandController extends  AbstractController{
 	@Autowired
 	private TDemandService tDemandService;
+	@Autowired
+	private RcResourceService rcResourceService;
+	
 	/**
 	 *对接人列表
 	 */
@@ -73,7 +79,6 @@ public class TDemandController extends  AbstractController{
 		return pageUtil;
 
 	}
-
 	
 	@RequestMapping("/applyList")
 	public PageUtils applyList(@RequestParam Map<String, Object> params, HttpSession session){
@@ -100,6 +105,7 @@ public class TDemandController extends  AbstractController{
 
 		List<TDemandInfo> tDemandList = tDemandService.queryApplyList(query);
 		int total = tDemandService.queryApplyTotal(query);
+		
 		PageUtils pageUtil = new PageUtils(tDemandList, total, query.getLimit(), query.getPage());
 		
 		return pageUtil;
@@ -200,7 +206,49 @@ public class TDemandController extends  AbstractController{
 		}
 		tDemand.setState(state);
 		
-		tDemandService.edit(tDemand, lui.getUserId());
+		String hiteMatch = params.get("hiteMatch") == null ? "" : params.get("hiteMatch").toString();
+		List<RcResourceInfo> rrf = new ArrayList<RcResourceInfo>();
+		if("yes".equals(hiteMatch)){
+			rrf = rcResourceService.matchingRes(keyWord);
+		}
+		String choose_res = params.get("chooseRes") == null ? "" : params.get("chooseRes").toString();
+		
+		tDemandService.edit(tDemand, lui.getUserId(), rrf, choose_res,hiteMatch);
+		
+		return R.ok();
+	}
+	
+	/**
+	 * 撤销
+	 */
+	@RequestMapping("/revoke")
+	public R revoke(@RequestParam Map<String, Object> params, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return R.error("登录状态异常！");
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+			
+			TDemandEntity tDemand = new TDemandEntity();
+			
+			String demandId = params.get("demandId") == null ? "" : params.get("demandId").toString();
+			if(StringUtil.isNull(demandId)){
+				return R.error("提交信息异常！");
+			}
+			tDemand.setDemandId(demandId);
+			
+			String remark = params.get("remark") == null ? "" : params.get("remark").toString();
+			tDemand.setRemark(remark);
+			
+			tDemandService.revoke(tDemand, lui.getUserId());
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		
 		
 		return R.ok();
 	}
@@ -254,6 +302,7 @@ public class TDemandController extends  AbstractController{
 		
 		
 		return R.ok();
+	}
 	
-  }
+	
 }

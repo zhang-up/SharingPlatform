@@ -45,6 +45,9 @@
         <result property="state" column="state"/>
         <result property="stateName" column="state_name"/>
         <result property="remark" column="remark"/>
+        <result property="chooseNums" column="choose_nums"/>
+        <result property="recommendNums" column="recommend_nums"/>
+        
     </resultMap>
 
 	<select id="queryObject"  resultMap="tDemandMap">
@@ -107,8 +110,6 @@
 			limit #{offset},#{limit}
 		</if>
 	</select>
-
-	
 	
 	<select id="queryInfoList" resultMap="tDemandInfoMap">
 		SELECT * FROM
@@ -117,8 +118,9 @@
 		td.provide_dep, pd.name AS provide_dep_name,td.demand_name,td.key_word,td.demand_detail,
 		td.access_mode,am.par_name AS access_mode_name,td.serve_mode,sm.par_name AS serve_mode_name,
 		td.frequency,f.par_name AS frequency_name,td.state,s.par_name AS state_name,
-		td.demand_use,td.save_time,td.creater,td.remark 
+		td.demand_use,td.save_time,td.creater,td.remark, dr.choose_nums, dr.recommend_nums
 		FROM t_demand td
+		LEFT JOIN (SELECT COUNT(IF(state = 1, 1, NULL)) AS choose_nums,COUNT(resource_id) AS recommend_nums,demand_id FROM t_demand_resource GROUP BY demand_id) dr ON td.demand_id = dr.demand_id
 		LEFT JOIN pub_organ dd ON td.demand_dep = dd.CODE AND dd.STATUS = '1'
 		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
 		LEFT JOIN t_parameter am ON am.par_code = 'T_DEMAND|ACCESS_MODE' AND td.access_mode = am.par_value
@@ -132,7 +134,6 @@
 		<if test="demandDep != null and demandDep != ''">
 	      AND td.demand_dep = #{demandDep}
 	    </if>
-	    
 	    <if test="provideDep != null and provideDep != ''">
 	      AND td.provide_dep = #{provideDep}
 	    </if>
@@ -160,13 +161,7 @@
 			limit #{offset},#{limit}
 		</if>
 	</select>
-	
-	
-	
-	
-	
-	
-	
+
  	<select id="queryTotal" resultType="int">
 		SELECT count(td.demand_id)
 		FROM t_demand td
@@ -185,10 +180,10 @@
 	    </if>
 	    <if test="timeType != null and timeType != ''">
 		    <if test="stratDate != null and stratDate != ''">
-		      AND ope.operate_time = #{stratDate}
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
 		    </if>
 		    <if test="endDate != null and endDate != ''">
-		      AND ope.operate_time &lt;= #{endDate}
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
 		    </if>
 		</if>
 		<!-- 申请页面对草稿状态做限制 -->
@@ -200,9 +195,6 @@
 	      AND td.state NOT IN ('00')
 	    </if>
 	</select>
-	
-
-
 
 	<insert id="save" parameterType="com.project.entity.TDemandEntity">
 		insert into t_demand

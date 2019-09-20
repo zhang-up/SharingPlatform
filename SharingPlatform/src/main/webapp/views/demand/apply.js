@@ -48,8 +48,8 @@ function initApplyList(){
                   {label: '期望更新频率', name: 'frequencyName',align:"center",width:110,},
                   {label: '用途', name: 'demandUse',},
                   {label: '状态', name: 'stateName',align:"center",width:90,},
-                  {label: '推荐资源数', name: 'id',align:"center",width:90,},
-                  {label: '引用资源', name: 'id',align:"center",width:90,},
+                  {label: '推荐资源数', name: 'recommendNums',align:"center",width:90,},
+                  {label: '引用资源', name: 'chooseNums',align:"center",width:90,},
                   {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
                 	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
@@ -58,7 +58,7 @@ function initApplyList(){
                 	  if('00'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delApply('"+id+"');>删除</a>";
                 	  }else if('03'==state || '05'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=''>撤销</a>";
+                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=revokeApply('"+id+"');>撤销</a>";
                 	  }else{
                 		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
                 	  }
@@ -155,8 +155,36 @@ function delApply(id){
 	});
 }
 
-var showDemandId = '';
-function demandDetailPage(id){
-	showDemandId = id;
-	popup('views/demand/demandDetail.html');
+var revokeDemandId = '';
+function revokeApply(id){
+	revokeDemandId = id;
+	popup('views/demand/revokeDemand.html');
+}
+
+function importDemand(){
+	popup('views/demand/importDemand.html');
+}
+
+function matchingResAll(){
+	openDialog('matApply','提示',300,150,'匹配资源操作，将会把所有草稿状态并且没有匹配过资源的清单做资源匹配。',function(){
+		//alert('确定');
+		$.ajax({
+			url:'./rcresource/matchingResAll',
+			data:'mat=All',
+			dataType:'json',
+			type:'post',
+			success: function(result){
+				var code = result.code;
+				if(code == 500){
+					alert(result.msg);
+					return;
+				}
+				searchApply('update');
+				alert('已完成匹配！');
+			},
+			error:commerror
+		});
+	},function(){
+		//alert('取消');
+	});
 }

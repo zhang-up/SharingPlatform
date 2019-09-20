@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.dao.TDemandOperateDao;
 import com.project.entity.TDemandOperateEntity;
+import com.project.info.TDemandOperateInfo;
 import com.project.service.TDemandOperateService;
 
 
@@ -62,4 +63,8 @@ public class TDemandOperateServiceImpl implements TDemandOperateService {
 		tDemandOperateDao.deleteBatch(operateIds);
 	}
 	
+	@Override
+	public List<TDemandOperateInfo> queryListByDemand(Object demandId){
+		return tDemandOperateDao.queryListByDemand(demandId);
+	}
 }

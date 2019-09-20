@@ -21,16 +21,16 @@ $(function() {
 	addselect("T_DEMAND","STATE","ft_state","",true);
 	addselect("T_DEMAND","TIME_TYPE","ft_timeType","",false,"：");
 	
-	
+	$("#ft_state > option[value='00']").remove();
 	dockingList();
 });
 
-var $gridTable;
+var $ft_applyTable;
 function dockingList(){
 	
-	$gridTable = $('#ft_applyGrid');
+	$ft_applyTable = $('#ft_applyGrid');
 	
-	$gridTable.jqGrid({
+	$ft_applyTable.jqGrid({
         url: "../tdemand/list",
         datatype: "json",
         styleUI: 'Bootstrap',
@@ -56,9 +56,9 @@ function dockingList(){
                 	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
                 	  if('01'==state){
-                		  return '<a href="javascript:void(0)" onclick=deal('+id+')>处理</a> ';
+                		  return '<a href="javascript:void(0)" onclick=firstDeal("'+id+'");>处理</a> ';
                 	  }else{
-                		  return '<a href="javascript:void(0)" onclick="">查看</a>';
+                		  return '<a href="javascript:void(0)" onclick=demandDetailPage("'+id+'");>查看</a>';
                 	  }
                 	  
                   }}],
@@ -85,29 +85,29 @@ function dockingList(){
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$gridTable.closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$ft_applyTable.closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
 	
 }
-var demandid='';
-function deal(id){
-	 demandid=id;
+var deal_demandid='';
+function firstDeal(id){
+	deal_demandid=id;
 	popup('views/demand/dockTrial.html');	
 }
 
 function searchTrial(){
 	
 
-	$gridTable.jqGrid('setGridParam', {
-        postData: applyCondition(), 
+	$ft_applyTable.jqGrid('setGridParam', {
+        postData: firstCondition(), 
         page: 1
     }).trigger('reloadGrid');
 	
 }
 
 
-function applyCondition(){
+function firstCondition(){
 	
 	var queryJson={
 			demandDep : $("#ft_needDepId").val(),
@@ -118,11 +118,6 @@ function applyCondition(){
 			endDate : $("#ft_endDate").val()
 	}
 	return queryJson;
-}
-var showDemandId = '';
-function editApplyPage(id){
-	showDemandId = id;
-	popup('views/demand/dockTrial.html');
 }
 
 
