@@ -6,6 +6,7 @@ import java.util.Map;
 import com.project.entity.TDemandEntity;
 import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
+import com.project.info.TDemandStatisticInfo;
 
 public interface TDemandService {
 	
@@ -31,4 +32,8 @@ public interface TDemandService {
 	void deleteBatch(String[] demandIds);
 	
 	List<TDemandInfo> dockingList(Map<String, Object> map);
+
+	//提供方统计
+    List<TDemandStatisticInfo> statisticPro(Map<String, Object> map);
+
 }

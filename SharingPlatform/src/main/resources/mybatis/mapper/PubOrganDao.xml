@@ -37,15 +37,16 @@
 		<result column="NAME" property="text"></result>
 		<result column="VALUE" property="value"></result>
 		<result column="CNUMS" property="cNums"></result>
+		<result column="OPEN" property="open"></result>
 	</resultMap>
 	
     <select id="tree" parameterType="com.project.param.PubOrganParam"  resultMap="treeMap">
-    	SELECT a.parentCode,a.CODE,a.NAME,a.VALUE,count(b.code) cNums FROM
+    	SELECT a.parentCode,a.CODE,a.NAME,a.VALUE,count(b.code) cNums, open FROM
 			(SELECT PARENT_CODE parentCode,
 				CODE,
 				NAME,
 				 CODE VALUE,
-				 SORT_ORDER
+				 SORT_ORDER, true as open
 			FROM pub_region WHERE STATUS = 1
 			UNION ALL
 			SELECT	
@@ -53,7 +54,7 @@
 				t.ORG_CODE CODE,
 				o.SHORT_NAME NAME,
 				t.ORG_CODE VALUE,
-				o.SORT_ORDER
+				o.SORT_ORDER, false as open
 			FROM pub_organ_tree t
 			LEFT JOIN pub_organ o ON t.ORG_CODE = o.CODE
 			WHERE o. STATUS = 1

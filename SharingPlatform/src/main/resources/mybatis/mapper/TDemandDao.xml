@@ -47,8 +47,106 @@
         <result property="remark" column="remark"/>
         <result property="chooseNums" column="choose_nums"/>
         <result property="recommendNums" column="recommend_nums"/>
-        
+
     </resultMap>
+    
+    <resultMap type="com.project.info.TDemandStatisticInfo" id="statisticInfoMap">
+        <result property="demandDep" column="demand_dep"/>
+        <result property="demandDepName" column="demand_dep_name"/>
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="shouldProNums" column="should_pro_nums"/>
+        <result property="alreadyProNums" column="already_pro_nums"/>
+        <result property="notProNums" column="not_pro_nums"/>
+        <result property="appliedForNums" column="applied_for_nums"/>
+        <result property="firstTrialNums" column="first_trial_nums"/>
+        <result property="confirmedNums" column="confirmed_nums"/>
+        <result property="rescindedNums" column="rescinded_nums"/>
+    </resultMap>
+    
+    <!-- 提供方统计 -->
+    <select id="statisticPro"  resultMap="statisticInfoMap">
+    	SELECT my_view.provide_dep, my_view.provide_dep_name,my_view.should_pro_nums,my_view.already_pro_nums,my_view.not_pro_nums,
+		my_view.applied_for_nums,my_view.first_trial_nums,my_view.confirmed_nums, my_view.rescinded_nums
+		FROM	
+		(SELECT td.provide_dep, pd.name AS provide_dep_name,
+		COUNT(should_pro.demand_id) AS should_pro_nums,COUNT(already_pro.demand_id) AS already_pro_nums,
+		<!-- 未提供 -->
+		COUNT(should_pro.demand_id) - COUNT(already_pro.demand_id) AS not_pro_nums,
+		COUNT(applied_for.demand_id) AS applied_for_nums,COUNT(first_trial.demand_id) AS first_trial_nums,
+		COUNT(confirmed.demand_id) AS confirmed_nums, COUNT(rescinded.demand_id) AS rescinded_nums
+		FROM t_demand td 
+		LEFT JOIN pub_organ pd ON td.provide_dep = pd.code AND pd.STATUS = '1'
+		<!-- 应提供 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('01','02','03','04','05','06') 
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+			GROUP BY tdo.demand_id) should_pro ON td.demand_id = should_pro.demand_id
+		<!-- 已提供 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('06') 
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+			GROUP BY tdo.demand_id) already_pro ON td.demand_id = already_pro.demand_id
+		<!-- 已申请 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('01','02','03','04','05','06','07')
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if> 
+			GROUP BY tdo.demand_id) applied_for ON td.demand_id = applied_for.demand_id
+		<!-- 已初审 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('02','03','04','05','06','07')
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if> 
+			GROUP BY tdo.demand_id) first_trial ON td.demand_id = first_trial.demand_id
+		<!-- 已确认 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('04','05','06','07')
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if> 
+			GROUP BY tdo.demand_id) confirmed ON td.demand_id = confirmed.demand_id
+		<!-- 已撤销 -->
+		LEFT JOIN (SELECT tdo.demand_id FROM t_demand_operate tdo 
+			WHERE tdo.state IN ('07')
+			<if test="stratDate != null and stratDate != ''">
+		      AND tdo.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tdo.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if> 
+			GROUP BY tdo.demand_id) rescinded ON td.demand_id = rescinded.demand_id
+		WHERE 1=1
+		    <if test="provideDep != null and provideDep != ''">
+		      AND td.provide_dep = #{provideDep}
+		    </if>
+		GROUP BY td.provide_dep, pd.name) my_view 
+		<if test="sidx != null and sidx.trim() != ''">
+	      order by ${sidx} ${sord}
+	    </if>
+		    
+	</select>
 
 	<select id="queryObject"  resultMap="tDemandMap">
 		select * from t_demand where demand_id = #{value}

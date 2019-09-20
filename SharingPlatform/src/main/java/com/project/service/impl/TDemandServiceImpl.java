@@ -15,6 +15,7 @@ import com.project.entity.TDemandResourceEntity;
 import com.project.exception.RRException;
 import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
+import com.project.info.TDemandStatisticInfo;
 import com.project.service.TDemandService;
 import com.project.utils.DateUtil;
 import com.project.utils.StringUtil;
@@ -194,4 +195,33 @@ public class TDemandServiceImpl implements TDemandService {
 		return tDemandDao.queryInfoList(map);
 
 	}
+
+	//提供方统计
+	@Override
+	public List<TDemandStatisticInfo> statisticPro(Map<String, Object> map){
+		
+		String sidx = map.get("sidx") == null ? "" : map.get("sidx").toString();
+		if(!StringUtil.isNull(sidx)){
+			if("provideDepName".equals(sidx)){
+				map.put("sidx","my_view.provide_dep_name");
+			}else if("shouldProNums".equals(sidx)){
+				map.put("sidx","my_view.should_pro_nums");
+			}else if("alreadyProNums".equals(sidx)){
+				map.put("sidx","my_view.already_pro_nums");
+			}else if("notProNums".equals(sidx)){
+				map.put("sidx","my_view.not_pro_nums");
+			}else if("appliedForNums".equals(sidx)){
+				map.put("sidx","my_view.applied_for_nums");
+			}else if("firstTrialNums".equals(sidx)){
+				map.put("sidx","my_view.first_trial_nums");
+			}else if("confirmedNums".equals(sidx)){
+				map.put("sidx","my_view.confirmed_nums");
+			}else if("rescindedNums".equals(sidx)){
+				map.put("sidx","my_view.rescinded_nums");
+			}
+		}
+		
+		return tDemandDao.statisticPro(map);
+    }
+
 }

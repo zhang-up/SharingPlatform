@@ -1,11 +1,24 @@
 package com.project.controller;
 
+
 import java.util.ArrayList;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +30,7 @@ import com.project.entity.TDemandEntity;
 import com.project.exception.RRException;
 import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
+import com.project.info.TDemandStatisticInfo;
 import com.project.info.loginUserInfo;
 import com.project.service.RcResourceService;
 import com.project.service.TDemandService;
@@ -24,6 +38,7 @@ import com.project.utils.PageUtils;
 import com.project.utils.Query;
 import com.project.utils.R;
 import com.project.utils.StringUtil;
+import com.project.utils.Util;
 
 
 
@@ -304,5 +319,131 @@ public class TDemandController extends  AbstractController{
 		return R.ok();
 	}
 	
+
+	//提供方统计
+	@RequestMapping("/statisticPro")
+	public List<TDemandStatisticInfo> statisticPro(@RequestParam Map<String, Object> params, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return new ArrayList();
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return new ArrayList();
+		}
+		
+		return tDemandService.statisticPro(params);
+	}
 	
+	//导出提供方统计
+	@RequestMapping("/exporStaPro")
+	public String exporStaPro(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpServletResponse response, HttpSession session){
+		
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return "登录状态异常！";
+		}
+		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return e.getMsg();
+		}
+		
+		String fileName = "需求申请提供方统计"+Util.getStdfDate()+".xls";
+		try {
+			ServletOutputStream out = response.getOutputStream();
+			response.setContentType("application/binary;charset=UTF-8");
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes("gbk"),"ISO-8859-1"));
+        	this.exportProExcel(params, out);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return "导出成功！";
+		
+	}
+	
+	private void exportProExcel(Map<String, Object> params, ServletOutputStream out) {
+		
+		Map<String,String> titMap = new HashMap<String,String>();
+		titMap.put("provideDepName", "信息资源提供部门");
+		titMap.put("shouldProNums", "应提供");
+		titMap.put("alreadyProNums", "已提供");
+		titMap.put("notProNums", "未提供");
+		titMap.put("appliedForNums", "已申请");
+		titMap.put("firstTrialNums", "已初审");
+		titMap.put("confirmedNums", "已确认");
+		titMap.put("rescindedNums", "已撤销");
+		
+		List<TDemandStatisticInfo> tdsiList = tDemandService.statisticPro(params);
+		
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet("提供方统计");
+		
+		HSSFCellStyle headStyle=wb.createCellStyle();
+		headStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		headStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		HSSFFont font = wb.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); ;
+		headStyle.setFont(font);
+		
+		HSSFCellStyle styleInt=wb.createCellStyle();
+		styleInt.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		styleInt.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		
+		HSSFCellStyle style=wb.createCellStyle();
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		try {
+			String colId = params.get("colId").toString();
+			String[] colIds = colId.split(",");
+			
+			int row_nums = 0;
+			HSSFRow headRow = sheet.createRow(row_nums);
+			//根据heads的长度来创建格子
+			for (int i = 0; i < colIds.length; i++) {
+				Cell headCell = headRow.createCell(i);
+				headCell.setCellValue(titMap.get(colIds[i]));
+				headCell.setCellStyle(headStyle);
+			}
+			headRow.setHeightInPoints(30);
+			row_nums++;
+			//根据有多少条数据来创建填写数据的行
+			for(TDemandStatisticInfo tdsi : tdsiList){
+				HSSFRow row = sheet.createRow(row_nums);
+				for (int i = 0; i < colIds.length; i++) {
+					Cell cell = row.createCell(i);
+					cell.setCellValue(tdsi.get(colIds[i]));
+					if(!"provideDepName".equals(colIds[i])){
+						cell.setCellStyle(styleInt);
+					}else{
+						cell.setCellStyle(style);
+					}
+				}
+				row.setHeightInPoints(30);
+				row_nums++;
+			}
+			
+			for (int i = 0; i < colIds.length; i++) {
+				
+				if("provideDepName".equals(colIds[i])){
+					sheet.setColumnWidth(i, 50 * 256);
+				}else{
+					sheet.setColumnWidth(i, 10 * 256);
+				}
+			}
+			
+        	wb.write(out);
+            out.flush();
+            out.close();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+
 }

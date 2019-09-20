@@ -87,9 +87,11 @@ function initResList(dataS){
         	$.each($("front[name='chose_Res']"), function(i, n){
         		var thisId = $(this).attr('id');
         		if(rowId == thisId){
-        			$(this).show();
-        		}else{
-        			$(this).hide();
+        			if($(this).is(':hidden')){
+        				$(this).show();
+        			}else{
+        				$(this).hide();
+        			}
         		}
         	});
         },
@@ -133,6 +135,14 @@ function editApply(state){
 		alert('请填写用途！');
 		return;
 	}
+	
+	choose_res = '';
+	$.each($("front[name='chose_Res']"), function(i, n){
+		var thisId = $(this).attr('id');
+		if(!$(this).is(':hidden')){
+		   choose_res = thisId;
+		}
+	});
 	
 	var str = "demandId="+(mergeDemandId == 'add' ? '' : mergeDemandId)+
 	"&provideDep="+provideDepId+"&demandName="+demandName+
