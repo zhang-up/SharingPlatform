@@ -200,6 +200,35 @@ public class TDemandServiceImpl implements TDemandService {
 	@Override
 	public List<TDemandStatisticInfo> statisticPro(Map<String, Object> map){
 		
+		String staTimeType = map.get("staTimeType") == null ? "" : map.get("staTimeType").toString();
+		if("2".equals(staTimeType)){
+			String beforeDay = map.get("beforeDay") == null ? "0" : map.get("beforeDay").toString();
+			String dayDate = map.get("dayDate") == null ? "" : map.get("dayDate").toString();
+			String afterDay = map.get("afterDay") == null ? "0" : map.get("afterDay").toString();
+			if(StringUtil.isNull(dayDate)){
+				map.put("stratDate", "");
+				map.put("endDate", "");
+			}else{
+				int bDay = 0;
+				try {
+					bDay = Integer.valueOf(beforeDay);
+				} catch (Exception e) {
+					bDay = 0;
+				}
+				int aDay = 0;
+				try {
+					aDay = Integer.valueOf(afterDay);
+				} catch (Exception e) {
+					aDay = 0;
+				}
+				
+				String stratDate = DateUtil.addDay(dayDate, (0-bDay));
+				String endDate = DateUtil.addDay(dayDate, aDay);
+				map.put("stratDate", stratDate);
+				map.put("endDate", endDate);
+			}
+		}
+		
 		String sidx = map.get("sidx") == null ? "" : map.get("sidx").toString();
 		if(!StringUtil.isNull(sidx)){
 			if("provideDepName".equals(sidx)){
@@ -218,6 +247,14 @@ public class TDemandServiceImpl implements TDemandService {
 				map.put("sidx","my_view.confirmed_nums");
 			}else if("rescindedNums".equals(sidx)){
 				map.put("sidx","my_view.rescinded_nums");
+			}else if("rejectNums".equals(sidx)){
+				map.put("sidx","my_view.reject_nums");
+			}else if("regressionNums".equals(sidx)){
+				map.put("sidx","my_view.regression_nums");
+			}else if("sharedNums".equals(sidx)){
+				map.put("sidx","my_view.shared_nums");
+			}else if("noFinishNums".equals(sidx)){
+				map.put("sidx","my_view.no_finish_nums");
 			}
 		}
 		

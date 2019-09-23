@@ -23,10 +23,18 @@ public class TDemandStatisticInfo implements Serializable {
 	private int appliedForNums;
 	//已初审
 	private int firstTrialNums;
+	//已回退
+	private int regressionNums;
 	//已确认
 	private int confirmedNums;
+	//已驳回
+	private int rejectNums;
 	//已撤销
 	private int rescindedNums;
+	//已共享
+	private int sharedNums;
+	//未完成
+	private int noFinishNums;
 	
 	public String get(String nameId) {
 		if("provideDepName".equals(nameId)){
@@ -45,7 +53,16 @@ public class TDemandStatisticInfo implements Serializable {
 			return String.valueOf(this.confirmedNums);
 		}else if("rescindedNums".equals(nameId)){
 			return String.valueOf(this.rescindedNums);
+		}else if("rejectNums".equals(nameId)){
+			return String.valueOf(this.rejectNums);
+		}else if("regressionNums".equals(nameId)){
+			return String.valueOf(this.regressionNums);
+		}else if("sharedNums".equals(nameId)){
+			return String.valueOf(this.sharedNums);
+		}else if("noFinishNums".equals(nameId)){
+			return String.valueOf(this.noFinishNums);
 		}
+		
 		return "";
 	}
 	
@@ -115,7 +132,37 @@ public class TDemandStatisticInfo implements Serializable {
 	public void setRescindedNums(int rescindedNums) {
 		this.rescindedNums = rescindedNums;
 	}
-	
-	
+
+	public int getRejectNums() {
+		return rejectNums;
+	}
+
+	public void setRejectNums(int rejectNums) {
+		this.rejectNums = rejectNums;
+	}
+
+	public int getRegressionNums() {
+		return regressionNums;
+	}
+
+	public void setRegressionNums(int regressionNums) {
+		this.regressionNums = regressionNums;
+	}
+
+	public int getSharedNums() {
+		return sharedNums;
+	}
+
+	public void setSharedNums(int sharedNums) {
+		this.sharedNums = sharedNums;
+	}
+
+	public int getNoFinishNums() {
+		return noFinishNums;
+	}
+
+	public void setNoFinishNums(int noFinishNums) {
+		this.noFinishNums = noFinishNums;
+	}
 	
 }

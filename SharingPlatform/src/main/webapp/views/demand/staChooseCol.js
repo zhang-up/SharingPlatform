@@ -55,8 +55,12 @@ function cDatas(){
 	 			'{"colName":"未提供","id":"notProNums"},'+
 	 			'{"colName":"已申请","id":"appliedForNums"},'+
 	 			'{"colName":"已初审","id":"firstTrialNums"},'+
+	 			'{"colName":"已回退","id":"regressionNums"},'+
 	 			'{"colName":"已确认","id":"confirmedNums"},'+
-	 			'{"colName":"已撤销","id":"rescindedNums"}]';
+	 			'{"colName":"已驳回","id":"rejectNums"},'+
+	 			'{"colName":"已撤销","id":"rescindedNums"},'+
+	 			'{"colName":"已共享","id":"sharedNums"},'+
+	 			'{"colName":"未完成","id":"noFinishNums"}]';
 	
 	return JSON.parse(str);
 }

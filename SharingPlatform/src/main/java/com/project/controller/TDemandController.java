@@ -377,8 +377,12 @@ public class TDemandController extends  AbstractController{
 		titMap.put("notProNums", "未提供");
 		titMap.put("appliedForNums", "已申请");
 		titMap.put("firstTrialNums", "已初审");
+		titMap.put("regressionNums", "已回退");
 		titMap.put("confirmedNums", "已确认");
+		titMap.put("rejectNums", "已驳回");
 		titMap.put("rescindedNums", "已撤销");
+		titMap.put("sharedNums", "已共享");
+		titMap.put("noFinishNums", "未完成");
 		
 		List<TDemandStatisticInfo> tdsiList = tDemandService.statisticPro(params);
 		

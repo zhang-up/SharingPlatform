@@ -13,24 +13,65 @@
 		
 		<div style="left:230px;width: 90px;">统计时间：</div>
 		
-		<div style="left:320px;width:100px;">
+		<div style="left:320px;width: 120px;">
+			<select id="sta_timeType" name="sta_timeType" style="width:120px;">
+				<option value="1">选择起止时间</option>
+				<option value="2">选择时间点</option>
+			</select>
+		</div>
+		
+		<div style="left:450px;width:100px;" name="type_quantum">
 			<input id="stratDate" name="stratDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:420px;width:25px;">
+		<div style="left:550px;width:25px;" name="type_quantum">
 			至
 		</div>
-		<div style="left:445px;width:100px;">
+		<div style="left:575px;width:100px;" name="type_quantum">
 			<input id="endDate" name="endDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:555px;width: 60px;">
+
+		
+		<div style="left:450px;width:25px;" name="type_day">
+			前
+		</div>
+		<div style="left:475px;width:30px;" name="type_day">
+			<input id="beforeDay" name="beforeDay" style="width: 30px;"/>
+		</div>
+		<div style="left:505px;width:25px;" name="type_day">
+			天
+		</div>
+		<div style="left:530px;width:100px;" name="type_day">
+			<input id="dayDate" name="dayDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:630px;width:25px;" name="type_day">
+			后
+		</div>
+		<div style="left:655px;width:30px;" name="type_day">
+			<input id="afterDay" name="beforeDay" style="width: 30px;"/>
+		</div>
+		<div style="left:685px;width:25px;" name="type_day">
+			天
+		</div>
+		
+		<div style="left:720px;width: 60px;">
 			<a class="srcBut" href="javascript:" onclick="searchStaPro();" >查询</a>
 		</div>
-		<div style="left:625px;width:60px;">
+		<div style="left:790px;width:60px;">
 			<a class="resetBut" href="javascript:" onclick="resetStaPro();" >重置</a>
 		</div>
-		<div style="left:695px;width:75px;">
+		<div style="left:860px;width:75px;">
 			<a class="but" href="javascript:" style="width: 75px;" onclick="uploadStaPro();" >导出统计表</a>
 		</div>
+		
+<!-- 		<div style="left:685px;width: 60px;"> -->
+<!-- 			<a class="srcBut" href="javascript:" onclick="searchStaPro();" >查询</a> -->
+<!-- 		</div> -->
+<!-- 		<div style="left:755px;width:60px;"> -->
+<!-- 			<a class="resetBut" href="javascript:" onclick="resetStaPro();" >重置</a> -->
+<!-- 		</div> -->
+<!-- 		<div style="left:825px;width:75px;"> -->
+<!-- 			<a class="but" href="javascript:" style="width: 75px;" onclick="uploadStaPro();" >导出统计表</a> -->
+<!-- 		</div> -->
 	</div>
 	<div class="gridPanel">
 	    <table id="statisticGrid"></table>
