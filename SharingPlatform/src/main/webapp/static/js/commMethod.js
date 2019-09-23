@@ -112,3 +112,7 @@ var stringify = function (obj) {
         return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
     }
 };
+
+function chooseGridRow(gTable,id){
+	$(gTable).jqGrid('setSelection',id);
+}

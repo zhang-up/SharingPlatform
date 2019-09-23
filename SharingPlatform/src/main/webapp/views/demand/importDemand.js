@@ -3,7 +3,8 @@
  */
 
 $(function() {
-	$('dd[name="importRe"]').hide();
+	$('dd[name="importRe1"]').hide();
+	$('dd[name="importRe2"]').hide();
 });	
 
 function showfileSelected(){
@@ -91,7 +92,18 @@ function uploadComplete(evt) {
 	if(backJ.code == 0){
 		if(upType == 'check'){
 			$('dd[name="msg"]').hide();
-			$('dd[name="importRe"]').show();
+			var repeatInfo = backJ.repeatInfo;
+			if(!strIsNull(repeatInfo)){
+				var repInfs = repeatInfo.split("<br/>");
+				var repR = repInfs.length;
+				if(repR>1){
+					$('#repeatInfo').parent().attr('style','height:'+(repR*20+10)+'px;');
+				}
+				$('#repeatInfo').empty();
+				$('#repeatInfo').append(repeatInfo);
+				$('dd[name="importRe1"]').show();
+			}
+			$('dd[name="importRe2"]').show();
 			creatImpRe(backJ.msg);
 			alert('检查完成');
 			check = 'yes';

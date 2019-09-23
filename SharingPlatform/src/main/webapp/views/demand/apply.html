@@ -1,41 +1,62 @@
 <meta name="content-type" content="text/html; charset=UTF-8">
 
-<script type="text/javascript" src="views/demand/apply.js?v=1"></script>
+<script type="text/javascript" src="views/demand/apply.js?v=2"></script>
 
 
 <div class="showList" style='height:100px;'>
-	<div class="screen">
-		<div style="left:0px;width: 150px;">信息资源提供部门：</div>
-		<div style="left:150px;width: 220px;">
-			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择部门"/>
-			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择部门"/>
+	<div align="center" class="screen">
+		<div style="left:20px;width: 200px;">
+			<input id="keyWordByList" style="width:200px;" placeholder="请输入关键字"/>
 		</div>
-		
-		<div style="left:390px;width: 60px;">状态：</div>
-		<div style="left:450px;"><select id="state" name="state"></select></div>
-		
-		<div style="left:580px;width: 150px;"><select id="timeType" name="timeType" style="width:140px;"></select></div>
-		
-		<div style="left:730px;width:110px;">
-			<input id="stratDate" name="stratDate" class="Wdate" readonly="readonly"/>
+		<div style="left:230px;width: 200px;">
+			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
+			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
 		</div>
-		<div style="left:830px;width:30px;">
+<!-- 		<div style="left:20px;width: 200px;top:35px;"> -->
+<!-- 			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择信息资源提供部门"/> -->
+<!-- 			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择信息资源提供部门"/> -->
+<!-- 		</div> -->
+		
+<!-- 		<div style="left:390px;width: 60px;">状态：</div> -->
+		<div style="left:440px;width: 130px;"><select id="state" name="state" style="width: 130px;"></select></div>
+<!-- 		<div style="left:230px;width: 140px;top:35px;"><select id="state" name="state" style="width: 140px;"></select></div> -->
+		
+		<div style="left:580px;width: 140px;"><select id="timeType" name="timeType" style="width:140px;"></select></div>
+<!-- 		<div style="left:230px;width: 140px;"><select id="timeType" name="timeType" style="width:140px;"></select></div> -->
+		
+		<div style="left:730px;width:100px;">
+			<input id="stratDate" name="stratDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:830px;width:25px;">
 			至
 		</div>
-		<div style="left:850px;width:110px;">
-			<input id="endDate" name="endDate" class="Wdate" readonly="readonly"/>
+		<div style="left:855px;width:100px;">
+			<input id="endDate" name="endDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:950px;">
-			<a class="btn btn-primary" href="javascript:" onclick="searchApply();" >搜  索</a>
+<!-- 		<div style="left:380px;width:100px;"> -->
+<!-- 			<input id="stratDate" name="stratDate" style="width: 100px;" class="Wdate" readonly="readonly"/> -->
+<!-- 		</div> -->
+<!-- 		<div style="left:480px;width:25px;"> -->
+<!-- 			至 -->
+<!-- 		</div> -->
+<!-- 		<div style="left:505px;width:100px;"> -->
+<!-- 			<input id="endDate" name="endDate" style="width: 100px;" class="Wdate" readonly="readonly"/> -->
+<!-- 		</div> -->
+		
+		<div style="left:965px;width:60px;">
+			<a class="srcBut" href="javascript:" onclick="searchApply();" >查询</a>
 		</div>
-		<div style="left:1050px;">
-			<a class="btn btn-primary" href="javascript:" onclick="editApplyPage('add','');" >添加申请</a>
+		<div style="left:1035px;width:60px;">
+			<a class="resetBut" href="javascript:" onclick="resetApply();" >重置</a>
 		</div>
-		<div style="left:1150px;">
-			<a class="btn btn-primary" href="javascript:" onclick="importDemand();" >导入申请</a>
+		<div style="left:1105px;width:60px;">
+			<a class="but" href="javascript:" onclick="editApplyPage('add','');" >添加申请</a>
 		</div>
-		<div style="left:1250px;">
-			<a class="btn btn-primary" href="javascript:" onclick="matchingResAll();" >匹配资源</a>
+		<div style="left:1175px;width:60px;">
+			<a class="but" href="javascript:" onclick="importDemand();" >导入申请</a>
+		</div>
+		<div style="left:1245px;">
+			<a class="but" href="javascript:" onclick="matchingResAll();" >匹配资源</a>
 		</div>
 	</div>
 	<div class="gridPanel">

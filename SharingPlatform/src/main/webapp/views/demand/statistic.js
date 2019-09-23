@@ -52,6 +52,15 @@ function initStaProList(){
 	
 }
 
+function resetStaPro(){
+	$("#proDepId").val('');
+	$("#proDepName").val('');
+	$("#stratDate").val('');
+	$("#endDate").val('');
+	searchStaPro();
+}
+
+
 function searchStaPro(){
 	$staProTable.jqGrid('setGridParam', {
         postData: staProCondition()

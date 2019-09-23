@@ -156,8 +156,11 @@ function uploadFile() {
 		return;
 	}
 	var fd = new FormData();
-	if(isClick== true){fd.append("importDFile", files[0]);alert(1)}
-	else{fd.append("importDFile", null);alert(2)}
+	if(isClick== true){
+		fd.append("importDFile", files[0]);
+	}else{
+		fd.append("importDFile", null);
+	}
 		
 		//fd.append("importDFile", file);
 		fd.append("demandid", pro_deal_demandid);

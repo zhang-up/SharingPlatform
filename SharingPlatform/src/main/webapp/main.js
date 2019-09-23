@@ -19,7 +19,7 @@ function creatMenu(){
 		 type : 'post',
 		 success: function(result){
 			 var lisConH = '';
-			 var left = 0;
+			 var left = 20;
 			 var fpage = 0;
 			 var firstId = -1;
 			 var firstUrl = '';

@@ -3,21 +3,21 @@
  */
 $(function() {
 	
-	$("#ft_needDepName").click(function(){
-		bindingDepTree("ft_needDepId","ft_needDepName");
+	$("#pro_needDepName").click(function(){
+		bindingDepTree("pro_needDepId","pro_needDepName");
 	});
 		
-	$("#ft_stratDate").click(function(){
-		bindingDateTag("ft_stratDate",'date',$("#ft_stratDate").val(),'','');
+	$("#pro_stratDate").click(function(){
+		bindingDateTag("pro_stratDate",'date',$("#pro_stratDate").val(),'','');
 	});
-	$("#ft_endDate").click(function(){
-		bindingDateTag("ft_endDate",'date',$("#ft_endDate").val(),'','');
+	$("#pro_endDate").click(function(){
+		bindingDateTag("pro_endDate",'date',$("#pro_endDate").val(),'','');
 	});
 	
-	addselect("T_DEMAND","STATE","ft_state","",true);
-	addselect("T_DEMAND","TIME_TYPE","ft_timeType","",false,"：");
+	addselect("T_DEMAND","STATE","pro_state","",true);
+	addselect("T_DEMAND","TIME_TYPE","pro_timeType","",false,"：");
 	
-	$("#ft_state > option[value='00']").remove();
+	$("#pro_state > option[value='00']").remove();
 	
 	dockingList();
 });
@@ -25,9 +25,9 @@ $(function() {
 var $gridTable;
 function dockingList(){
 	
-	$gridTable = $('#ft_applyGrid');
+	$pro_gridTable = $('#pro_applyGrid');
 	
-	$gridTable.jqGrid({
+	$pro_gridTable.jqGrid({
         url: "../tdemand/provideList",
         postData:{
         	token : (sessionStorage.token!=null ? sessionStorage.token: '')
@@ -43,7 +43,8 @@ function dockingList(){
         //altRows: true,
         //altclass:'somec',
         //autowidth: true,
-        colModel:[{label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
+        colModel:[{label: ' ', name: 'demandId',key:true,align:"center",hidden:true,},
+                  {label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
                   //{label: '信息资源提供部门 ', name: 'provideDepName',align:"center",width:120,},
                   {label: '需求名称', name: 'demandName',align:"center",width:80,},
                   {label: '需求内容', name: 'demandDetail',align:"center",width:80,},
@@ -60,7 +61,7 @@ function dockingList(){
                 	  }else if('04'==state ){
                 		  return '<a href="javascript:void(0)" onclick=finshVerify("'+id+'");>完成确认</a>';
                 	  }else{
-                		  return '<a href="javascript:void(0)" onclick=demandDetailPage("'+id+'");>查看</a>';
+                		  return '<a href="javascript:void(0)" onclick=demandDePage("'+id+'");>查看</a>';
                 	  }
                 	  
                   }}],
@@ -73,7 +74,7 @@ function dockingList(){
         //rownumWidth: 25, 
         autowidth:true,
         //multiselect: true,
-        pager: "#ft_applyGridPager",
+        pager: "#pro_applyGridPager",
         jsonReader : {
             root: "list",
             page: "currPage",
@@ -87,48 +88,61 @@ function dockingList(){
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$gridTable.closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$pro_gridTable.closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
 	
 }
 var pro_deal_demandid='';
 function deal(id){
+	chooseGridRow($pro_gridTable,id);
 	pro_deal_demandid=id;
 	popup('views/demand/dealProvide.html');	
 }
 
 function finshVerify(id){
+	chooseGridRow($pro_gridTable,id);
 	pro_deal_demandid=id;
 	popup('views/demand/finishVerify.html');	
 }
-function searchTrial(){
-	
 
-	$gridTable.jqGrid('setGridParam', {
-        postData: applyCondition(), 
+function demandDePage(id){
+	chooseGridRow($pro_gridTable,id);
+	demandDetailPage(id);
+}
+
+function resetPro(){
+	$("#pro_needDepId").val('');
+	$("#pro_needDepName").val('');
+	$("#pro_state").val('');
+	$("#pro_timeType").val('01');
+	$("#pro_stratDate").val('');
+	$("#pro_endDate").val('');
+	$("#pro_keyWordByList").val('');
+	searchPro();
+}
+
+function searchPro(){
+	$pro_gridTable.jqGrid('setGridParam', {
+        postData: pro_applyCondition(), 
         page: 1
     }).trigger('reloadGrid');
 	
 }
 
 
-function applyCondition(){
+function pro_applyCondition(){
 	
 	var queryJson={
-			demandDep : $("#ft_needDepId").val(),
-			provideDep : $("#ft_proDepId").val(),
-			state : $("#ft_state").val(),
-			timeType : $("#ft_timeType").val(),
-			stratDate : $("#ft_stratDate").val(),
-			endDate : $("#ft_endDate").val()
+			demandDep : $("#pro_needDepId").val(),
+			provideDep : $("#pro_proDepId").val(),
+			state : $("#pro_state").val(),
+			timeType : $("#pro_timeType").val(),
+			stratDate : $("#pro_stratDate").val(),
+			endDate : $("#pro_endDate").val(),
+			keyWordByList : $("#pro_keyWordByList").val()
 	}
 	return queryJson;
-}
-var showDemandId = '';
-function editApplyPage(id){
-	showDemandId = id;
-	popup('views/demand/dockTrial.html');
 }
 
 

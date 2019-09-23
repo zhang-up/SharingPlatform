@@ -92,6 +92,8 @@ function initResList(dataS){
         			}else{
         				$(this).hide();
         			}
+        		}else{
+        			$(this).hide();
         		}
         	});
         },

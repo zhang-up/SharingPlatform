@@ -5,28 +5,31 @@
 
 <div class="showList" style='height:100px;'>
 	<div class="screen">
-		<div style="left:0px;width: 150px;">信息资源提供部门：</div>
-		<div style="left:150px;width: 220px;">
-			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择部门"/>
-			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择部门"/>
+<!-- 		<div style="left:0px;width: 150px;">信息资源提供部门：</div> -->
+		<div style="left:20px;width: 200px;">
+			<input id="proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
+			<input id="proDepName" style="width:200px;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
 		</div>
 		
-		<div style="left:390px;width: 100px;">统计时间：</div>
+		<div style="left:230px;width: 90px;">统计时间：</div>
 		
-		<div style="left:490px;width:110px;">
-			<input id="stratDate" name="stratDate" class="Wdate" readonly="readonly"/>
+		<div style="left:320px;width:100px;">
+			<input id="stratDate" name="stratDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:590px;width:30px;">
+		<div style="left:420px;width:25px;">
 			至
 		</div>
-		<div style="left:610px;width:110px;">
-			<input id="endDate" name="endDate" class="Wdate" readonly="readonly"/>
+		<div style="left:445px;width:100px;">
+			<input id="endDate" name="endDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:710px;">
-			<a class="btn btn-primary" href="javascript:" onclick="searchStaPro();" >搜  索</a>
+		<div style="left:555px;width: 60px;">
+			<a class="srcBut" href="javascript:" onclick="searchStaPro();" >查询</a>
 		</div>
-		<div style="left:810px;">
-			<a class="btn btn-primary" href="javascript:" onclick="uploadStaPro();" >导出统计表</a>
+		<div style="left:625px;width:60px;">
+			<a class="resetBut" href="javascript:" onclick="resetStaPro();" >重置</a>
+		</div>
+		<div style="left:695px;width:75px;">
+			<a class="but" href="javascript:" style="width: 75px;" onclick="uploadStaPro();" >导出统计表</a>
 		</div>
 	</div>
 	<div class="gridPanel">

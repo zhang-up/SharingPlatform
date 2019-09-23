@@ -81,7 +81,7 @@ public class TDemandController extends  AbstractController{
 		} catch (RRException e) {
 			return new PageUtils();
 		}
-		params.put("firstT", "true");	
+		params.put("proT", "true");	
 		params.put("provideDep", lui.getOrgCode());
 		//查询列表数据
         Query query = new Query(params);

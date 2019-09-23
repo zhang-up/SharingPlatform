@@ -148,6 +148,7 @@ public class TImportController extends  AbstractController{
                 .substring(fileName.lastIndexOf(".") + 1); 
 		
 		String checkList = "";
+		String repeatInfo = "";
 		try {
 			HSSFSheet sheet03=null;
 			XSSFSheet sheet07=null;
@@ -227,15 +228,78 @@ public class TImportController extends  AbstractController{
 					importList.add(iMap);
 				}
 	        } 
+			
+			//去重后的List，通过部门，名称，内容三条信息判断
+			List<Map<String,String>> removalList = this.removalImportList(importList);
+			for(Map<String,String> importMap : removalList){
+				if(!StringUtil.isNull(importMap.get("msg_Info"))){
+					repeatInfo = importMap.get("msg_Info");
+					repeatInfo += "本次导入文件中包含数据"+importList.size()+"条，去除重复后实际保存数据"+(removalList.size()-1)+"条。";
+				}
+			}
+//			System.out.println(removalList);
 			JsonConfig jsonConfig = new JsonConfig();
-			JSONArray jsonObj =  JSONArray.fromObject(this.creatBaseDate(importList, lui, type), jsonConfig);
+			JSONArray jsonObj =  JSONArray.fromObject(this.creatBaseDate(removalList, lui, type), jsonConfig);
 			checkList = jsonObj.toString();
 			
 		} catch (IOException e) {
 			return R.error("文件格式异常！");
 		} 
 		
-		return R.ok(checkList);
+		return R.ok(checkList).put("repeatInfo", repeatInfo);
+	}
+	
+	/**
+	 * 以提供部门，名称，内容三条信息判断去除重复的记录
+	 * @param importList
+	 * @param lui
+	 * @param type
+	 * @return map中含“msg_Info”项的是反馈信息在组合实体类时需排除这条
+	 */
+	private List<Map<String,String>> removalImportList(List<Map<String,String>> importList){
+		
+		Map<String,Map<String,String>> reMap = new HashMap<String,Map<String,String>>();
+		Map<String,String> repeatRowsNums = new HashMap<String,String>();
+		for(Map<String,String> importMap : importList){
+			
+			String rowsNums = importMap.get("rowsNums") == null ? "0" : importMap.get("rowsNums").toString();
+			String provideDepName = importMap.get("provideDepName") == null ? "" : importMap.get("provideDepName").toString();
+			String demandName = importMap.get("demandName") == null ? "" : importMap.get("demandName").toString();
+			String demandDetail = importMap.get("demandDetail") == null ? "" : importMap.get("demandDetail").toString();
+			
+			String key = provideDepName+demandName+demandDetail;
+			
+			Map<String,String> tempMap = reMap.get(key);
+			if(tempMap == null){//没有重复
+				reMap.put(key, importMap);
+				repeatRowsNums.put(rowsNums, "");
+			}else{//发现重复
+				String reRowNums = tempMap.get("rowsNums") == null ? "0" : tempMap.get("rowsNums").toString();
+				String rNumsV = repeatRowsNums.get(reRowNums);
+				rNumsV += "、"+rowsNums;
+				repeatRowsNums.put(reRowNums, rNumsV);
+			}
+		}
+		
+		List<Map<String,String>> reList = new ArrayList<Map<String,String>>();
+		for(String key : reMap.keySet()){
+			reList.add(reMap.get(key));
+		}
+		
+		String msg_Info = "msg_Info";
+		for(String key : repeatRowsNums.keySet()){
+			if("msg_Info".equals(msg_Info)){
+				msg_Info = "";
+			}
+			String value = repeatRowsNums.get(key);
+			if(!StringUtil.isNull(value)){
+				msg_Info += "第"+key+"行数据与第"+value.substring(1)+"行数据重复。<br/>";
+			}
+		}
+		Map<String,String> tempMap = new HashMap<String,String>();
+		tempMap.put("msg_Info", msg_Info);
+		reList.add(tempMap);
+		return reList;
 	}
 	
 	/**
@@ -287,6 +351,9 @@ public class TImportController extends  AbstractController{
 		List<TDemandOperateEntity> tdoeList = new ArrayList<TDemandOperateEntity>();
 		List<TImportDetailEntity> tideList = new ArrayList<TImportDetailEntity>();
 		for(Map<String,String> importMap : importList){
+			if(!StringUtil.isNull(importMap.get("msg_Info"))){
+				continue;
+			}
 			
 			Map<String,String> checkMap = new HashMap<String,String>();
 			

@@ -43,7 +43,8 @@ function dockingList(){
         //altRows: true,
         //altclass:'somec',
         //autowidth: true,
-        colModel:[{label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
+        colModel:[{label: ' ', name: 'demandId',key:true,align:"center",hidden:true,},
+                  {label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
                   {label: '信息资源提供部门 ', name: 'provideDepName',align:"center",width:120,},
                   {label: '需求名称', name: 'demandName',align:"center",width:80,},
                   {label: '需求内容', name: 'demandDetail',align:"center",width:80,},
@@ -58,7 +59,7 @@ function dockingList(){
                 	  if('01'==state){
                 		  return '<a href="javascript:void(0)" onclick=firstDeal("'+id+'");>处理</a> ';
                 	  }else{
-                		  return '<a href="javascript:void(0)" onclick=demandDetailPage("'+id+'");>查看</a>';
+                		  return '<a href="javascript:void(0)" onclick=demandDePage("'+id+'");>查看</a>';
                 	  }
                 	  
                   }}],
@@ -92,13 +93,17 @@ function dockingList(){
 }
 var deal_demandid='';
 function firstDeal(id){
+	chooseGridRow($ft_applyTable,id);
 	deal_demandid=id;
 	popup('views/demand/dockTrial.html');	
 }
 
-function searchTrial(){
-	
+function demandDePage(id){
+	chooseGridRow($ft_applyTable,id);
+	demandDetailPage(id);
+}
 
+function searchTrial(){
 	$ft_applyTable.jqGrid('setGridParam', {
         postData: firstCondition(), 
         page: 1
@@ -106,6 +111,18 @@ function searchTrial(){
 	
 }
 
+function resetTrial(){
+	$("#ft_needDepId").val('');
+	$("#ft_needDepName").val('');
+	$("#ft_proDepId").val('');
+	$("#ft_proDepName").val('');
+	$("#ft_state").val('');
+	$("#ft_timeType").val('01');
+	$("#ft_stratDate").val('');
+	$("#ft_endDate").val('');
+	$("#ft_keyWordByList").val('');
+	searchTrial();
+}
 
 function firstCondition(){
 	
@@ -115,7 +132,8 @@ function firstCondition(){
 			state : $("#ft_state").val(),
 			timeType : $("#ft_timeType").val(),
 			stratDate : $("#ft_stratDate").val(),
-			endDate : $("#ft_endDate").val()
+			endDate : $("#ft_endDate").val(),
+			keyWordByList : $("#ft_keyWordByList").val()
 	}
 	return queryJson;
 }

@@ -5,34 +5,41 @@
 
 <div class="showList" style='height:100px;'>
 	<div class="screen">
-		<div style="left:0px;width: 130px;">信息资源需求部门：</div>
-		<div style="left:100px;width: 150px;">
-			<input id="ft_needDepId" style="width:100px;display:none;"readonly="readonly" placeholder="请选择部门"/>
-			<input id="ft_needDepName" style="width:100px;"readonly="readonly" placeholder="请选择部门"/>
+		<div style="left:20px;width: 200px;">
+			<input id="ft_keyWordByList" style="width:200px;" placeholder="请输入关键字"/>
 		</div>
 		
-		<div style="left:170px;width: 250px;">信息资源提供部门：</div>
-		<div style="left:250px;width: 320px;">
-			<input id="ft_proDepId" style="width:100px;display:none;"readonly="readonly" placeholder="请选择部门"/>
-			<input id="ft_proDepName" style="width:100px;"readonly="readonly" placeholder="请选择部门"/>
+<!-- 		<div style="left:0px;width: 130px;">信息资源需求部门：</div> -->
+		<div style="left:230px;width: 200px;">
+			<input id="ft_needDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择信息资源需求部门"/>
+			<input id="ft_needDepName" style="width:200px;"readonly="readonly" placeholder="请选择信息资源需求部门"/>
 		</div>
 		
-		<div style="left:460px;width: 60px;">状态：</div>
-		<div style="left:500px;"><select id="ft_state" name="ft_state"></select></div>
-		
-		<div style="left:630px;width: 80px;"><select id="ft_timeType" name="ft_timeType" style="width:80px;"></select></div>
-		
-		<div style="left:730px;width:110px;">
-			<input id="ft_stratDate" name="ft_stratDate" class="Wdate" readonly="readonly"/>
+<!-- 		<div style="left:170px;width: 250px;">信息资源提供部门：</div> -->
+		<div style="left:440px;width: 200px;">
+			<input id="ft_proDepId" style="width:200px;display:none;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
+			<input id="ft_proDepName" style="width:200px;"readonly="readonly" placeholder="请选择信息资源提供部门"/>
 		</div>
-		<div style="left:830px;width:30px;">
+		
+<!-- 		<div style="left:460px;width: 60px;">状态：</div> -->
+		<div style="left:650px;width: 130px;"><select id="ft_state" name="ft_state" style="width: 130px;"></select></div>
+		
+		<div style="left:790px;width: 140px;"><select id="ft_timeType" name="ft_timeType" style="width:140px;"></select></div>
+		
+		<div style="left:940px;width:100px;">
+			<input id="ft_stratDate" name="ft_stratDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:1040px;width:25px;">
 			至
 		</div>
-		<div style="left:850px;width:110px;">
-			<input id="ft_endDate" name="ft_endDate" class="Wdate" readonly="readonly"/>
+		<div style="left:1065px;width:100px;">
+			<input id="ft_endDate" name="ft_endDate" style="width: 100px;" class="Wdate" readonly="readonly"/>
 		</div>
-		<div style="left:950px;">
-			<a class="btn btn-primary" href="javascript:" onclick="searchTrial();" ><i class="fa fa-plus"></i>搜  索</a>
+		<div style="left:1175px;width:60px;">
+			<a class="srcBut" href="javascript:" onclick="searchTrial();" >查询</a>
+		</div>
+		<div style="left:1245px;width:60px;">
+			<a class="resetBut" href="javascript:" onclick="resetTrial();" >重置</a>
 		</div>
 
 	</div>

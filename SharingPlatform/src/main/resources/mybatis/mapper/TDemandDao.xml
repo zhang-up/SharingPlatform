@@ -248,10 +248,23 @@
 		</if>
 		<!-- 申请页面对草稿状态做限制 -->
 		<if test="apply != null and apply != ''">
+			<if test="keyWordByList != null and keyWordByList != ''">
+		      AND (pd.name like CONCAT('%',#{keyWordByList},'%') or td.demand_name like CONCAT('%',#{keyWordByList},'%') or td.demand_detail like CONCAT('%',#{keyWordByList},'%') or td.demand_use like CONCAT('%',#{keyWordByList},'%'))
+		    </if>
 	      AND ((td.state = '00' AND td.creater = #{userId}) OR td.state NOT IN ('00'))
 	    </if>
 	    <!-- 初审页面不查询草稿状态 -->
 		<if test="firstT != null and firstT != ''">
+			<if test="keyWordByList != null and keyWordByList != ''">
+		      AND (dd.name like CONCAT('%',#{keyWordByList},'%') or pd.name like CONCAT('%',#{keyWordByList},'%') or td.demand_name like CONCAT('%',#{keyWordByList},'%') or td.demand_detail like CONCAT('%',#{keyWordByList},'%') or td.demand_use like CONCAT('%',#{keyWordByList},'%'))
+		    </if>
+	      AND td.state NOT IN ('00')
+	    </if>
+	    <!-- 提供部门审核页面不查询草稿状态 -->
+		<if test="proT != null and proT != ''">
+			<if test="keyWordByList != null and keyWordByList != ''">
+		      AND (dd.name like CONCAT('%',#{keyWordByList},'%') or td.demand_name like CONCAT('%',#{keyWordByList},'%') or td.demand_detail like CONCAT('%',#{keyWordByList},'%') or td.demand_use like CONCAT('%',#{keyWordByList},'%'))
+		    </if>
 	      AND td.state NOT IN ('00')
 	    </if>
 		ORDER BY td.state,td.save_time DESC) PlayStation

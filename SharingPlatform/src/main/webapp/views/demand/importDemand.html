@@ -20,10 +20,16 @@
 			<font id="fileSize" style="left:400px;"></font>
 			<a id="updateBut" class="subA" href="javascript:" onclick="upload('check');" style="position:absolute;width: 20%; right:20%; display: none;">检查文件</a>
 		</dd>
-		<dd name="importRe">
-			<font >列表中是导入文件中的异常数据，没有数据时表示文件数据正常！</font>
+		<dd name="importRe1">
+			<font >重复数据是以信息资源提供部门、需求名称、需求内容为判断依据，三项都相同则为重复！</font>
 		</dd>
-		<dd name="importRe" style="height: 350px;">
+		<dd name="importRe1">
+			<font id="repeatInfo"></font>
+		</dd>
+		<dd name="importRe2">
+			<font >列表显示导入文件中的异常数据，没有数据时表示文件数据正常！</font>
+		</dd>
+		<dd name="importRe2" style="height: 350px;">
 			<div class="gridPanel">
 			    <table id="importReGrid"></table>
 		    </div>

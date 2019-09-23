@@ -16,23 +16,23 @@ height:80px;
 .menuDiv .menusDiv{
 width:100%;
 position: relative;
-height:45px;
-border-bottom: 1px solid #3B85D8;
-background-color: #FFFFFF;
+height:35px;
+/* border-bottom: 1px solid #3B85D8; */
+background-color: #3498DB;
 }
 
 .menuDiv .menuBut{
 position: absolute;
 display:block;
 text-decoration:none;
-font-size:16px;
+font-size:14px;
 width:100px;
 bottom:0px;
-height:45px;
-line-height:45px;
+height:35px;
+line-height:35px;
 text-align:center;
-color:#222;
-background-color:#e6e6e6;
+color:#FFFFFF;
+background-color:#3498DB;
 }
 
 .menuDiv .thisMenu,.menuDiv .menuBut:hover{
@@ -40,8 +40,8 @@ background-color:#e6e6e6;
 /* border-top: 2px solid #C0C0B4; */
 /* border-right: 2px solid #676565; */
 /* border-bottom: 2px solid #676565; */
-background-color:#3B85D8; 
-color:#F0F0F0;
+background-color:#FFFFFF;
+color:#3498DB;
 /*border-bottom: 2px solid #A98E67;*/
 
 /*border-top-left-radius:1px;

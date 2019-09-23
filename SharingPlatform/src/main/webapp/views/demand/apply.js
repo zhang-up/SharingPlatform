@@ -14,8 +14,8 @@ $(function() {
 		bindingDateTag("endDate",'date',$("#endDate").val(),'','');
 	});
 	
-	addselect("T_DEMAND","STATE","state","",true);
-	addselect("T_DEMAND","TIME_TYPE","timeType","",false,"：");
+	addselect("T_DEMAND","STATE","state","",true,"","状态");
+	addselect("T_DEMAND","TIME_TYPE","timeType","",false,"");
 	
 	
 	initApplyList();
@@ -40,17 +40,18 @@ function initApplyList(){
         recordpos: "center",
         pagerpos: "left",
         shownumpos: "right",
-        colModel:[{label: '信息资源提供部门 ', name: 'provideDepName',},
+        colModel:[{label: ' ', name: 'demandId',key:true,align:"center",hidden:true,},
+                  {label: '信息资源提供部门 ', name: 'provideDepName',width:230,},
                   {label: '需求名称', name: 'demandName',},
                   {label: '需求内容', name: 'demandDetail',},
-                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:110,},
-                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:115,},
-                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:110,},
+                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:78,},
+                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:100,},
+                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:78,},
                   {label: '用途', name: 'demandUse',},
-                  {label: '状态', name: 'stateName',align:"center",width:90,},
-                  {label: '推荐资源数', name: 'recommendNums',align:"center",width:90,},
-                  {label: '引用资源', name: 'chooseNums',align:"center",width:90,},
-                  {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
+                  {label: '状态', name: 'stateName',align:"center",width:50,},
+                  {label: '推荐资源数', name: 'recommendNums',align:"center",width:65,},
+                  {label: '引用资源', name: 'chooseNums',align:"center",width:55,},
+                  {label: '操作', name: 'id',align:"center",width:55,formatter:function(cellvalue, options, rowObject){
                 	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
                 	  rObj.push(rowObject);
@@ -60,16 +61,19 @@ function initApplyList(){
                 	  }else if('03'==state || '05'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=revokeApply('"+id+"');>撤销</a>";
                 	  }else{
-                		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
+                		  str = "<a href='javascript:void(0)' onclick=demandDePage('"+id+"');>查看</a>";
                 	  }
                 	  rowNums++;
                 	  return str;
                   }}],
-        
+//		altRows: true,//单双行样式不同
+//		altclass: 'differ',
         height: 560,
+        width : '95%',
+        autowidth:true,
+        viewrecords: true,//显示总记录数
         rowNum: 15,
 		rowList : [15,30,45],
-        autowidth:true,
         pager: "#applyGridPager",
         jsonReader : {
             root: "list",
@@ -89,6 +93,17 @@ function initApplyList(){
     });
 	
 }
+function resetApply(){
+	$("#proDepId").val('');
+	$("#proDepName").val('');
+	$("#state").val('');
+	$("#timeType").val('01');
+	$("#stratDate").val('');
+	$("#endDate").val('');
+	$("#keyWordByList").val('');
+	searchApply('');
+}
+
 
 function searchApply(type){
 	rObj = [];
@@ -115,7 +130,8 @@ function applyCondition(){
 			state : $("#state").val(),
 			timeType : $("#timeType").val(),
 			stratDate : $("#stratDate").val(),
-			endDate : $("#endDate").val()
+			endDate : $("#endDate").val(),
+			keyWordByList : $("#keyWordByList").val()
 	}
 	return queryJson;
 }
@@ -123,6 +139,7 @@ function applyCondition(){
 var mergeDemandId = 'add';
 var eRowObj = null
 function editApplyPage(id,rNums){
+	chooseGridRow($gridTable,id);
 	mergeDemandId = id;
 	eRowObj = rObj[rNums];
 	//alert(stringify(eRowObj));
@@ -131,6 +148,7 @@ function editApplyPage(id,rNums){
 
 var deleDemandId = '';
 function delApply(id){
+	chooseGridRow($gridTable,id);
 	deleDemandId = id;
 	openDialog('delApply','提示',300,150,'记录删除后将无法恢复！是否确认删除。',function(){
 		//alert('确定');
@@ -157,12 +175,18 @@ function delApply(id){
 
 var revokeDemandId = '';
 function revokeApply(id){
+	chooseGridRow($gridTable,id);
 	revokeDemandId = id;
 	popup('views/demand/revokeDemand.html');
 }
 
 function importDemand(){
 	popup('views/demand/importDemand.html');
+}
+
+function demandDePage(id){
+	chooseGridRow($gridTable,id);
+	demandDetailPage(id);
 }
 
 function matchingResAll(){
