@@ -29,37 +29,60 @@
 	margin: 0 auto;
 }
 
-.PassWordBack dl{
+.PassWordBack .pop_hide{
 	position: absolute;
 	right:0px;
 	width:900px;
+	background-color:#F1F4F7;
+/* 	border: 2px solid #1890FF; */
+	height: 40px;
+	overflow-x:hidden;
+}
+
+.PassWordBack .pop_con{
+	position: absolute;
+	top:40px;
+	right:0px;
+	width:900px;
 	background-color:#FFFFFF;
-	border: 2px solid #1890FF;
+/* 	border: 2px solid #1890FF; */
 	height: 700px;
 	overflow-x:auto;
 }
-.PassWordBack dl dd{
+
+.PassWordBack .pop_foot{
+	position: absolute;
+	top : 740px;
+	right:0px;
+	width:900px;
+	background-color:#FFFFFF;
+	border-top: 2px solid #F1F4F7;
+	height: 42px;
+	overflow-x:hidden;
+}
+
+.PassWordBack .pop_con dd,.PassWordBack .pop_hide dd,.PassWordBack .pop_foot dd{
 	position: relative;
 	padding-left: 30px;
 	height:40px; 
 	font-size:14px;
 }
 
-.PassWordBack dl dd font{
+.PassWordBack .pop_con dd font{
 	position: absolute;
 	/*color:#52A0EA;*/ 
 	bottom: 5px;
 	font-size:14px;
 }
 
-.PassWordBack dl dd .redStart{
+.PassWordBack .pop_con dd .redStart{
 	color:red;
 	width:10px;
 	bottom: 0px;
 	font-size:14px;
 }
 
-.PassWordBack dl .cut-offRule{
+.PassWordBack .pop_con .cut-offRule{
 	padding-left: 30px;
 	line-height:13px; 
 	height:13px; 
@@ -67,18 +90,18 @@
 	color:red;
 }
 
-.PassWordBack dl .page_tital{
+.PassWordBack .pop_hide .page_tital{
 	position: relative;
 	padding-left: 10px;
-	line-height:30px; 
-	height:30px; 
+	line-height:40px; 
+	height:40px; 
 	font-size:16px;
-	background-color:#2A82E4;
-	color:#FFFFFF;
+	background-color:#F1F4F7;
+	color:#000000;
 	font-weight: bold;
 }
 
-.PassWordBack dl .groud_tital{
+.PassWordBack .pop_con .groud_tital{
 	position: relative;
 	padding-left: 10px;
 	line-height:30px; 
@@ -90,22 +113,24 @@
 	font-weight: bold;
 }
 
-.PassWordBack dl .page_tital .canBut{
+.PassWordBack .pop_hide .page_tital .canBut{
 	position:absolute;
-	height: 30px;
-	width: 30px;
+	text-decoration:none;
+	height: 40px;
+	width: 40px;
 	font-size: 20px;
 	right:0px;
 	bottom:0px;
-	line-height:28px;
+	line-height:38px;
 	text-align: center;
-	background-color:#2A82E4;
+	background-color:#F1F4F7;
 	border: 0px;
-	color:#FFFFFF; 
+	color:#000000; 
 	font-weight:bold;
 }
 
-.PassWordBack dl .page_tital .canBut:hover{
+.PassWordBack .pop_hide .page_tital .canBut:hover{
+	text-decoration:none;
 	border-left: 2px solid #C0C0B4;
 	border-top: 2px solid #C0C0B4;
 	border-right: 2px solid #676565;
@@ -114,19 +139,19 @@
 	right:0px;
 }
 
-/* .PassWordBack dl dd{ */
+/* .PassWordBack .pop_con dd{ */
 /* 	position: relative; */
 /* 	height:20px;  */
 /* } */
 
-/* .PassWordBack dl dd font{ */
+/* .PassWordBack .pop_con dd font{ */
 /* 	position: absolute; */
 /* 	/*color:#52A0EA;*/  */
 /* 	bottom: 0px; */
 /* 	font-size:14px; */
 /* } */
 
-.PassWordBack dl dd div a{
+.PassWordBack .pop_con dd div a{
 	font-size:14px;
 	display:block;
 	width:80px;
@@ -144,7 +169,7 @@
     border-bottom: 1px solid #676565;
 }
 
-.PassWordBack dl dd div .chooseA{
+.PassWordBack .pop_con dd div .chooseA{
 	/*background-color:#DCEBFC; 
 	color:#52A0EA; 
 	border: 1px solid #52A0EA;*/
@@ -157,17 +182,17 @@
     background-color: #52A0EA;
 }
 
-.PassWordBack dl input{
+.PassWordBack .pop_con input{
 	position: absolute;
-	border: 1px solid #52A0EA;
-	height:30px;
+	border: 1px solid #DFE3EA;
+	height:26px;
 	width:535px;
 	bottom: 0px;
 	padding-left: 10px;
 }
 
 .PassWordBack input[type='checkbox']{
-	border: 1px solid #52A0EA;
+	border: 1px solid #DFE3EA;
 	height:13px;
 	width:13px;
 	bottom: 0px;
@@ -175,16 +200,16 @@
 	margin-right: 3px;
 }
 
-.PassWordBack dl textarea{
+.PassWordBack .pop_con textarea{
 	position: absolute;
-	border: 1px solid #52A0EA;
+	border: 1px solid #DFE3EA;
 	/*height:30px;*/
 	width:535px;
 	bottom: 0px;
 	padding-left: 10px;
 }
 
-.PassWordBack dl .textareaShow{
+.PassWordBack .pop_con .textareaShow{
 	position: absolute;
 	border: 1px solid #FFFFFF;
 	/*height:30px;*/
@@ -193,35 +218,35 @@
 	padding-left: 0px;
 }
 
-.PassWordBack dl select{
+.PassWordBack .pop_con select{
 	position: absolute;
-	border: 1px solid #52A0EA;
-	height:30px;
+	border: 1px solid #DFE3EA;
+	height:26px;
 	width:535px;
 	bottom: 0px;
 	padding-left: 10px;
 }
 
-.PassWordBack dl .fileBut {
+.PassWordBack .pop_con .fileBut {
 	width:535px;
 }
 
-.PassWordBack dl .errorInp, .alterPawCon dl .errorInp{
+.PassWordBack .pop_con .errorInp, .alterPawCon .pop_con .errorInp{
 	border: 1px solid red;
 }
 
-.PassWordBack dl .passInp, .alterPawCon dl .passInp{
+.PassWordBack .pop_con .passInp, .alterPawCon .pop_con .passInp{
 	border: 1px solid #8DE039;
 }
 
-.PassWordBack dl a{
+.PassWordBack .pop_con a{
 	display:block;
 	text-decoration:none; 
 	/*color:#52A0EA;*/
 	bottom:0px;
 }
 
-.PassWordBack dl .showI{
+.PassWordBack .pop_con .showI{
 	position:absolute;
 	display:inline-block;
 	line-height:0; 
@@ -235,7 +260,7 @@
 	cursor:pointer;
 }
 
-.PassWordBack dl .chosI{
+.PassWordBack .pop_con .chosI{
 	position:absolute;
 	display:inline-block;
 	line-height:0; 
@@ -250,25 +275,39 @@
 }
 
 .PassWordBack .subA{
-	border-left: 2px solid #C0C0B4;
-	border-top: 2px solid #C0C0B4;
-	border-right: 2px solid #676565;
-	border-bottom: 2px solid #676565;
-	background-color:#3B85D8; 
-	color:#F0F0F0;
-	text-decoration:none; 
-	height:35px; 
-	line-height:35px;
 	text-align:center; 
-	width:535px;
-	font-weight: bold;
+	text-decoration:none;
+	height:30px; 
+	line-height:30px;
+	font-size:14px;
+	width:60px;
+	background-color:#659BE0;  
+	color:#F0F0F0; 
+	margin-top: 5px;
 }
 
 .PassWordBack .subA:hover{
-	border-left: 2px solid #676565;
-	border-top: 2px solid #676565;
-	border-right: 2px solid #C0C0B4;
-	border-bottom: 2px solid #C0C0B4;
-	background-color:#F0F0F0;
-	color:#3B85D8;
+	text-align:center; 
+	text-decoration:none;
+	background-color:#F0F0F0;  
+	color:#659BE0; 
+}
+
+.PassWordBack .canA{
+	text-align:center; 
+	text-decoration:none;
+	height:30px; 
+	line-height:30px;
+	font-size:14px;
+	width:60px;
+	background-color:#ED6B75;  
+	color:#F0F0F0; 
+	margin-top: 5px;
+}
+
+.PassWordBack .canA:hover{
+	text-align:center; 
+	text-decoration:none;
+	background-color:#F0F0F0;  
+	color:#ED6B75; 
 }

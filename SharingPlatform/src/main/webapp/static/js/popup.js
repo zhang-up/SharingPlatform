@@ -54,11 +54,14 @@ function popupCallBack(url,fun){
 }
 
 function caleDlH(){
-	if($('#PassWordBack > dl').is('dl') && calDlh){
-		$('#PassWordBack > dl').height($(window).height()*70/100);
+	if($('#PassWordBack > .pop_con').is('dl') && calDlh){
+		$('#PassWordBack > .pop_con').height($(window).height()*70/100);
 		if($('#presCon').is('dt')){
 			$('#presCon').height(($(window).height()*70/100)-70);
 		}
+	}
+	if($('#PassWordBack > .pop_foot').is('dl') && calDlh){
+		$('#PassWordBack > .pop_foot').attr('style','top:'+($(window).height()*70/100+40)+'px;');
 	}
 }
 
@@ -98,14 +101,22 @@ var openDialog = function(id,title,width,height,message,subFun,canFun){
 	$('body').append('<div id="'+id+'BackBack" class="PassWordBackBack" style="top:40%;z-index:10000"/>');
 	
 	$('#'+id+'BackBack').append('<div id="'+id+'Back" class="PassWordBack" style="width:'+width+'px;height:'+height+'px;"/>');
-	$('#'+id+'Back').append('<dl align="left" style="width:'+width+'px;height:'+height+'px;">'+
-	    	'<dd id="page_tital" class="page_tital" style="height:20px;line-height:20px;">'+title+'</dd>'+
+	$('#'+id+'Back').append('<dl align="left" class="pop_hide" style="width:'+width+'px;">'+
+			'<dd id="page_tital" class="page_tital">'+title+'</dd>'+
+			'</dl>'+
+			'<dl align="left" class="pop_con" style="width:'+width+'px;height:'+(height-40)+'px;">'+
 	    	'<dd class="cut-offRule" ></dd>'+
 			'<dd class="tital" style="padding-left:10px;padding-right:10px;line-height:20px;height:'+msgH+'px;"><font style="top:0px;">'+message+'</font></dd>'+
 			'<dd class="cut-offRule" ></dd>'+
+//			'<dd style="position: relative;">'+
+//			'	<a class="subA" href="javascript:" onclick="cancelDialog(\''+id+'\','+subFun+');" style="position: absolute;width:40%;top:0px;left:10px;height:25px;line-height:25px;bottom:5px;">确定</a>'+
+//			'	<a class="subA" href="javascript:" onclick="cancelDialog(\''+id+'\','+canFun+');" style="position: absolute;width:40%;top:0px;right:10px;height:25px;line-height:25px;bottom:5px;">取消</a>'+
+//			'</dd>'+
+		'</dl>'+
+		'<dl align="left" class="pop_foot" style="width:'+width+'px;top:'+height+'px;">'+
 			'<dd style="position: relative;">'+
-			'	<a class="subA" href="javascript:" onclick="cancelDialog(\''+id+'\','+subFun+');" style="position: absolute;width:40%;top:0px;left:10px;height:25px;line-height:25px;bottom:5px;">确定</a>'+
-			'	<a class="subA" href="javascript:" onclick="cancelDialog(\''+id+'\','+canFun+');" style="position: absolute;width:40%;top:0px;right:10px;height:25px;line-height:25px;bottom:5px;">取消</a>'+
+			'	<a class="subA" href="javascript:" onclick="cancelDialog(\''+id+'\','+subFun+');" style="position:absolute;right:80px;">确定</a>'+
+			'	<a class="canA" href="javascript:" onclick="cancelDialog(\''+id+'\','+canFun+');" style="position:absolute;right:10px;">取消</a>'+
 			'</dd>'+
 		'</dl>');
 }

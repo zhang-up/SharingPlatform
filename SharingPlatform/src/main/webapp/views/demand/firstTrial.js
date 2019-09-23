@@ -44,16 +44,16 @@ function dockingList(){
         //altclass:'somec',
         //autowidth: true,
         colModel:[{label: ' ', name: 'demandId',key:true,align:"center",hidden:true,},
-                  {label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:120,},
-                  {label: '信息资源提供部门 ', name: 'provideDepName',align:"center",width:120,},
-                  {label: '需求名称', name: 'demandName',align:"center",width:80,},
-                  {label: '需求内容', name: 'demandDetail',align:"center",width:80,},
-                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:100,},
-                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:120,},
-                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:120,},
-                  {label: '用途', name: 'demandUse',align:"center",width:80,},
+                  {label: '信息资源需求部门 ', name: 'demandDepName',align:"center",width:230,},
+                  {label: '信息资源提供部门 ', name: 'provideDepName',align:"center",width:230,},
+                  {label: '需求名称', name: 'demandName',align:"center",},
+                  {label: '需求内容', name: 'demandDetail',align:"center",},
+                  {label: '期望提供方式', name: 'accessModeName',align:"center",width:78,},
+                  {label: '期望共享服务方式', name: 'serveModeName',align:"center",width:100,},
+                  {label: '期望更新频率', name: 'frequencyName',align:"center",width:78,},
+                  {label: '用途', name: 'demandUse',align:"center",},
                   {label: '状态', name: 'stateName',align:"center",width:80,},
-                  {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
+                  {label: '操作', name: 'id',align:"center",width:55,formatter:function(cellvalue, options, rowObject){
                 	  var id=rowObject.demandId;
                 	  var state = rowObject.state;
                 	  if('01'==state){
@@ -70,7 +70,9 @@ function dockingList(){
 		rowList : [15,30,45],
         //rownumbers: true, 
         //rownumWidth: 25, 
+		width : '95%',
         autowidth:true,
+        viewrecords: true,//显示总记录数
         //multiselect: true,
         pager: "#ft_applyGridPager",
         jsonReader : {

@@ -18,7 +18,7 @@ $(function() {
 			//$('#backCause').val('');
 		}
 	});
-	$('#file').append('<a id="fileA" href="javascript:;" class="fileBut" style="width: 100%;">选择文件'
+	$('#file').append('<a id="fileA" href="javascript:;" class="fileBut" style="width: 80px;">选择文件'
 			+'<input type="file" style="width: 100%;" name="fileToUpload" id="fileToUpload" onchange="showfileSelected();"/></a>');
 	
 });	
@@ -197,7 +197,7 @@ function uploadComplete(evt) {
 	
 	if(backJ.code == 0){
 		alert('导入成功');
-		searchApply();
+		searchPro();
 		cancelPopup();
 	}else{
 		

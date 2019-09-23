@@ -48,12 +48,7 @@ function submit(){
 				cancelPopup();
 				return;
 			}
-			if(mergeDemandId=='add'){
-				searchApply();
-			}else{
-				eRowObj = null;
-				searchApply('update');
-			}
+			searchPro();
 			cancelPopup();
 		},
 		error:commerror

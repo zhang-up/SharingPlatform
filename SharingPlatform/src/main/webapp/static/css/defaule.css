@@ -53,6 +53,8 @@ min-height: 20px;
 	line-height:35px;
 	margin-top: 4px;
     cursor:pointer;
+    background-color:#659BE0;  
+	color:#F0F0F0; 
 }
 
 .fileBut input {

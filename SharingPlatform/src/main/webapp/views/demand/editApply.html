@@ -2,8 +2,10 @@
 	
 	<script type="text/javascript" src="views/demand/editApply.js?v=1"></script>
 	
-    <dl align="left">
-    	<dd id="page_tital" class="page_tital">申请</dd>
+	<dl align="left" class="pop_hide">
+		<dd id="page_tital" class="page_tital">申请</dd>
+	</dl>
+    <dl align="left" class="pop_con">
 		<dd class="cut-offRule" ></dd>
 		<dd>
 			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>信息资源提供部门</font>
@@ -43,9 +45,11 @@
 			<textarea style="left:170px;width: 675px;" rows="3" id="demandUse" placeholder="请输入用途"></textarea>
 		</dd>
 		<dd class="cut-offRule" id="last_cut" ></dd>
+	</dl>
+	<dl align="left" class="pop_foot">
 		<dd>
-			<a class="subA" href="javascript:" onclick="editApply('00');" style="position:absolute;width: 20%;">保存草稿</a>  
-			<a class="subA" href="javascript:" onclick="editApply('01');" style="position:absolute;width: 20%; right:40% ">提交</a>  
-			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%;right: 30px;">取消</a>  
+			<a class="subA" href="javascript:" onclick="editApply('00');" style="position:absolute;width: 70px;right:170px;">保存草稿</a>  
+			<a class="subA" href="javascript:" onclick="editApply('01');" style="position:absolute;right:100px; ">提交</a>  
+			<a class="canA" href="javascript:" onclick="cancelPopup();" style="position:absolute;right:30px;">取消</a>  
 		</dd>
 	</dl>

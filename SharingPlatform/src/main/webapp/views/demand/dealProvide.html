@@ -2,11 +2,10 @@
 	
 	<script type="text/javascript" src="views/demand/dealProvide.js?v=1"></script>
 	
-	<dl align="left" style="height: 30px;">
-		<dd id="page_tital" class="page_tital"></dd>
+	<dl align="left" class="pop_hide">
+		<dd id="page_tital" class="page_tital">需求申请</dd>
 	</dl>
-    <dl align="left" style="top: 30px;border-top:0px;">
-    	<dd id="groud_tital" class="groud_tital">需求申请</dd>
+    <dl align="left" class="pop_con">
 		<dd class="cut-offRule" ></dd>
 		<dd>
 			<font style="width: 126px;text-align: right;">信息资源需求部门</font>
@@ -56,7 +55,7 @@
 			<select id="dealReasonYes" style="width: 200px;left:130px;"></select>
 			<select id="dealReasonNo" style="width: 200px;left:130px;display: none;"></select>
 		    <font style="left:420px;" id="backCauseTi">处理依据：</font>
-			<div style="position: absolute;right:22%;width: 20%;" id="file">
+			<div style="position: absolute;right:22%;width: 20%;top:5px;" id="file">
 				
 			</div>
 		
@@ -65,18 +64,19 @@
 			<font id="fileName"></font>
 			<font id="fileSize" style="left:400px;"></font>
 		</dd>
-	
-
 		
 		<dd style="height: 70px;">
 			<font style="height: 40px;" class="redStart"></font><font style="left:40px;height: 40px;">说明：</font>
 			<textarea style="left:130px;width: 675px;" rows="3" id="demandUse" placeholder="请输入说明"></textarea>
 		</dd>
-		<dd>
-		   <a id ="submit" class="subA" href="javascript:" onclick="uploadFile();" style="position:absolute;width: 20%; right:60% ">提交</a> 
-			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%; right:20% ">关闭</a>  
-		</dd>
 		<dd class="cut-offRule" ></dd>
 	</dl>
+	<dl align="left" class="pop_foot">
+		<dd>
+			<a id ="submit" class="subA" href="javascript:" onclick="uploadFile();" style="position:absolute;right:100px; ">提交</a>  
+			<a class="canA" href="javascript:" onclick="cancelPopup();" style="position:absolute;right:30px;">取消</a>  
+		</dd>
+	</dl>
+	
 
 	
