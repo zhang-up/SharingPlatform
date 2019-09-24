@@ -14,6 +14,7 @@ public interface THistoryOperateDao extends BaseDao<THistoryOperateEntity> {
     List<THistoryOperateEntity> findList(THistoryOperateEntity tHistoryOperate);
     
     void insertHistory_operate(Map<String, Object> map);
+    void deleteByData(String id);
 
 
 }

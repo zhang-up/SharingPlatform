@@ -17,6 +17,8 @@ import com.project.entity.TDemandEntity;
 import com.project.entity.THistoryDataEntity;
 import com.project.exception.RRException;
 import com.project.info.RcResourceInfo;
+import com.project.info.TDemandInfo;
+import com.project.info.THistoryDataInfo;
 import com.project.info.loginUserInfo;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
@@ -140,14 +142,45 @@ public class THistoryDataController extends  AbstractController{
 		tHistoryDataService.update(tHistoryData);
 		
 	}
-	
+	/**
+	 * 详细信息
+	 */
+	@RequestMapping("/infoD/{historyId}")
+	public THistoryDataInfo infoDetail(@PathVariable("historyId") String demandId){
+		System.out.println(123);
+		//TDemandInfo tDemand = tDemandService.queryDetailObject(historyId);
+		return tHistoryDataService.infoDetail(demandId);
+	}
 	/**
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	public void delete(@RequestBody String[] historyIds){
-		tHistoryDataService.deleteBatch(historyIds);
+	public R delete(@RequestParam Map<String, Object> params, HttpSession session){
+
+		String token = params.get("token") == null ? "" : params.get("token").toString();
+		if(StringUtil.isNull(token)){
+			return R.error("登录状态异常！");
+		}
 		
+		loginUserInfo lui;
+		try {
+			lui = super.getLoginedInfo(token, session);
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+		
+		String historyId = params.get("historyId") == null ? "" : params.get("historyId").toString();
+		if(StringUtil.isNull(historyId)){
+			return R.error("提交参数异常，删除记录失败！");
+		}
+		
+		try {
+			tHistoryDataService.delete(historyId,lui.getUserId());
+		} catch (RRException e) {
+			return R.error(e.getMsg());
+		}
+	
+		return R.ok();
 	}
 	
 }

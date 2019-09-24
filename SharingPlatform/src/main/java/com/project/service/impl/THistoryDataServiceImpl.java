@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import com.com.project.service.THistoryDataService;
 import com.project.dao.THistoryDataDao;
 import com.project.dao.THistoryOperateDao;
+import com.project.entity.TDemandEntity;
 import com.project.entity.THistoryDataEntity;
+import com.project.exception.RRException;
+import com.project.info.THistoryDataInfo;
 import com.project.utils.DateUtil;
 import com.project.utils.UUIDUtil;
 
@@ -74,13 +77,26 @@ public class THistoryDataServiceImpl implements THistoryDataService {
 	}
 	
 	@Override
-	public void delete(String historyId){
+	public void delete(String historyId, String userId){
+		
+		THistoryDataEntity tDataEntity=tHistoryDataDao.queryObject(historyId);
+		if(!userId.equals(tDataEntity.getCreater())){
+			throw new RRException("您没有删除该记录的权限！");
+		}
+		tHistoryOperateDao.deleteByData(historyId);
 		tHistoryDataDao.delete(historyId);
+		
+
 	}
 	
 	@Override
 	public void deleteBatch(String[] historyIds){
 		tHistoryDataDao.deleteBatch(historyIds);
+	}
+
+	@Override
+	public THistoryDataInfo infoDetail(String id) {
+		return tHistoryDataDao.findHistoryList(id);
 	}
 	
 }

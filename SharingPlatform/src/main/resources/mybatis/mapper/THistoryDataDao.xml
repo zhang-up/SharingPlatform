@@ -17,6 +17,32 @@
         <result property="remark" column="remark"/>
     </resultMap>
     
+        <resultMap type="com.project.info.THistoryDataInfo" id="map1">
+        <result property="historyId" column="history_id"/>
+        <result property="provideDep" column="name"/>
+        <result property="hisName" column="his_name"/>
+        <result property="hisDetail" column="his_detail"/>
+        <result property="period" column="period"/>
+        <result property="saveTime" column="save_time"/>
+        <result property="creater" column="peoName"/>
+        <result property="state" column="par_name"/>
+        <result property="stateT" column="state"/>       
+        <result property="remark" column="remark"/>
+        <result property="resultUse" column="tho_remark"/>
+        <result property="par_name" column="result"/>      
+    </resultMap>
+     
+    <select id="findHistoryList" resultMap="map1">
+		select th.history_id,th.provide_dep,th.his_name,th.his_detail,
+		th.period,th.save_time ,th.creater ,pd.name ,pu.name as peoName,th.remark,am.par_name,tho.remark as tho_remark
+		FROM t_history_data th
+		LEFT JOIN pub_organ pd ON th.provide_dep = pd.code and pd.STATUS='1'
+		LEFT JOIN t_history_operate tho ON th.history_id=tho.history_id
+		LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_OPERATE|OPERATE_RES' AND tho.operate_res = am.par_value
+		LEFT JOIN pub_user pu on th.creater=pu.ID 
+		where th.history_id=#{h_provideDep}
+	</select>
+    
      <select id="findHistory" resultMap="tHistoryDataMap">
      	SELECT * FROM
         (

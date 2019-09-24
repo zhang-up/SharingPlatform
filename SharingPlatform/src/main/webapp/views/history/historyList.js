@@ -50,7 +50,7 @@ function findHistoryList(){
                 	  if('00'==state){
                 		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delHistory('"+id+"');>删除</a>";
                 	  }else if('01'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>查看</a> <a href='javascript:void(0)' onclick=revokeApply('"+id+"');>撤销</a>";
+                		  str = "<a href='javascript:' onclick=findHis('"+id+"');>查看</a> <a href='javascript:void(0)' onclick=revokeHistory('"+id+"');>撤销</a>";
                 	  }else{
                 		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
                 	  }
@@ -121,13 +121,15 @@ function editApplyPage(id,rNums){
 }
 
 var deleHistoryId = '';
+var str='';
 function delHistory(id){
 	deleHistoryId = id;
+	 str="historyId="+deleHistoryId
 	openDialog('delHistory','提示',300,150,'记录删除后将无法恢复！是否确认删除。',function(){
 		//alert('确定');
 		$.ajax({
-			url:'./?/delete',
-			data:'demandId='+deleDemandId,
+			url:'./thistorydata/delete',
+			data:str,
 			dataType:'json',
 			type:'post',
 			success: function(result){
@@ -147,13 +149,18 @@ function delHistory(id){
 }
 
 var revokeDemandId = '';
-function revokeApply(id){
+function revokeHistory(id){
 	revokeDemandId = id;
-	popup('views/demand/revokeDemand.html');
+	popup('views/history/revokeHistory.html');
 }
 
 function importDemand(){
 	popup('views/demand/importDemand.html');
+}
+var historyId = '';
+function findHis(id){
+	historyId = id;
+	popup('views/history/findHistory.html');
 }
 
 

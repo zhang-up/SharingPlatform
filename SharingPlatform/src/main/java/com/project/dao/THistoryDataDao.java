@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Insert;
 import com.project.entity.THistoryDataEntity;
+import com.project.info.THistoryDataInfo;
 
 @Mapper
 public interface THistoryDataDao extends BaseDao<THistoryDataEntity> {
@@ -18,5 +19,6 @@ public interface THistoryDataDao extends BaseDao<THistoryDataEntity> {
     
     List<THistoryDataEntity> findHistory(Map<String, Object> map);
 
+    THistoryDataInfo findHistoryList(String id);
 
 }
