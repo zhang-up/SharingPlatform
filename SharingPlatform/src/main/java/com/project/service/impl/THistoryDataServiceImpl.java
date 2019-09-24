@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.dao.THistoryDataDao;
+import com.project.dao.THistoryOperateDao;
 import com.project.entity.THistoryDataEntity;
 import com.project.service.THistoryDataService;
+import com.project.utils.DateUtil;
+import com.project.utils.UUIDUtil;
 
 
 
@@ -17,6 +20,9 @@ public class THistoryDataServiceImpl implements THistoryDataService {
 	@Autowired
 	private THistoryDataDao tHistoryDataDao;
 	
+	@Autowired
+	private THistoryOperateDao tHistoryOperateDao;
+	
 	@Override
 	public THistoryDataEntity queryObject(String historyId){
 		return tHistoryDataDao.queryObject(historyId);
@@ -24,7 +30,7 @@ public class THistoryDataServiceImpl implements THistoryDataService {
 	
 	@Override
 	public List<THistoryDataEntity> queryList(Map<String, Object> map){
-		return tHistoryDataDao.queryList(map);
+		return tHistoryDataDao.findHistory(map);
 	}
 
 	@Override
@@ -40,6 +46,21 @@ public class THistoryDataServiceImpl implements THistoryDataService {
 	@Override
 	public int queryTotal(Map<String, Object> map){
 		return tHistoryDataDao.queryTotal(map);
+	}
+	
+	/*
+	 *插入
+	 */
+	@Override
+	public void insertHistory(Map<String, Object> map){
+		map.put("historyId", UUIDUtil.getUUID32());
+		map.put("saveTime", DateUtil.getDate());
+		String period=map.get("h_startTime")+"--"+map.get("h_endTime");
+		map.put("period", period);		
+		map.put("operateId", UUIDUtil.getUUID32());
+		System.out.println(map);
+		tHistoryDataDao.insertHistory(map);
+		tHistoryOperateDao.insertHistory_operate(map);
 	}
 	
 	@Override

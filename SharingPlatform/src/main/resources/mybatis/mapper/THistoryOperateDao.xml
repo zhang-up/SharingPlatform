@@ -78,6 +78,29 @@
 			#{fileAdd}
 		)
 	</insert>
+	
+		<insert id="insertHistory_operate" >
+		insert into t_history_operate
+		(
+			operate_id, 
+			history_id, 
+			operator, 
+			operate_time, 
+			operate_res,
+			state, 
+			remark
+		)
+		values
+		(
+			#{operateId}, 
+			#{historyId}, 
+			#{token}, 
+			#{saveTime}, 
+			#{h_dealResult}, 
+			#{state}, 
+			#{h_demandUse} 
+		)
+	</insert>
 	 
 	<update id="update" parameterType="com.project.entity.THistoryOperateEntity">
 		update t_history_operate 

@@ -12,9 +12,34 @@
         <result property="period" column="period"/>
         <result property="saveTime" column="save_time"/>
         <result property="creater" column="creater"/>
-        <result property="state" column="state"/>
+        <result property="state" column="par_name"/>
         <result property="remark" column="remark"/>
     </resultMap>
+    
+     <select id="findHistory" resultMap="tHistoryDataMap">
+     	SELECT * FROM
+        (
+		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name
+         FROM t_history_data h
+     	 LEFT JOIN pub_organ pd ON h.provide_dep = pd.code and pd.STATUS='1'
+         LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_DATA|STATE' AND h.state = am.par_value
+     	 where 1=1
+     	<if test="provideDep != null and provideDep != ''">
+	      AND h.provide_dep = #{provideDep}
+	    </if>
+	    <if test="state != null and state != ''">
+	      AND td.state = #{state}
+	    </if>
+     	<!-- 申请页面对草稿状态做限制 -->
+		<if test="people != null and apply != ''">
+	      AND ((h.state = '00' AND h.creater = #{userId}) OR h.state NOT IN ('00'))
+	    </if>
+     	
+     	) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	 </select>
 
 	<select id="queryObject" resultType="com.project.entity.THistoryDataEntity">
 		select * from t_history_data where history_id = #{value}
@@ -84,6 +109,33 @@
 			#{creater}, 
 			#{state}, 
 			#{remark}
+		)
+	</insert>
+	
+	<insert id="insertHistory" >
+		insert into t_history_data
+		(
+			history_id, 
+			provide_dep, 
+			his_name, 
+			his_detail, 
+			period, 
+			save_time, 
+			creater, 
+			state, 
+			remark
+		)
+		values
+		(
+			#{historyId}, 
+			#{provide_dep}, 
+			#{h_demandName}, 
+			#{h_demantDetail}, 
+			#{period}, 
+			#{saveTime}, 
+			#{token}, 
+			#{state}, 
+			#{h_demandUse}
 		)
 	</insert>
 	 
