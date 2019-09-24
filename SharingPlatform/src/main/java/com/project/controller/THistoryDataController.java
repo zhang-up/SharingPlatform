@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.com.project.service.THistoryDataService;
 import com.project.entity.TDemandEntity;
 import com.project.entity.THistoryDataEntity;
 import com.project.exception.RRException;
 import com.project.info.RcResourceInfo;
 import com.project.info.loginUserInfo;
-import com.project.service.THistoryDataService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
 import com.project.utils.R;
@@ -41,20 +40,19 @@ public class THistoryDataController extends  AbstractController{
 		if(StringUtil.isNull(token)){
 			return new PageUtils();
 		}
-		System.out.println(params);
+		
 		loginUserInfo lui;
 		try {
 			lui = super.getLoginedInfo(token, session);
 		} catch (RRException e) {
 			return new PageUtils();
 		}
-		params.put("provideDep", lui.getOrgCode());
-		
+		params.put("provideDep", lui.getOrgCode());		
 		params.put("people", "true");
 		params.put("userId", lui.getUserId());
+		//System.out.println(params);
 		//查询列表数据
         Query query = new Query(params);
-
 		List<THistoryDataEntity> tHistoryDataList = tHistoryDataService.queryList(query);
 		int total = tHistoryDataService.queryTotal(query);
 		PageUtils pageUtil = new PageUtils(tHistoryDataList, total, query.getLimit(), query.getPage());

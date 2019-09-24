@@ -21,6 +21,9 @@ public class THistoryDataEntity implements Serializable {
 	//创建人
 	private String creater;
 	//需求当前的状态：00草稿，01已提交，02已处理完成，03已撤销，04已删除
+	private String stateT;
+	
+	//需求当前的状态：00草稿，01已提交，02已处理完成，03已撤销，04已删除
 	private String state;
 	//备注
 	private String remark;
@@ -132,6 +135,15 @@ public class THistoryDataEntity implements Serializable {
 	 */
 	public String getRemark() {
 		return remark;
+	}
+	
+	
+	
+	public String getStateT() {
+		return stateT;
+	}
+	public void setStateT(String stateT) {
+		this.stateT = stateT;
 	}
 	@Override
 	public String toString() {

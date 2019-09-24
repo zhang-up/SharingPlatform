@@ -6,20 +6,21 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.project.entity.THistoryDataEntity" id="tHistoryDataMap">
         <result property="historyId" column="history_id"/>
-        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDep" column="name"/>
         <result property="hisName" column="his_name"/>
         <result property="hisDetail" column="his_detail"/>
         <result property="period" column="period"/>
         <result property="saveTime" column="save_time"/>
         <result property="creater" column="creater"/>
         <result property="state" column="par_name"/>
+        <result property="stateT" column="state"/>       
         <result property="remark" column="remark"/>
     </resultMap>
     
      <select id="findHistory" resultMap="tHistoryDataMap">
      	SELECT * FROM
         (
-		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name
+		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name,pd.name,h.history_id,h.state
          FROM t_history_data h
      	 LEFT JOIN pub_organ pd ON h.provide_dep = pd.code and pd.STATUS='1'
          LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_DATA|STATE' AND h.state = am.par_value
@@ -27,8 +28,8 @@
 	      LEFT JOIN (SELECT history_id,MAX(operate_time) AS operate_time FROM t_history_operate WHERE state = #{timeType} GROUP BY history_id) ope ON h.history_id = ope.history_id
 	    </if>
      	 where 1=1
-     	<if test="provideDep != null and provideDep != ''">
-	      AND h.provide_dep = #{provideDep}
+     	<if test="h_provideDep != null and h_provideDep != ''">
+	      AND h.provide_dep = #{h_provideDep}
 	    </if>
 	    <if test="state != null and state != ''">
 	      AND h.state = #{state}
