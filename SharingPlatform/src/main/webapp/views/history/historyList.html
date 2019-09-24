@@ -1,0 +1,36 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="views/history/historyList.js?v=1"></script>
+
+
+<div class="showList" style='height:100px;'>
+	<div class="screen">
+
+		<div style="left:390px;width: 60px;">状态：</div>
+		<div style="left:450px;"><select id="h_state" name="state"></select></div>
+		
+		<div style="left:580px;width: 150px;"><select id="h_timeType" name="timeType" style="width:140px;"></select></div>
+		
+		<div style="left:730px;width:110px;">
+			<input id="h_stratDate" name="stratDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:830px;width:30px;">
+			至
+		</div>
+		<div style="left:850px;width:110px;">
+			<input id="h_endDate" name="endDate" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:950px;">
+			<a class="btn btn-primary" href="javascript:" onclick="searchHistory();" >搜  索</a>
+		</div>
+		<div style="left:1050px;">
+			<a class="btn btn-primary" href="javascript:" onclick="editApplyPage('add','');" >添加</a>
+		</div>
+
+	</div>
+	<div class="gridPanel">
+	    <table id="h_applyGrid"></table>
+	    <div id="h_applyGridPager"></div>
+    </div>
+  </div>
+

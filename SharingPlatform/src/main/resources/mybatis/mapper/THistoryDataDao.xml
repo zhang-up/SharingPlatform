@@ -12,9 +12,50 @@
         <result property="period" column="period"/>
         <result property="saveTime" column="save_time"/>
         <result property="creater" column="creater"/>
-        <result property="state" column="state"/>
+        <result property="state" column="par_name"/>
         <result property="remark" column="remark"/>
     </resultMap>
+    
+     <select id="findHistory" resultMap="tHistoryDataMap">
+     	SELECT * FROM
+        (
+		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name
+         FROM t_history_data h
+     	 LEFT JOIN pub_organ pd ON h.provide_dep = pd.code and pd.STATUS='1'
+         LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_DATA|STATE' AND h.state = am.par_value
+     	<if test="timeType != null and timeType != ''">
+	      LEFT JOIN (SELECT history_id,MAX(operate_time) AS operate_time FROM t_history_operate WHERE state = #{timeType} GROUP BY history_id) ope ON h.history_id = ope.history_id
+	    </if>
+     	 where 1=1
+     	<if test="provideDep != null and provideDep != ''">
+	      AND h.provide_dep = #{provideDep}
+	    </if>
+	    <if test="state != null and state != ''">
+	      AND h.state = #{state}
+	    </if>
+	    
+	    <if test="timeType != null and timeType != ''">
+		    <if test="stratDate != null and stratDate != ''">
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+		</if>
+		
+     	<!-- 申请页面对草稿状态做限制 -->
+		<if test="people != null and apply != ''">
+	      AND ((h.state = '00' AND h.creater = #{userId}) OR h.state NOT IN ('00'))
+	    </if>
+     	 <!-- 对接人页面不查询草稿状态 -->
+		<if test="firstT != null and firstT != ''">
+	      AND h.state NOT IN ('00')
+	    </if>
+     	) PlayStation
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	 </select>
 
 	<select id="queryObject" resultType="com.project.entity.THistoryDataEntity">
 		select * from t_history_data where history_id = #{value}
@@ -56,7 +97,36 @@
 	</select>
 
  	<select id="queryTotal" resultType="int">
-		select count(*) from t_history_data 
+		select count(h.history_id) 
+ 		from t_history_data  h
+ 		<if test="timeType != null and timeType != ''">
+	      LEFT JOIN (SELECT history_id,MAX(operate_time) AS operate_time FROM t_history_operate WHERE state = #{timeType} GROUP BY history_id) ope ON h.history_id = ope.history_id
+	    </if>
+     	 where 1=1
+     	<if test="provideDep != null and provideDep != ''">
+	      AND h.provide_dep = #{provideDep}
+	    </if>
+	    <if test="state != null and state != ''">
+	      AND h.state = #{state}
+	    </if>
+	    
+	    <if test="timeType != null and timeType != ''">
+		    <if test="stratDate != null and stratDate != ''">
+		      AND ope.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND ope.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+		</if>
+		
+     	<!-- 申请页面对草稿状态做限制 -->
+		<if test="people != null and apply != ''">
+	      AND ((h.state = '00' AND h.creater = #{userId}) OR h.state NOT IN ('00'))
+	    </if>
+     	 <!-- 对接人页面不查询草稿状态 -->
+		<if test="firstT != null and firstT != ''">
+	      AND h.state NOT IN ('00')
+	    </if>
 	</select>
 
 
@@ -84,6 +154,33 @@
 			#{creater}, 
 			#{state}, 
 			#{remark}
+		)
+	</insert>
+	
+	<insert id="insertHistory" >
+		insert into t_history_data
+		(
+			history_id, 
+			provide_dep, 
+			his_name, 
+			his_detail, 
+			period, 
+			save_time, 
+			creater, 
+			state, 
+			remark
+		)
+		values
+		(
+			#{historyId}, 
+			#{provide_dep}, 
+			#{h_demandName}, 
+			#{h_demantDetail}, 
+			#{period}, 
+			#{saveTime}, 
+			#{token}, 
+			#{state}, 
+			#{h_demandUse}
 		)
 	</insert>
 	 

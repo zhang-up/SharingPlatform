@@ -20,4 +20,6 @@ public interface THistoryDataService {
 	void delete(String historyId);
 	
 	void deleteBatch(String[] historyIds);
+	
+	void insertHistory(Map<String, Object> map);
 }

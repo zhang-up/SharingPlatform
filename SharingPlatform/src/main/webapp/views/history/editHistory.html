@@ -1,0 +1,59 @@
+<meta name="content-type" content="text/html; charset=UTF-8">
+	
+	<script type="text/javascript" src="views/history/editHistory.js?v=1"></script>
+	
+    <dl align="left">
+    	<dd id="page_tital" class="page_tital">添加清单</dd>
+		<dd class="cut-offRule" ></dd>
+
+		<dd>
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>资源名称</font>
+			<input id="h_demandName" style="left:170px;width: 675px;" type="text" placeholder="请输入需求名称"/>
+		</dd>
+
+		<dd style="height: 70px;">
+			<font style="width: 126px;text-align: right;"><h style="left: 0px;height: 50px;" class="redStart"> * </h>数据项<br>（须细化到数据项）</font>
+			<textarea style="left:170px;width: 675px;"  rows="3" id="h_demantDetail" placeholder="数据项"></textarea>
+		</dd>
+
+
+         <dd>
+            <font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>数据周期</font>
+            <input id="h_startTime" style="left:170px;width: 200px;" type="text" placeholder="请输入数据周期"/> 
+          	<font style="width: 126px;left:260px;text-align: right;">至</font>
+            <input id="h_endTime" style="left:390px;width: 200px;" type="text" placeholder="请输入数据周期"/>
+         </dd> 
+	           
+	           
+<!-- 	    <dd>       		
+		<div style="left:170px;width:200px;">
+			<input id="h_startTime" name="h_startTime" class="Wdate" readonly="readonly"/>
+		</div>
+		<div style="left:340px;width:200px;">
+			至
+		</div>
+		<div style="left:340px;width:200px;">
+			<input id="h_endTime" name="h_endTime" class="Wdate" readonly="readonly"/>
+		</div>    
+	      </dd>    -->   
+	           
+	           
+	           
+		<dd>
+			 <font style="width: 126px;text-align: right;"><h style="left: 0px;" class="redStart"> * </h>处理结果</font>
+			<select id="h_dealResult" style="left:170px;width: 200px;"></select>
+		</dd>
+
+
+
+		<dd style="height: 70px;">
+			<font style="width: 126px;text-align: right;height: 50px; "><h style="left: 0px;height: 50px;" class="redStart">  </h>说明</font>
+			<textarea style="left:170px;width: 675px;" rows="3" id="h_demandUse" placeholder="请输入用途"></textarea>
+		</dd>
+		<dd class="cut-offRule" id="last_cut" ></dd>
+		<dd>
+			<a class="subA" href="javascript:" onclick="editHistory('00');" style="position:absolute;width: 20%;">保存草稿</a>  
+			<a class="subA" href="javascript:" onclick="editHistory('01');" style="position:absolute;width: 20%; right:40% ">提交</a>  
+			<a class="subA" href="javascript:" onclick="cancelPopup();" style="position:absolute;width: 20%;right: 30px;">取消</a>  
+		</dd>
+	</dl>

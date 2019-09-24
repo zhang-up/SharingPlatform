@@ -20,6 +20,8 @@ public class THistoryOperateEntity implements Serializable {
 	private String remark;
 	//附件地址
 	private String fileAdd;
+	//处理结果
+	private String operate_res;
 
 	/**
 	 * 设置：操作ID
@@ -105,4 +107,11 @@ public class THistoryOperateEntity implements Serializable {
 	public String getFileAdd() {
 		return fileAdd;
 	}
+	public String getOperate_res() {
+		return operate_res;
+	}
+	public void setOperate_res(String operate_res) {
+		this.operate_res = operate_res;
+	}
+	
 }

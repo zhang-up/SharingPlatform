@@ -133,4 +133,11 @@ public class THistoryDataEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
+	@Override
+	public String toString() {
+		return "THistoryDataEntity [historyId=" + historyId + ", provideDep=" + provideDep + ", hisName=" + hisName
+				+ ", hisDetail=" + hisDetail + ", period=" + period + ", saveTime=" + saveTime + ", creater=" + creater
+				+ ", state=" + state + ", remark=" + remark + "]";
+	}
+	
 }
