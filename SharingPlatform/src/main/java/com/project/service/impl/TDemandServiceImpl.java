@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.com.project.service.TDemandService;
 import com.project.dao.TDemandDao;
 import com.project.dao.TDemandOperateDao;
 import com.project.dao.TDemandResourceDao;
@@ -17,6 +16,7 @@ import com.project.exception.RRException;
 import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
 import com.project.info.TDemandStatisticInfo;
+import com.project.service.TDemandService;
 import com.project.utils.DateUtil;
 import com.project.utils.StringUtil;
 import com.project.utils.UUIDUtil;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.com.project.xss.SQLFilter;
+import com.project.xss.SQLFilter;
 
 /**
  * 查询参数

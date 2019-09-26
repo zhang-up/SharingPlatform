@@ -1,4 +1,4 @@
-package com.com.project.xss;
+package com.project.xss;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

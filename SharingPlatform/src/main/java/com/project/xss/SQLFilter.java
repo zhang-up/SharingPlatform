@@ -1,4 +1,4 @@
-package com.com.project.xss;
+package com.project.xss;
 
 import org.apache.commons.lang.StringUtils;
 

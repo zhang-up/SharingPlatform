@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.com.project.service.RcResourceService;
 import com.project.dao.RcResourceDao;
 import com.project.dao.TDemandDao;
 import com.project.dao.TDemandResourceDao;
@@ -16,6 +15,7 @@ import com.project.entity.RcResourceEntity;
 import com.project.entity.TDemandResourceEntity;
 import com.project.info.RcResourceInfo;
 import com.project.info.TDemandInfo;
+import com.project.service.RcResourceService;
 import com.project.utils.StringUtil;
 import com.project.utils.UUIDUtil;
 

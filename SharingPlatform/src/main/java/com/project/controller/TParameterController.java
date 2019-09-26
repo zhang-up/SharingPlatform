@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.com.project.service.TParameterService;
 import com.project.entity.TParameterEntity;
+import com.project.service.TParameterService;
 import com.project.utils.PageUtils;
 import com.project.utils.Query;
 

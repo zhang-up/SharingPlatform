@@ -1,4 +1,4 @@
-package com.com.project.service;
+package com.project.service;
 
 import com.project.entity.PubOrganTreeEntity;
 
