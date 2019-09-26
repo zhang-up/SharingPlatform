@@ -2,6 +2,9 @@ package com.project.info;
 
 import java.io.Serializable;
 
+import com.project.utils.CTools;
+import com.project.utils.StringUtil;
+
 
 public class THistoryDataInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,20 +19,37 @@ public class THistoryDataInfo implements Serializable {
 	private String hisDetail;
 	//数据周期
 	private String period;
-	//时间格式 yyyy-MM-dd hh:mm:ss
-	private String saveTime;
-	//创建人
-	private String creater;
-	//需求当前的状态：00草稿，01已提交，02已处理完成，03已撤销，04已删除
-	private String stateT;
 	
+	//数据周期--前	
+	private String beforeT;
+	
+	//数据周期--后
+	private String lastT;
+		
+	//时间格式 yyyy-MM-dd hh:mm:ss,data表的时间
+	private String saveTime;
+	//创建人,data表的人
+	private String creater;
+	private String createrNumber;
+	private String mobile;
+	//operate表的时间
+	private String operateTime;
+	//operate 表的人
+	private String operatePeo;	
+	//需求当前的状态：00草稿，01已提交，02已处理完成，03已撤销，04已删除--数字
+	private String stateT;	
 	//需求当前的状态：00草稿，01已提交，02已处理完成，03已撤销，04已删除
 	private String state;
 	//备注
 	private String remark;
 	
+	
 	//处理结果 
 	private String result;
+	
+	//处理结果 状态  1 接入 ,2  不接入
+	private String resultRes;
+	
 	//处理说明  
 	private String resultUse;
 	
@@ -154,19 +174,62 @@ public class THistoryDataInfo implements Serializable {
 		return remark;
 	}
 	
-	
-	
+		
 	public String getStateT() {
 		return stateT;
 	}
 	public void setStateT(String stateT) {
 		this.stateT = stateT;
 	}
-	@Override
-	public String toString() {
-		return "THistoryDataEntity [historyId=" + historyId + ", provideDep=" + provideDep + ", hisName=" + hisName
-				+ ", hisDetail=" + hisDetail + ", period=" + period + ", saveTime=" + saveTime + ", creater=" + creater
-				+ ", state=" + state + ", remark=" + remark + "]";
+	public String getBeforeT() {
+		return beforeT;
 	}
+	public void setBeforeT(String beforeT) {
+		this.beforeT = beforeT;
+	}
+	public String getLastT() {
+		return lastT;
+	}
+	public void setLastT(String lastT) {
+		this.lastT = lastT;
+	}
+	public String getResultRes() {
+		return resultRes;
+	}
+	public void setResultRes(String resultRes) {
+		this.resultRes = resultRes;
+	}
+	public String getOperateTime() {
+		return operateTime;
+	}
+	public void setOperateTime(String operateTime) {
+		this.operateTime = operateTime;
+	}
+	public String getOperatePeo() {
+		return operatePeo;
+	}
+	public void setOperatePeo(String operatePeo) {
+		this.operatePeo = operatePeo;
+	}
+	public String getCreaterNumber() {
+		return createrNumber;
+	}
+	public void setCreaterNumber(String createrNumber) {
+		this.createrNumber = createrNumber;
+	}
+	public String getMobile() {
+		if(StringUtil.isNull(mobile)){
+			return mobile;
+		}else{
+			return CTools.decrypt(mobile);
+		}
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+	
+	
 	
 }

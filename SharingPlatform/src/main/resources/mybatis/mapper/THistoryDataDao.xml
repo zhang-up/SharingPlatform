@@ -17,7 +17,7 @@
         <result property="remark" column="remark"/>
     </resultMap>
     
-        <resultMap type="com.project.info.THistoryDataInfo" id="map1">
+        <resultMap type="com.project.info.THistoryDataInfo" id="findHistoryListMap">
         <result property="historyId" column="history_id"/>
         <result property="provideDep" column="name"/>
         <result property="hisName" column="his_name"/>
@@ -28,25 +28,77 @@
         <result property="state" column="par_name"/>
         <result property="stateT" column="state"/>       
         <result property="remark" column="remark"/>
-        <result property="resultUse" column="tho_remark"/>
-        <result property="par_name" column="result"/>      
+        <result property="resultUse" column="tho_remark"/> 
+        <result property="mobile" column="mobile"/>  
+        <result property="resultRes" column="operate_res"/> 
     </resultMap>
      
-    <select id="findHistoryList" resultMap="map1">
-		select th.history_id,th.provide_dep,th.his_name,th.his_detail,
-		th.period,th.save_time ,th.creater ,pd.name ,pu.name as peoName,th.remark,am.par_name,tho.remark as tho_remark
+    
+        <resultMap type="com.project.info.THistoryStatisticInfo" id="statisticInfoMap">
+        <result property="provideDep" column="provide_dep"/>
+        <result property="provideDepName" column="provide_dep_name"/>
+        <result property="alreadyProNums" column="already_pro_nums"/>
+        <result property="rescindedNums" column="rescinded_nums"/>
+    </resultMap>
+    
+        <!-- 提供方统计 -->
+    <select id="historyStatisticPro"  resultMap="statisticInfoMap">    	
+		SELECT  my_view.provide_dep_name,my_view.already_pro_nums, my_view.rescinded_nums
+		FROM	
+		(SELECT thd.provide_dep,pd.name AS provide_dep_name,
+		COUNT(already_pro.history_id) AS already_pro_nums,
+		COUNT(rescinded.history_id) AS rescinded_nums
+		FROM t_history_data thd
+		LEFT JOIN pub_organ pd ON thd.provide_dep = pd.code AND pd.STATUS='1'
+    	<!-- 已提交 -->
+		LEFT JOIN(SELECT tho.history_id FROM t_history_operate tho
+			WHERE tho.state in ('01') 
+    		<if test="stratDate != null and stratDate != ''">
+		      AND tho.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tho.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if>
+			GROUP BY tho.history_id)already_pro on thd.history_id=already_pro.history_id
+		<!-- 已撤销 -->
+		LEFT JOIN(SELECT tho.history_id FROM t_history_operate tho
+			WHERE tho.state in ('02') 
+			<if test="stratDate != null and stratDate != ''">
+		      AND tho.operate_time >= CONCAT(#{stratDate},' 00:00:00')
+		    </if>
+		    <if test="endDate != null and endDate != ''">
+		      AND tho.operate_time &lt;= CONCAT(#{endDate},' 23:59:59')
+		    </if> 
+			GROUP BY tho.history_id)rescinded on thd.history_id=rescinded.history_id
+		    WHERE 1=1
+		    <if test="provideDep != null and provideDep != ''">
+		      AND thd.provide_dep = #{provideDep}
+		    </if>
+		    GROUP BY thd.provide_dep, pd.name) my_view 
+		<if test="sidx != null and sidx.trim() != ''">
+	      order by ${sidx} ${sord}
+	    </if>
+    	
+    	
+    </select>
+    
+    
+    
+    <select id="findHistoryDetails" resultMap="findHistoryListMap">
+		select th.history_id,th.provide_dep,th.his_name,th.his_detail,th.state,tho.operate_res,pu.mobile,
+		th.period,th.save_time ,pd.name ,pu.name as peoName,th.remark,am.par_name,tho.remark as tho_remark    		
 		FROM t_history_data th
 		LEFT JOIN pub_organ pd ON th.provide_dep = pd.code and pd.STATUS='1'
-		LEFT JOIN t_history_operate tho ON th.history_id=tho.history_id
-		LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_OPERATE|OPERATE_RES' AND tho.operate_res = am.par_value
-		LEFT JOIN pub_user pu on th.creater=pu.ID 
-		where th.history_id=#{h_provideDep}
+    	LEFT JOIN pub_user pu on th.creater=pu.ID 
+		LEFT JOIN t_history_operate tho ON th.history_id=tho.history_id  and tho.state=#{state}
+		LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_OPERATE|OPERATE_RES' AND tho.operate_res = am.par_value		
+		where th.history_id=#{historyId}
 	</select>
     
      <select id="findHistory" resultMap="tHistoryDataMap">
      	SELECT * FROM
         (
-		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name,pd.name,h.history_id,h.state
+		 SELECT h.period ,h.save_time,h.his_name,h.his_detail, am.par_name,pd.name,h.history_id,h.state,h.creater
          FROM t_history_data h
      	 LEFT JOIN pub_organ pd ON h.provide_dep = pd.code and pd.STATUS='1'
          LEFT JOIN t_parameter am ON am.par_code = 'T_HISTORY_DATA|STATE' AND h.state = am.par_value
@@ -78,7 +130,7 @@
 		<if test="firstT != null and firstT != ''">
 	      AND h.state NOT IN ('00')
 	    </if>
-     	) PlayStation
+     	ORDER BY h.state,h.save_time DESC) PlayStation
 		<if test="offset != null and limit != null">
 			limit #{offset},#{limit}
 		</if>
@@ -87,6 +139,11 @@
 	<select id="queryObject" resultType="com.project.entity.THistoryDataEntity">
 		select * from t_history_data where history_id = #{value}
 	</select>
+	
+	<select id="findHistoryCode" resultType="String">
+		select creater from t_history_data where history_id = #{historyId}
+	</select>
+	
 
 	<select id="findALL" resultType="com.project.entity.THistoryDataEntity">
 		select * from t_history_data
@@ -157,6 +214,14 @@
 	</select>
 
 
+	  <update id="changHistoryState" >
+		update t_history_data set state='02' , save_time=#{saveTime},remark=#{remark}
+		where history_id = #{historyId}
+	  </update>
+	
+	
+	
+	
 	<insert id="save" parameterType="com.project.entity.THistoryDataEntity">
 		insert into t_history_data
 		(
@@ -184,7 +249,7 @@
 		)
 	</insert>
 	
-	<insert id="insertHistory" >
+	<insert id="insertHistory"  parameterType="com.project.entity.THistoryDataEntity">
 		insert into t_history_data
 		(
 			history_id, 
@@ -200,17 +265,35 @@
 		values
 		(
 			#{historyId}, 
-			#{provide_dep}, 
-			#{h_demandName}, 
-			#{h_demantDetail}, 
+			#{provideDep}, 
+			#{hisName}, 
+			#{hisDetail}, 
 			#{period}, 
 			#{saveTime}, 
-			#{token}, 
+			#{creater}, 
 			#{state}, 
-			#{h_demandUse}
+			#{remark}
 		)
 	</insert>
-	 
+	
+	
+	
+	<update id="changDraftHistory" parameterType="com.project.entity.THistoryDataEntity">
+		update t_history_data 
+		<set>
+			<if test="provideDep != null">provide_dep = #{provideDep}, </if>
+			<if test="hisName != null">his_name = #{hisName}, </if>
+			<if test="hisDetail != null">his_detail = #{hisDetail}, </if>
+			<if test="period != null">period = #{period}, </if>
+			<if test="saveTime != null">save_time = #{saveTime}, </if>
+			<if test="state != null">state = #{state}, </if>
+			<if test="creater != null">creater = #{creater}, </if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where history_id = #{historyId}
+	</update>
+	
+ 
 	<update id="update" parameterType="com.project.entity.THistoryDataEntity">
 		update t_history_data 
 		<set>
@@ -226,6 +309,9 @@
 		where history_id = #{historyId}
 	</update>
 	
+	
+	
+
 	<delete id="delete">
 		delete from t_history_data where history_id = #{value}
 	</delete>

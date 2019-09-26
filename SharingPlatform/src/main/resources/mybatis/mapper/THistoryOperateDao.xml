@@ -14,6 +14,25 @@
         <result property="fileAdd" column="file_add"/>
     </resultMap>
 
+   	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.project.entity.THistoryOperateEntity" id="findOperateM">
+        <result property="operateId" column="operate_id"/>
+        <result property="operateTime" column="operate_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap> 
+    	
+	<select id="findOperateRes"  resultMap="findOperateResmap">
+		select operate_res from t_history_operate
+		where history_id = #{historyId} and state='01'
+	</select>
+	
+	<select id="findOperate" resultMap="findOperateM">
+		select operate_time ,remark from t_history_operate
+		where history_id = #{historyId} and state='01'
+	</select>
+	 
+    
+    
 	<select id="queryObject" resultType="com.project.entity.THistoryOperateEntity">
 		select * from t_history_operate where operate_id = #{value}
 	</select>
@@ -79,7 +98,7 @@
 		)
 	</insert>
 	
-		<insert id="insertHistory_operate" >
+		<insert id="insertHistory_operate" parameterType="com.project.entity.THistoryOperateEntity">
 		insert into t_history_operate
 		(
 			operate_id, 
@@ -94,14 +113,21 @@
 		(
 			#{operateId}, 
 			#{historyId}, 
-			#{token}, 
-			#{saveTime}, 
-			#{h_dealResult}, 
+			#{operator}, 
+			#{operateTime}, 
+			#{operate_res}, 
 			#{state}, 
-			#{h_demandUse} 
+			#{remark} 
 		)
 	</insert>
-	 
+	
+	 <resultMap type="com.project.entity.THistoryOperateEntity" id="findOperateResmap">
+        <result property="operateId" column="operate_id"/>
+        <result property="state" column="state"/>
+        <result property="operate_res" column="operate_res"/>
+    </resultMap>
+	
+
 	<update id="update" parameterType="com.project.entity.THistoryOperateEntity">
 		update t_history_operate 
 		<set>
@@ -115,6 +141,20 @@
 		where operate_id = #{operateId}
 	</update>
 	
+	
+	<update id="changDraftHistoryOperate" parameterType="com.project.entity.THistoryOperateEntity">
+		update t_history_operate 
+		<set>
+			<if test="operator != null">operator = #{operator}, </if>
+			<if test="state != null">state = #{state}, </if>
+			<if test="operateTime != null">operate_time = #{operateTime}, </if>
+			<if test="remark != null">remark = #{remark}, </if>
+			<if test="operate_res != null">operate_res = #{operate_res}</if>
+		</set>
+		where history_id = #{historyId}
+	</update>
+	
+			
 	<delete id="delete">
 		delete from t_history_operate where operate_id = #{value}
 	</delete>

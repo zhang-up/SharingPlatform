@@ -15,6 +15,7 @@ $(function() {
 	addselect("T_HISTORY_DATA","TIME_TYPE","h_timeType","",false,"：");
 	
 	findHistoryList();
+	
 });
 
 var $gridTable;
@@ -26,7 +27,7 @@ function findHistoryList(){
 	$gridTable = $('#h_applyGrid');
 	
 	$gridTable.jqGrid({
-        url: "../thistorydata/list",
+        url: "./thistorydata/list",
         postData:{
         	token : (sessionStorage.token!=null ? sessionStorage.token: '')
 		},
@@ -40,19 +41,20 @@ function findHistoryList(){
                   {label: '资源名称', name: 'hisName',},
                   {label: '数据项', name: 'hisDetail',},
                   {label: '数据周期', name: 'period',align:"center",width:110,},
-                  {label: '提交时间', name: 'saveTime',align:"center",width:115,},
+                  {label: '操作时间', name: 'saveTime',align:"center",width:115,},
                   {label: '状态', name: 'state',align:"center",width:90,},
                   {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
                 	  var id=rowObject.historyId;
+                	  var userId=rowObject.creater;
                 	  var state = rowObject.stateT;
-                	  rObj.push(rowObject);
+                	  rObj.push(rowObject);               	
                 	  var str = '';
                 	  if('00'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delHistory('"+id+"');>删除</a>";
-                	  }else if('01'==state){
-                		  str = "<a href='javascript:' onclick=findHis('"+id+"');>查看</a> <a href='javascript:void(0)' onclick=revokeHistory('"+id+"');>撤销</a>";
+                		  str = "<a href='javascript:' onclick=editHistoryPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delHistory('"+id+"');>删除</a>";
+                	  }else if('01'==state && userId==sessionStorage.token){
+                		  str = "<a href='javascript:' onclick=findHis('"+id+"','"+state+"');>查看</a> <a href='javascript:void(0)' onclick=revokeHistory('"+id+"');>撤销</a>";
                 	  }else{
-                		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
+                		  str = "<a href='javascript:void(0)' onclick=findHis('"+id+"','"+state+"');>查看</a>";
                 	  }
                 	  rowNums++;
                 	  return str;
@@ -87,10 +89,10 @@ function searchHistory(type){
 	rowNums = 0;
 	var curpagenum = 1;
 	
-	if('update'==type){
+/*	if('update'==type){
 		curpagenum = $gridTable.jqGrid('getGridParam', 'page');
 	}
-	
+	*/
 	$gridTable.jqGrid('setGridParam', {
         postData: historyCondition(), 
         page: curpagenum
@@ -98,8 +100,7 @@ function searchHistory(type){
 }
 
 
-function  historyCondition(){
-	
+function  historyCondition(){	
 	var queryJson={
 			token : (sessionStorage.token!=null ? sessionStorage.token: ''),
 			state : $("#h_state").val(),
@@ -112,7 +113,7 @@ function  historyCondition(){
 
 var h_mergeDemandId = 'add';
 var eRowObj = null
-function editApplyPage(id,rNums){
+function editHistoryPage(id,rNums){
 	h_mergeDemandId = id;
 	eRowObj = rObj[rNums];
 	//alert(stringify(eRowObj));
@@ -121,15 +122,14 @@ function editApplyPage(id,rNums){
 }
 
 var deleHistoryId = '';
-var str='';
+var strHis='';
 function delHistory(id){
 	deleHistoryId = id;
-	 str="historyId="+deleHistoryId
+	strHis="historyId="+deleHistoryId
 	openDialog('delHistory','提示',300,150,'记录删除后将无法恢复！是否确认删除。',function(){
-		//alert('确定');
 		$.ajax({
 			url:'./thistorydata/delete',
-			data:str,
+			data:strHis,
 			dataType:'json',
 			type:'post',
 			success: function(result){
@@ -138,13 +138,12 @@ function delHistory(id){
 					alert(result.msg);
 					return;
 				}
-				searchHistory('update');
+				searchHistory();
 				alert('记录已删除！');
 			},
 			error:commerror
 		});
 	},function(){
-		//alert('取消');
 	});
 }
 
@@ -154,13 +153,17 @@ function revokeHistory(id){
 	popup('views/history/revokeHistory.html');
 }
 
-function importDemand(){
-	popup('views/demand/importDemand.html');
-}
 var historyId = '';
-function findHis(id){
+var stateHis='';
+function findHis(id,state){
 	historyId = id;
-	popup('views/history/findHistory.html');
+	stateHis=state;
+	popup('./views/history/findHistory.html');
 }
-
+/*var historyRId = '';
+function findRevoke(id){
+	historyRId = id;
+	popup('views/history/findRevoke.html');
+}
+*/
 

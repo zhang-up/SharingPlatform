@@ -13,8 +13,16 @@ public interface THistoryOperateDao extends BaseDao<THistoryOperateEntity> {
 
     List<THistoryOperateEntity> findList(THistoryOperateEntity tHistoryOperate);
     
-    void insertHistory_operate(Map<String, Object> map);
+    void insertHistory_operate(THistoryOperateEntity tho);
+  
     void deleteByData(String id);
+    
+    THistoryOperateEntity findOperateRes(Map<String, Object> map);
+    
+    
+    void changDraftHistoryOperate(THistoryOperateEntity tho);
+    
+    THistoryOperateEntity findOperate(Map<String, Object> map);
 
 
 }

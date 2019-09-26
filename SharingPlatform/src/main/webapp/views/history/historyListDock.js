@@ -15,7 +15,7 @@ $(function() {
 	
 	addselect("T_HISTORY_DATA","STATE","ho_state","",true);
 	addselect("T_HISTORY_DATA","TIME_TYPE","ho_timeType","",false,"：");
-	
+	$("#ho_state > option[value='00']").remove();
 	findHistory();
 });
 
@@ -28,7 +28,7 @@ function findHistory(){
 	$gridTable = $('#ho_applyGrid');
 	
 	$gridTable.jqGrid({
-        url: "../thistorydata/list",
+        url: "./thistorydata/listDock",
         postData:{
         	token : (sessionStorage.token!=null ? sessionStorage.token: '')
 		},
@@ -43,23 +43,21 @@ function findHistory(){
                   {label: '资源名称', name: 'hisName',},
                   {label: '数据项', name: 'hisDetail',},
                   {label: '数据周期', name: 'period',align:"center",width:110,},
-                  {label: '提交时间', name: 'saveTime',align:"center",width:115,},
+                  {label: '操作时间', name: 'saveTime',align:"center",width:115,},
                   {label: '状态', name: 'state',align:"center",width:90,},
-    /*              {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
-                	  var id=rowObject.demandId;
-                	  var state = rowObject.state;
+                 {label: '操作', name: 'id',align:"center",width:80,formatter:function(cellvalue, options, rowObject){
+                	  var id=rowObject.historyId;
+                	  var state = rowObject.stateT;
                 	  rObj.push(rowObject);
-                	  var str = '';
-                	  if('00'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=delApply('"+id+"');>删除</a>";
-                	  }else if('03'==state || '05'==state){
-                		  str = "<a href='javascript:' onclick=editApplyPage('"+id+"','"+rowNums+"');>修改</a> <a href='javascript:void(0)' onclick=revokeApply('"+id+"');>撤销</a>";
+                	  var str = ''; 
+                	  if('01'==state){
+                		  str = "<a href='javascript:' onclick=findHis('"+id+"','"+state+"');>查看</a>" ;
                 	  }else{
-                		  str = "<a href='javascript:void(0)' onclick=demandDetailPage('"+id+"');>查看</a>";
+                		  str = "<a href='javascript:void(0)' onclick=findHis('"+id+"','"+state+"');>查看</a>";
                 	  }
                 	  rowNums++;
                 	  return str;
-                  }}*/],
+                  }}],
         
         height: 560,
         rowNum: 15,
@@ -91,10 +89,10 @@ function searchHistoryOper(type){
 	rowNums = 0;
 	var curpagenum = 1;
 	
-	if('update'==type){
+/*	if('update'==type){
 		curpagenum = $gridTable.jqGrid('getGridParam', 'page');
 	}
-	
+	*/
 	$gridTable.jqGrid('setGridParam', {
         postData: historyConditionOper(), 
         page: curpagenum
@@ -114,24 +112,12 @@ function  historyConditionOper(){
 	}
 	return queryJson;
 }
-
-var h_mergeDemandId = 'add';
-var eRowObj = null
-function editApplyPage(id,rNums){
-	h_mergeDemandId = id;
-	eRowObj = rObj[rNums];
-	//alert(stringify(eRowObj));
-	//alert(mergeDemandId)
-	popup('views/history/editHistory.html');
+var historyId = '';
+var stateHis='';
+function findHis(id,state){
+	historyId = id;
+	stateHis=state;
+	popup('./views/history/findHistory.html');
 }
 
 
-var revokeDemandId = '';
-function revokeApply(id){
-	revokeDemandId = id;
-	popup('views/demand/revokeDemand.html');
-}
-
-function importDemand(){
-	popup('views/demand/importDemand.html');
-}

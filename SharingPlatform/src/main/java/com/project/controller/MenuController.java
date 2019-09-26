@@ -32,7 +32,7 @@ public class MenuController extends  AbstractController{
 		smiList.add(new SysMenusInfo("需求统计", "views/demand/statistic.html"));	
 		smiList.add(new SysMenusInfo("历史清单提交", "views/history/historyList.html"));
 		smiList.add(new SysMenusInfo("历史清单", "views/history/historyListDock.html"));
-		smiList.add(new SysMenusInfo("历史统计", ""));
+		smiList.add(new SysMenusInfo("历史统计", "views/history/statisticHistory.html"));
 		
 		
 		return smiList;

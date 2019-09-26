@@ -2,6 +2,7 @@ package com.com.project.service;
 
 import com.project.entity.THistoryDataEntity;
 import com.project.info.THistoryDataInfo;
+import com.project.info.THistoryStatisticInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -24,5 +25,10 @@ public interface THistoryDataService {
 	
 	void insertHistory(Map<String, Object> map);
 	
-	THistoryDataInfo infoDetail(String id);
+	THistoryDataInfo findHistoryList(Map<String, Object> map);
+	
+	void recall(Map<String, Object> map);
+	
+	//提供方统计
+    List<THistoryStatisticInfo> historyStatisticPro(Map<String, Object> map);
 }
